@@ -1,0 +1,433 @@
+
+*{
+    margin:0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;;
+    color: #000000a4;
+}
+
+.banner{
+  width: 100%; 
+  height: 40vh;
+  background-image: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)),url(../image/pexels-pixabay-276528.jpg); 
+  background-size: cover;
+  background-position: center;
+}
+
+.navbar{
+    width: 85%;
+    margin: auto;
+    padding: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.329);
+}
+
+.logo{
+    width: 120px;
+    cursor: pointer;
+}
+
+.navbar ul li{
+    list-style: none ;
+    display:  inline-block;
+    margin: 20px;
+    position: relative;
+}
+
+.navbar ul li a{
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: sans-serif;
+
+}
+
+.navbar ul li::after{
+    content: '';
+    height: 3px;
+    width:0%;
+    background: #009688;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: 0.5s;
+}
+
+.navbar ul li:hover::after{
+    width: 100%;
+}
+
+.navbar ul li a.active::after{
+
+    content: '';
+    height: 3px;
+    width:100%;
+    background: #009688;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: 0.5s;
+
+}
+
+
+
+.topic{
+    position: relative;
+    display: grid;
+    grid-template-columns: 220px 220px 220px 220px 220px 220px;
+    grid-gap: 120px;
+    left: 20%;
+    top:80px;
+    width: 80%;
+}
+.topic h1{
+    color: #d32f2386;
+    font-size: 23px;
+    text-shadow: 0.8px -0.8px;
+    letter-spacing: 2px;
+}
+.topic1{
+    position: relative;
+    display: grid;
+    grid-template-columns: 220px 220px 220px 220px 220px 220px;
+    grid-gap: 120px;
+    left: 20%;
+    top:190px;
+    width: 80%;
+
+}
+.topic1 h1{
+    color: #d32f2386;
+    font-size: 23px;
+    text-shadow: 0.8px -0.8px;
+    letter-spacing: 2px;
+}
+
+.content{
+    position: relative;
+    display: grid;
+    top:120px;
+    left: 20%;
+    grid-template-columns: 100px 200px 100px 200px 100px 200px;
+    grid-gap: 20px;
+    width: 80%;
+}
+.content1{
+    position: relative;
+    display: grid;
+    top:200px;
+    left: 20%;
+    grid-template-columns: 100px 200px 100px 200px 100px 200px;
+    grid-gap: 20px;
+    width: 80%;   
+}
+
+.num{
+    position: relative;
+    color: black;
+    border: 3px solid black;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    text-align: center;
+}
+
+.num p{
+    position: relative;
+    color: black;
+    top:20%;
+    font-size: 30px;
+}
+
+.design{
+    left: 20px;
+    position: relative;
+    display: grid;
+    grid-gap: 20px;
+    top:300px;
+    grid-template-columns: repeat(4,1fr);
+    grid-gap: 20px;
+    width: 98%;
+    
+}
+
+.design h2{
+    top: 20px;
+    position: relative;
+    text-align: center;
+    color: white;
+    letter-spacing: 2px;
+}
+
+.design p{
+    position: relative;
+    color: rgba(232, 216, 233, 0.884);
+    top:30px;
+    display: inline-block;
+    text-align: center;
+    font-size: 18px;
+    width: 80%;
+    left: 20px;
+}
+
+.design .fa-bath{
+    position: relative;
+    left: 180px;
+    color: white;
+    font-size: 50px;
+    top: 20px;
+
+}
+
+.fa-couch{
+    position: relative;
+    left: 180px;
+    color: white;
+    font-size: 50px;
+    top: 20px;
+}
+.fa-chair{
+    position: relative;
+    left: 180px;
+    color: white;
+    font-size: 50px;
+    top: 20px;
+}
+.fa-bed{
+    position: relative;
+    left: 180px;
+    color: white;
+    font-size: 50px;
+    top: 20px;
+}
+
+.design1{
+    position: relative;
+    background-color: rgb(63,81,181);
+    height: 270px;
+    width: 100%;
+}
+.design2{
+    position: relative;
+    background-color: rgb(33,150,243);
+    height: 270px;
+    width: 100%;
+}
+.design3{
+    position: relative;
+    background-color: rgb(255,76,76);
+    height: 270px;
+    width: 100%;
+}
+.design4{
+    position: relative;
+    background-color: rgb(0,150,136);
+    height: 270px;
+    width: 100%;
+}
+
+.design1 img{
+bottom: 190px;
+position: relative;
+opacity: 0;
+width: 100%;
+
+}
+
+.design1 img:hover{
+    position: relative;
+    opacity: 0.3;
+    transition-delay: 6.9s;
+    transition-duration: 0.1s;
+    transition: all 300ms ease-out;
+    transform: translateY(30px)
+}
+
+
+.design2 img
+{
+    bottom: 200px;
+    position: relative;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    
+}
+    
+.design2 img:hover
+{
+    position: relative;
+    opacity: 0.3;
+    transition-delay: 6.9s;
+    transition-duration: 0.1s;
+    transition: all 300ms ease-out;
+    transform: translateY(30px)
+}
+
+.design3 img
+{
+    bottom: 205px;
+    position: relative;
+    opacity: 0;
+    width: 95%;
+    height: 100%;
+    
+}
+    
+.design3 img:hover
+{
+    position: relative;
+    opacity: 0.3;
+    transition-delay: 6.9s;
+    transition-duration: 0.1s;
+    transition: all 300ms ease-out;
+    transform: translateY(30px)
+}
+
+.design4 img
+{
+    bottom: 206px;
+    position: relative;
+    opacity: 0;
+    width: 95%;
+    height: 100%;
+    
+}
+    
+.design4 img:hover
+{
+    position: relative;
+    opacity: 0.3;
+    transition-delay: 6.9s;
+    transition-duration: 0.1s;
+    transition: all 300ms ease-out;
+    transform: translateY(30px)
+}
+  
+  
+    
+    
+
+
+
+.footer{
+    margin: 0;
+    bottom: -489px;
+    position: relative;
+    width: 100%;
+    height: 410px;
+    background-color:#77694d;
+    text-align: center;
+    font-family: sans-serif;
+    
+}
+
+
+.contact{
+    width: 94%;
+    padding: 50px;
+    display: flex;
+    top:50px;
+    justify-content: space-between;
+}
+
+.contact .logo{
+    top:20px;
+    position: relative;
+    color: white;
+    border-style: solid;
+    width: 30%;
+    left: 40%;
+    font-size: 40px;
+    letter-spacing: 3px;
+    height: 40%;
+    text-align: center;
+}
+.logo h1{
+    color: white;
+}
+
+
+.contact .icon{
+    position: relative;
+    display: grid;
+    top: 40px;
+    grid-template-columns: repeat(5,1fr);
+    width: 20%;
+    left: 46%;
+}
+.contact .fa-facebook{
+    position: relative;
+    font-size: 20px;
+}
+.contact .fa-twitter{
+    position: relative;
+    font-size: 20px;
+}
+.contact .fa-instagram{
+    position: relative;
+    font-size: 20px;
+}
+.contact .fa-google{
+    position: relative;
+    font-size: 20px;
+}
+.contact .fa-facebook:hover{
+    position: relative;
+    font-size: 20px;
+    color: white;
+}
+.contact .fa-twitter:hover{
+    position: relative;
+    font-size: 20px;
+    color: white;
+}
+.contact .fa-instagram:hover{
+    position: relative;
+    font-size: 20px;
+    color: white;
+}
+.contact .fa-google:hover{
+    position: relative;
+    font-size: 20px;
+    color: white;
+}
+
+
+
+.navbar_last{
+    position:relative;
+    width: 45%;
+    margin: auto;
+    padding: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    top:10%;
+    left: 10%;
+}
+
+
+
+.navbar_last ul li{
+    list-style: none ;
+    display:  inline-block;
+    margin: 20px;
+    position: relative;
+}
+
+.navbar_last ul li a{
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: sans-serif;
+
+}
+
+.fa-arrow-up{
+    color: white;
+    }
+    
