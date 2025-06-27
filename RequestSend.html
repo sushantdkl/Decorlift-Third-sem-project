@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return / Refund - DL</title>
+    <link rel="stylesheet" href="ResquestSend.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">
+            <img src="Newlogo.jpg.png" alt="Logo">
+        </div>
+    </div>
+        </div>
+        <nav class="nav">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">About Us</a>
+            <a href="#" class="nav-link">Project</a>
+            <a href="#" class="nav-link">Our Services</a>
+            <a href="#" class="nav-link">Contact Us</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="user-section">
+                <div class="user-avatar"></div>
+                <div class="user-info">
+                    <p class="greeting">Hello,</p>
+                    <p class="username">User</p>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="sidebar-link">Profile Information</a>
+                <a href="#" class="sidebar-link">Manage Address</a>
+                <a href="#" class="sidebar-link active">History</a>
+                <a href="#" class="sidebar-link logout">
+                <button class="menu-item" id="logoutBtn">
+                    <span class="google-icon"></span>
+                    Logout
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="success-message">
+                Request sent successfully!!!
+            </div>
+
+            <div class="return-form">
+                <h2 class="page-title">Return / Refund</h2>
+                
+                <div class="product-section">
+                    <div class="product-image">
+                        <img src="WhiteChair.png" alt="Wooden Chair" />
+                        <div class="product-thumbnails">
+                            <img src="image-2.png" alt="Thumbnail 1" />
+                            <img src="image-2.png" alt="Thumbnail 2" />
+                            <img src="image-4.png" alt="Thumbnail 3" />
+                            <img src="image-2.png" alt="Thumbnail 4" />
+                        </div>
+                    </div>
+                    
+                    <div class="product-details">
+                        <h3 class="product-title">Wooden Chair</h3>
+                        <p class="product-description">
+                            Comfortable and durable wooden chair perfect for dining rooms, 
+                            offices, or any space that needs stylish and functional seating.
+                        </p>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Purchase On</label>
+                                <input type="date" class="form-input" />
+                            </div>
+                            <div class="form-group">
+                                <label>Purchase For</label>
+                                <input type="text" class="form-input" placeholder="Enter purpose" />
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>What do you want to do?</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="action" value="exchange" />
+                                    Exchange
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="action" value="refund" />
+                                    Refund
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Reason</label>
+                            <textarea class="form-textarea" placeholder="Please provide reason for return/refund"></textarea>
+                        </div>
+                        
+                        <button class="submit-btn">Submit</button>
+                                     <div class="modal-overlay" id="modalOverlay">
+                        <div class="modal">
+            <h3>Are you sure you want to Log out?</h3>
+            <div class="modal-buttons">
+                <button class="btn btn-yes" id="confirmLogout">Yes</button>
+                <button class="btn btn-no" id="cancelLogout">No</button>
+            </div>
+        </div>
+    </div>
+
+                         <script>
+        // Get modal elements
+        const logoutBtn = document.getElementById('logoutBtn');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const confirmLogout = document.getElementById('confirmLogout');
+        const cancelLogout = document.getElementById('cancelLogout');
+
+        // Show modal when logout button is clicked
+        logoutBtn.addEventListener('click', function() {
+            modalOverlay.style.display = 'block';
+        });
+
+        // Hide modal when "No" is clicked
+        cancelLogout.addEventListener('click', function() {
+            modalOverlay.style.display = 'none';
+        });
+
+        // Handle logout confirmation
+        confirmLogout.addEventListener('click', function() {
+            // Here you would typically handle the actual logout process
+            alert('Logging out...');
+            modalOverlay.style.display = 'none';
+            // Redirect to login page or perform logout action
+            // window.location.href = '/login';
+        });
+
+        // Close modal when clicking outside of it
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                modalOverlay.style.display = 'none';
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalOverlay.style.display === 'block') {
+                modalOverlay.style.display = 'none';
+            }
+        });
+    </script>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

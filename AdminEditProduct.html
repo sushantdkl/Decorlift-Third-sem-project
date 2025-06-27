@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Edit Product</title>
-    <link rel="stylesheet" href="AdminEditProduct.css">
+    <link rel="stylesheet" href="css/AdminEditProduct.css">
 </head>
 <body>
     <div class="container">
@@ -35,15 +35,15 @@
                 <div class="nav-icon"></div>
                 <span>Manage Inventory</span>
             </a>
-            <a href="#" class="nav-item">
+            <a href="RequestNoti.html" class="nav-item">
                 <div class="nav-icon"></div>
                 <span>Requests</span>
             </a>
             
             <div class="logout">
-                <a href="#" class="nav-item">
-                    <div class="logout-icon"></div>
-                    <span>Logout</span>
+               <a href="#" class="sidebar-link logout">
+                    <button class="menu-item" id="logoutBtn">
+                    Logout
                 </a>
             </div>
         </nav>
@@ -105,6 +105,56 @@
 
                         <button type="submit" class="update-btn">Update</button>
                     </form>
+                     <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h3>Are you sure you want to Log out?</h3>
+            <div class="modal-buttons">
+                <button class="btn btn-yes" id="confirmLogout">Yes</button>
+                <button class="btn btn-no" id="cancelLogout">No</button>
+            </div>
+        </div>
+    </div>
+        
+    <script>
+        // Get modal elements
+        const logoutBtn = document.getElementById('logoutBtn');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const confirmLogout = document.getElementById('confirmLogout');
+        const cancelLogout = document.getElementById('cancelLogout');
+
+        // Show modal when logout button is clicked
+        logoutBtn.addEventListener('click', function() {
+            modalOverlay.style.display = 'block';
+        });
+
+        // Hide modal when "No" is clicked
+        cancelLogout.addEventListener('click', function() {
+            modalOverlay.style.display = 'none';
+        });
+
+        // Handle logout confirmation
+        confirmLogout.addEventListener('click', function() {
+            // Here you would typically handle the actual logout process
+            alert('Logging out...');
+            modalOverlay.style.display = 'none';
+            // Redirect to login page or perform logout action
+            // window.location.href = '/login';
+        });
+
+        // Close modal when clicking outside of it
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                modalOverlay.style.display = 'none';
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalOverlay.style.display === 'block') {
+                modalOverlay.style.display = 'none';
+            }
+        });
+    </script>
                 </div>
             </div>
         </main>
@@ -124,7 +174,11 @@
             e.preventDefault(); // Prevent the default form submission
             // Redirect to UpdateProduct.html
             window.location.href = 'UpdateProduct.html';
+
+            
         });
+
+        
     </script>
 </body>
 </html>

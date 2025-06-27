@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DL Decorlift - Admin Dashboard</title>
+    <link rel="stylesheet" href="css/RefundNoti.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">  
+                <img src="Newlogo.jpg.png" alt="DECORLIFT Logo">
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="admin-profile">
+                <div class="avatar"></div>
+                <span class="admin-name">Admin</span>
+            </div>
+
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="AdminProductHover.html" class="nav-item">Products</a></li>
+                    <li><a href="AdminManageUser.html" class="nav-item">Manage Users</a></li>
+                    <li><a href="DataProductAdd.html" class="nav-item">Manage Inventory</a></li>
+                    <li><a href="RequestNoti.html" class="nav-item active">Requests</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-link logout">
+                <class="menu-item" id="logoutBtn">
+                Logout
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h1 class="page-title">Requests</h1>
+            
+            <div class="request-card">
+                <div class="product-image">
+                    <img src="image-6.png" alt="Product" />
+                </div>
+                <div class="product-details">
+                    <h3 class="product-name">Product Name,</h3>
+                    <p class="product-address">375 udyog vihar phase 2, Gurgaon, Haryana - 122015</p>
+                    <p class="product-price">Purchased for : Rs 24,000</p>
+                    <p class="delivery-status">Delivered on:</p>
+                    <p class="remarks">Remarks:</p>
+                    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h3>Are you sure you want to Log out?</h3>
+            <div class="modal-buttons">
+                <button class="btn btn-yes" id="confirmLogout">Yes</button>
+                <button class="btn btn-no" id="cancelLogout">No</button>
+            </div>
+        </div>
+    </div>
+        
+    <script>
+        // Get modal elements
+        const logoutBtn = document.getElementById('logoutBtn');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const confirmLogout = document.getElementById('confirmLogout');
+        const cancelLogout = document.getElementById('cancelLogout');
+
+        // Show modal when logout button is clicked
+        logoutBtn.addEventListener('click', function() {
+            modalOverlay.style.display = 'block';
+        });
+
+        // Hide modal when "No" is clicked
+        cancelLogout.addEventListener('click', function() {
+            modalOverlay.style.display = 'none';
+        });
+
+        // Handle logout confirmation
+        confirmLogout.addEventListener('click', function() {
+            // Here you would typically handle the actual logout process
+            alert('Logging out...');
+            modalOverlay.style.display = 'none';
+            // Redirect to login page or perform logout action
+            // window.location.href = '/login';
+        });
+
+        // Close modal when clicking outside of it
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                modalOverlay.style.display = 'none';
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalOverlay.style.display === 'block') {
+                modalOverlay.style.display = 'none';
+            }
+        });
+    </script>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

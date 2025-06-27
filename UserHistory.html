@@ -3,76 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Manage Users</title>
-    <link rel="stylesheet" href="css/AdminManagerUser.css">
+    <title>Order History </title>
+    <link rel="stylesheet" href="UserHtml.css">
 </head>
 <body>
+    <!-- Header -->
     <header class="header">
         <div class="logo">
             <div class="logo-icon">
             <img src="Newlogo.jpg.png" alt="Logo">
         </div>
-    </div>
+        </div>
+        <nav class="nav">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">About Us</a>
+            <a href="#" class="nav-link">Project</a>
+            <a href="#" class="nav-link">Our Services</a>
+            <a href="#" class="nav-link">Contact Us</a>
+        </nav>
     </header>
 
-    <div class="sidebar">
-        <a href="Admin" class="nav-item">
-            <div class="icon"></div>
-            Admin
-        </a>
-        <a href="AdminProductHover.html" class="nav-item">
-            <div class="icon"></div>
-            Products
-        </a>
-        <a href="AdminManageUser.html" class="nav-item active">
-            <div class="icon"></div>
-            Manage Users
-        </a>
-        <a href="DataProductAdd.html" class="nav-item">
-            <div class="icon"></div>
-            Manage Inventory
-        </a>
-        <a href="RequestNoti.html" class="nav-item">
-            <div class="icon"></div>
-            Requests
-        </a>
-        <a href="#" class="sidebar-link logout">
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="user-section highlighted">
+                <div class="user-avatar"></div>
+                <div class="user-info">
+                    <p class="greeting">Hello,</p>
+                    <p class="username">User</p>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="UserInformation.html" class="sidebar-link">Profile Information</a>
+                <a href="ManageAddress.html" class="sidebar-link">Manage Address</a>
+                <a href="UserHistory.html" class="sidebar-link active">History</a>
+                <a href="#" class="sidebar-link logout">
                     <button class="menu-item" id="logoutBtn">
                     Logout
-       
-            </a>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h1 class="page-title">Order History</h1>
+            
+            <div class="order-card">
+                <div class="order-details">
+                    <div class="product-info">
+                        <h3 class="product-label">Product Name:</h3>
+                        <p class="product-name">Dining Chair 4 Seater, Gahana Haryana - 123015</p>
+                        <p class="purchase-date">Purchased on: 04.04.2020</p>
+                        <p class="delivery-status delivered">Delivered</p>
+                          
+                            <a href="Refund.html" class="refund-return-btn">Refund and Return</a> <!-- Updated line -->
         </div>
+                           
     </div>
-
-    <div class="main-content">
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search...">
-        </div>
-
-        <div class="table-container">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>S\N</th>
-                        <th>Name</th>
-                        <th>E-mail</th>
-                        <th>Address</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td></tr>
-                </tbody>
-            </table>
-            <div class="modal-overlay" id="modalOverlay">
+                    
+                    
+                    <div class="product-image">
+                        <img src="image-3.png" alt="Dining Chair Set" />
+                        
+        <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <h3>Are you sure you want to Log out?</h3>
             <div class="modal-buttons">
@@ -81,6 +75,7 @@
             </div>
         </div>
     </div>
+
         
     <script>
         // Get modal elements
@@ -123,7 +118,10 @@
         });
     </script>
 
-        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 </body>
 </html>

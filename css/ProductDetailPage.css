@@ -14,7 +14,7 @@ body {
 
 /* Header Styles */
 .header {
-    background-color: #d6cfcf;
+    background-color: #f3efeb;
     color: white;
     padding: 15px 30px;
     display: flex;
@@ -255,7 +255,7 @@ body {
 
 /* Footer */
 .footer {
-    background-color: #d6cfcf;
+    background-color:#f3efeb;
     color: rgb(10, 7, 7);
     padding: 40px 30px 20px;
     text-align: center;

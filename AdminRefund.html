@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DLA Admin Dashboard</title>
+    <link rel="stylesheet" href="css/AdminRefund.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-icon">
+            <img src="image/Newlogo.jpg.png" alt="Logo">
+        </div>
+        </header>
+
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="nav-item">
+                <div class="icon"></div>
+                <span>Admin</span>
+            </div>
+            <div class="nav-item">
+                <span>Products</span>
+            </div>
+            <div class="nav-item">
+                <span>Manage Users</span>
+            </div>
+            <div class="nav-item">
+                <span>Manage Inventory</span>
+            </div>
+            <div class="nav-item active">
+                <span>Requests</span>
+            </div>
+            <div class="sidebar-link logout">
+                    <button class="menu-item" id="logoutBtn">
+                    Logout
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h1 class="page-title">Requests Details</h1>
+            
+            <div class="request-card">
+                <div class="product-section">
+                    <div class="product-image">
+                        Image uploaded by<br>customer
+                    </div>
+                    <div class="product-info">
+                        <h2 class="product-title">White Aesthetic Chair</h2>
+                        <p class="product-description">
+                            Finnish-american architect and designer Eero Saarinen famously hated the sight of many table and chair legs in a room.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label class="form-label">Purchase By :</label>
+                        <input type="text" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Purchase on :</label>
+                        <input type="text" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Purchase For :</label>
+                        <input type="text" class="form-input">
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label">Reason :</label>
+                    <textarea class="form-textarea"></textarea>
+                </div>
+
+                <div class="customer-wants">
+                    <span class="form-label">Customer wants :</span>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-approve">Approve</button>
+                
+                <button class="btn btn-decline">Decline</button>
+                
+            <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h3>Are you sure you want to Log out?</h3>
+            <div class="modal-buttons">
+                <button class="btn btn-yes" id="confirmLogout">Yes</button>
+                <button class="btn btn-no" id="cancelLogout">No</button>
+            </div>
+        </div>
+    </div>
+        
+
+        
+
+        </div>
+    </div>
+</body>
+</html>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Add click handlers for navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove active class from all items
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                // Add active class to clicked item (except logout)
+                if (!this.classList.contains('logout')) {
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Add click handlers for action buttons
+        document.querySelector('.btn-approve').addEventListener('click', function() {
+            alert('Request approved!');
+        });
+
+        document.querySelector('.btn-decline').addEventListener('click', function() {
+            alert('Request declined!');
+
+        });
+        // Get modal elements
+        const logoutBtn = document.getElementById('logoutBtn');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const confirmLogout = document.getElementById('confirmLogout');
+        const cancelLogout = document.getElementById('cancelLogout');
+
+        // Show modal when logout button is clicked
+        logoutBtn.addEventListener('click', function() {
+            modalOverlay.style.display = 'block';
+        });
+
+        // Hide modal when "No" is clicked
+        cancelLogout.addEventListener('click', function() {
+            modalOverlay.style.display = 'none';
+        });
+
+        // Handle logout confirmation
+        confirmLogout.addEventListener('click', function() {
+            // Here you would typically handle the actual logout process
+            alert('Logging out...');
+            modalOverlay.style.display = 'none';
+            // Redirect to login page or perform logout action
+            // window.location.href = '/login';
+        });
+
+        // Close modal when clicking outside of it
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                modalOverlay.style.display = 'none';
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalOverlay.style.display === 'block') {
+                modalOverlay.style.display = 'none';
+            }
+        });
+
+    </script>
+</body>
+</html>
