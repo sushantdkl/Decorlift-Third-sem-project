@@ -71,6 +71,29 @@
     transition: 0.5s;
 
 }
+.profile-btn {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .profile-btn:hover {
+            background-color: white;
+            color: #333;
+        }
+
+        .profile-btn i {
+            font-size: 16px;
+        }
 .content{
     position: relative;
     width: 78%;
