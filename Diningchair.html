@@ -87,7 +87,7 @@
 
         }
 
-        .profile-btn {
+ .profile-btn {
             background-color: transparent;
             border: 2px solid white;
             color: white;
@@ -240,86 +240,125 @@
         }
 
         /* Footer Styles */
-        .footer {
-            margin-top: 100px;
-            position: relative;
-            width: 100%;
-            background-color: #F6F0EB;
-            text-align: center;
-            font-family: sans-serif;
-            padding: 60px 40px;
-            border: 2px solid gray;
-        }
+       .footer{
+    margin-top: 100px;
+    position: relative;
+    width: 100%;
+    height: 410px;
+    background-color:#F6F0EB;
+    text-align: center;
+    font-family: sans-serif;
+    
+}
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
 
-        .footer-logo {
-            border: 3px solid #2c3e50;
-            padding: 15px 40px;
-            margin: 0 auto 40px auto;
-            display: inline-block;
-            background-color: transparent;
-        }
+.contact{
+    width: 94%;
+    padding: 50px;
+    display: flex;
+    top:50px;
+    justify-content: space-between;
+}
 
-        .footer-logo h1 {
-            color: #2c3e50;
-            font-size: 36px;
-            letter-spacing: 2px;
-            margin: 0;
-            font-weight: bold;
-        }
+.contact .logo{
+    top:20px;
+    position: relative;
+    color: #032437;
+    border-style: solid;
+    width: 30%;
+    left: 40%;
+    font-size: 40px;
+    letter-spacing: 3px;
+    height: 40%;
+    text-align: center;
+}
+.logo h1{
+    color: #032437;
+    position: relative;
+    top :13px;
+}
 
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin: 40px 0;
-        }
 
-        .social-icons i {
-            font-size: 28px;
-            color: #666;
-            cursor: pointer;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
+.contact .icon{
+    position: relative;
+    display: grid;
+    top: 70px;
+    grid-template-columns: repeat(5,1fr);
+    width: 20%;
+    left: 46%;
+}
 
-        .social-icons i:hover {
-            color: #2c3e50;
-            transform: scale(1.1);
-        }
+.contact .fa-facebook{
+    position: relative;
+    font-size: 20px;
+}
 
-        .footer-nav {
-            margin-top: 40px;
-        }
+.contact .fa-twitter{
+    position: relative;
+    font-size: 20px;
+}
 
-        .footer-nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 40px;
-            margin: 0;
-            padding: 0;
-            align-items: center;
-        }
+.contact .fa-instagram{
+    position: relative;
+    font-size: 20px;
+}
 
-        .footer-nav ul li a {
-            text-decoration: none;
-            color: #666;
-            text-transform: uppercase;
-            font-family: sans-serif;
-            font-weight: 500;
-            font-size: 14px;
-            letter-spacing: 1px;
-            transition: color 0.3s ease;
-        }
+.contact .fa-google{
+    position: relative;
+    font-size: 20px;
+}
 
-        .footer-nav ul li a:hover {
-            color: #2c3e50;
-        }
+.contact .fa-facebook:hover{
+    position: relative;
+    font-size: 20px;
+    color: #3b7da2;
+}
+.contact .fa-twitter:hover{
+    position: relative;
+    font-size: 20px;
+    color: #3b7da2;
+}
+.contact .fa-instagram:hover{
+    position: relative;
+    font-size: 20px;
+    color: #3b7da2;
+}
+.contact .fa-google:hover{
+    position: relative;
+    font-size: 20px;
+    color: #3b7da2;
+}
+
+
+
+.navbar_last{
+    position:relative;
+    width: 45%;
+    margin: auto;
+    padding: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    top:20%;
+    left: 10%;
+}
+
+
+
+.navbar_last ul li{
+    list-style: none ;
+    display:  inline-block;
+    margin: 20px;
+    position: relative;
+}
+
+.navbar_last ul li a{
+    text-decoration: none;
+    color: #032437;
+    text-transform: uppercase;
+    font-family: sans-serif;
+
+}
 
         .back-to-top {
             color: #666;
@@ -507,31 +546,31 @@
         <a href="#" class="view-all-btn">View All Products</a>
     </div>
 
-    <div class="footer">
-        <div class="footer-content">
-            <div class="footer-logo">
-                <h1>DECORLIFT</h1>
-            </div>
-            
-            <div class="social-icons">
-                <i class="fa-brands fa-facebook"></i>
-                <i class="fa-brands fa-twitter"></i>
-                <i class="fa-brands fa-instagram"></i>
-                <i class="fa-brands fa-google"></i>
-            </div>
-            
-            <div class="footer-nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="Gallery.html">Gallery</a></li>
-                    <li><a href="services.html">Our Services</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="#top" class="back-to-top"><i class="fa-solid fa-arrow-up"></i> Back to top</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+   <div class="footer">
+      <div class="contact">
+          <div style="padding: 5px 5px; width: 100%;height: 298px; ;border:1px solid rgb(134, 126, 109) ">
+              <div class = "logo"><h1>DECORLIFT</h1></div>
+              <div class = "icon">
+              <i class="fa-brands fa-facebook"></i>
+              <i class="fa-brands fa-twitter"></i>
+              <i class="fa-brands fa-instagram"></i>
+              <i class="fa-brands fa-google"></i>
+              </div>
+              <div class="navbar_last">
+                  <ul>
+                      <li><a  href = "index.html">Home</a></li>
+                      <li><a href = "about.html">About Us</a></li>
+                      <li><a href = "Gallery.html">Gallery</a></li>
+                      <li><a href = "services.html">Our Services</a></li>
+                      <li><a href = "contact.html" >Contact Us</a></li>
+                      <li style="color: white;"><a href="#top"><i class="fa-solid fa-arrow-up"></i></a> Back to top</li>
+                  </ul>
+              </div>
+          </div>
+             
 
+
+      </div>
+    </div>
 </body>
 </html>

@@ -71,7 +71,7 @@
     transition: 0.5s;
 
 }
-        .profile-btn {
+   .profile-btn {
             background-color: transparent;
             border: 2px solid white;
             color: white;
@@ -94,7 +94,6 @@
         .profile-btn i {
             font-size: 16px;
         }
-
 .galery{
     top:40px;
     left: 20%;
@@ -159,7 +158,7 @@
 
 
 .footer{
-    margin: 0;
+    margin-top: 100px;
     position: relative;
     width: 100%;
     height: 410px;
