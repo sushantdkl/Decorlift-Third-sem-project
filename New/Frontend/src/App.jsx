@@ -1,26 +1,26 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 // import Layout from './components/Layout';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import ServicesPage from './pages/ServicesPage';
-import ContactPage from './pages/ContactPage';
-import GalleryPage from './pages/GalleryPage';
-import LoginPage from './pages/LoginPage';
-import SignUpPage from './pages/SignUpPage';
-import SecuritySetupPage from './pages/SecuritySetupPage';
-import ResetPasswordPage from './pages/ResetPasswordPage';
-import DiningChairsPage from './pages/DiningChairsPage';
-import ArchitecturePage from './pages/ArchitecturePage';
-import OfficeChairsPage from './pages/OfficeChairsPage';
-import SofaSetsPage from './pages/SofaSetsPage';
-import ShopPage from './pages/ShopPage';
-import CheckoutPage from './pages/CheckoutPage';
-import ProductDetailPage from './pages/ProductDetailPage';
-import ProfileInformationPage from './pages/ProfileInformationPage';
-import ManageAddressesPage from './pages/ManageAddressesPage'; 
-import OrderHistoryPage from './pages/OrderHistoryPage';
-import ReturnRefundPage from './pages/ReturnRefundPage';
+import HomePage from './public/HomePage';
+import AboutPage from './public/AboutPage';
+import ServicesPage from './public/ServicesPage';
+import ContactPage from './public/ContactPage';
+import GalleryPage from './public/GalleryPage';
+import LoginPage from './public/LoginPage';
+import SignUpPage from './public/SignUpPage';
+import SecuritySetupPage from './public/SecuritySetupPage';
+import ResetPasswordPage from './private/ResetPasswordPage';
+import DiningChairsPage from './private/DiningChairsPage';
+import ArchitecturePage from '../private/ArchitecturePage';
+import OfficeChairsPage from './private/OfficeChairsPage';
+import SofaSetsPage from './private/SofaSetsPage';
+import ShopPage from '../private/ShopPage';
+import CheckoutPage from './private/CheckoutPage';
+import ProductDetailPage from './private/ProductDetailPage';
+import ProfileInformationPage from './private/ProfileInformationPage';
+import ManageAddressesPage from '../private/ManageAddressesPage'; 
+import OrderHistoryPage from './private/OrderHistoryPage';
+import ReturnRefundPage from './private/ReturnRefundPage';
 function App() {
   return (
     <Router>
