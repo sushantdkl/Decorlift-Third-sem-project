@@ -25,6 +25,7 @@ const ProfileLayout = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-gray-100">
+<<<<<<< HEAD
       {/* Header */}
       <header className="fixed top-0 left-0 w-full z-50 bg-[#F6F0EB] flex items-center justify-between px-8 py-4 h-[100px] shadow">
         <div className="flex items-center">
@@ -44,6 +45,9 @@ const ProfileLayout = ({ children }) => {
           </ul>
         </nav>
       </header>
+=======
+
+>>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
 
       {/* Main Container */}
       <div className="flex pt-[100px] min-h-screen">
