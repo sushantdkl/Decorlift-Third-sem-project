@@ -9,6 +9,7 @@ const AboutPage = () => {
   return (
     <div className="font-sans text-black">
 <<<<<<< HEAD
+<<<<<<< HEAD
       {/* Hero Section with Navigation */}
        <div className="font-sans text-black">
       {/* Banner + Navbar */}
@@ -69,6 +70,8 @@ const AboutPage = () => {
 </div>
 =======
 >>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
+=======
+>>>>>>> Niraj_branch
       {/* About Us Title */}
       <div className="w-[78%] mx-auto mt-16 text-center">
         <h1 className="text-6xl font-bold drop-shadow">About us</h1>
@@ -142,10 +145,14 @@ const AboutPage = () => {
 
       {/* Stats Section */}
 <<<<<<< HEAD
+<<<<<<< HEAD
       <div className="min-h-[500px] bg-fixed bg-center bg-no-repeat bg-cover bg-[url('src/public/pexels-pixabay-276528.jpg')] bg-black/60 bg-blend-overlay text-white">
 =======
       <div className="min-h-[500px] bg-fixed bg-center bg-no-repeat bg-cover bg-[url('src/image/pexels-pixabay-276528.jpg')] bg-black/60 bg-blend-overlay text-white">
 >>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
+=======
+      <div className="min-h-[500px] bg-fixed bg-center bg-no-repeat bg-cover bg-[url('src/image/pexels-pixabay-276528.jpg')] bg-black/60 bg-blend-overlay text-white">
+>>>>>>> Niraj_branch
         <h1 className="text-center text-5xl font-bold py-10">Our Stats</h1>
         <div className="grid grid-cols-4 text-center w-1/2 mx-auto gap-5">
           <Bath className="text-4xl mx-auto" />
@@ -184,6 +191,7 @@ const AboutPage = () => {
         </div>
       </div>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
       {/* Footer */}
       <div className="bg-[#F6F0EB] w-full text-center py-12">
@@ -224,6 +232,10 @@ const AboutPage = () => {
     
      
 >>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
+=======
+    
+     
+>>>>>>> Niraj_branch
     </div>
   )
 }

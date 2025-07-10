@@ -19,11 +19,16 @@
     "multer": "^2.0.1",
     "pg": "^8.13.1",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "sequelize": "^6.37.7"
 =======
     "sequelize": "^6.37.7",
     "vite": "^7.0.2"
 >>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
+=======
+    "sequelize": "^6.37.7",
+    "vite": "^7.0.2"
+>>>>>>> Niraj_branch
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

@@ -1,50 +1,25 @@
-<<<<<<< HEAD
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { User } from "lucide-react"
-
-const LoginPage = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  })
-
-  const navigate = useNavigate()
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log("Login attempt:", formData)
-    // Later you can integrate actual login logic here
-  }
-=======
-// public/LoginPage.jsx
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-
-    if (formData.email && formData.password) {
-      console.log("Logging in with:", formData);
-      onLogin(true); // ✅ calling the function passed from App.jsx
-      navigate("/");
-    } else {
-      alert("Please enter email and password.");
-    }
-  };
->>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log("Login attempt:", formData)
+    // Later you can integrate actual login logic here
+  }
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center bg-no-repeat flex flex-col"
+      className="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center"
       style={{
         backgroundImage:
           "linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('src/public/backgrounds.png')",
@@ -55,7 +30,6 @@ const LoginPage = ({ onLogin }) => {
         <img
           src="src/public/aayush_logo.png"
           alt="Logo"
-<<<<<<< HEAD
           className="w-20 cursor-pointer" // <-- Controlled size
           onClick={() => navigate("/")}
         />
@@ -86,17 +60,6 @@ const LoginPage = ({ onLogin }) => {
               Contact Us
             </Link>
           </li>
-=======
-          className="w-20 cursor-pointer"
-          onClick={() => navigate("/")}
-        />
-        <ul className="flex space-x-8 uppercase text-white font-sans text-sm">
-          <li><Link to="/" className="hover:text-teal-500">Home</Link></li>
-          <li><Link to="/about" className="hover:text-teal-500">About Us</Link></li>
-          <li><Link to="/gallery" className="hover:text-teal-500">Gallery</Link></li>
-          <li><Link to="/services" className="hover:text-teal-500">Our Services</Link></li>
-          <li><Link to="/contact" className="hover:text-teal-500">Contact Us</Link></li>
->>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
           <li>
             <Link
               to="/login"
@@ -109,22 +72,16 @@ const LoginPage = ({ onLogin }) => {
       </nav>
 
       {/* Login Form */}
-      <div className="flex-grow flex items-center justify-center">
-        <div className="w-[400px] bg-white bg-opacity-90 p-8 rounded-lg text-black">
-          <h2 className="text-center text-2xl font-bold mb-6">Sign In</h2>
+      <div className="w-[400px] bg-white bg-opacity-90 p-8 rounded-lg text-black">
+        <h2 className="text-center text-2xl font-bold mb-6">Sign In</h2>
 
-<<<<<<< HEAD
           <form onSubmit={handleSubmit}>
-=======
-          <form onSubmit={handleLogin}>
->>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
             <label htmlFor="email" className="block font-semibold mb-2">
               Email
             </label>
             <input
               type="email"
               id="email"
-<<<<<<< HEAD
               name="email"
               value={formData.email}
               onChange={(e) =>
@@ -133,13 +90,6 @@ const LoginPage = ({ onLogin }) => {
               placeholder="Enter your email"
               required
               className="w-full p-2 mb-4 rounded bg-gray-100 text-black text-sm"
-=======
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              required
-              className="w-full p-2 mb-4 rounded bg-gray-100 text-sm"
-              placeholder="Enter your email"
->>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
             />
 
             <label htmlFor="password" className="block font-semibold mb-2">
@@ -148,7 +98,6 @@ const LoginPage = ({ onLogin }) => {
             <input
               type="password"
               id="password"
-<<<<<<< HEAD
               name="password"
               value={formData.password}
               onChange={(e) =>
@@ -157,29 +106,18 @@ const LoginPage = ({ onLogin }) => {
               placeholder="Enter your password"
               required
               className="w-full p-2 mb-2 rounded bg-gray-100 text-black text-sm"
-=======
-              value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              required
-              className="w-full p-2 mb-2 rounded bg-gray-100 text-sm"
-              placeholder="Enter your password"
->>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
             />
 
-            <Link
-              to="/forgot-password"
-              className="text-xs text-right block text-black hover:underline mb-4"
-            >
-              Forgot password?
-            </Link>
+          <Link
+            to="/forgot-password"
+            className="text-xs text-right block text-black hover:underline mb-4"
+          >
+            Forgot password?
+          </Link>
 
             <button
               type="submit"
-<<<<<<< HEAD
               className="w-full py-3 bg-[#518581] hover:bg-[#3e0e3e] text-white font-bold rounded transition-colors"
-=======
-              className="w-full py-3 bg-[#518581] hover:bg-[#3e0e3e] text-white font-bold rounded"
->>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
             >
               Sign In
             </button>
@@ -194,14 +132,7 @@ const LoginPage = ({ onLogin }) => {
         </div>
       </div>
     </div>
-<<<<<<< HEAD
   )
 }
 
 export default LoginPage
-=======
-  );
-};
-
-export default LoginPage;
->>>>>>> d17139aa86b154f6c2784353bed1549301db0d12

@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 // import Layout from './components/Layout';
@@ -22,38 +23,32 @@ import ProfileInformationPage from './private/ProfileInformationPage';
 import ManageAddressesPage from '../private/ManageAddressesPage'; 
 import OrderHistoryPage from './private/OrderHistoryPage';
 import ReturnRefundPage from './private/ReturnRefundPage';
+=======
+import React, { useState } from "react";
+import NavbarGuest from "./components/NavbarGuest";
+import NavbarUser from "./components/NavbarUser";
+import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollTop";
+import UserRoutes from "./routes/UserRoutes";
+
+>>>>>>> Niraj_branch
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
-    <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/gallery" element={<GalleryPage />} />
-          <Route path="/projects" element={<GalleryPage />} />
-          <Route path="/dining-chairs" element={<DiningChairsPage />} />
-          <Route path="/architecture" element={<ArchitecturePage />} />
-          <Route path="/office-chairs" element={<OfficeChairsPage />} />
-          <Route path="/sofa-sets" element={<SofaSetsPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/security-setup" element={<SecuritySetupPage />} />
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
-          <Route path="/forgot-password" element={<ResetPasswordPage />} />
-          <Route path="/shop" element={<ShopPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/product/:id" element={<ProductDetailPage />} />
-          <Route path="/profile" element={<ProfileInformationPage />} />
-          <Route path="/manage-addresses" element={<ManageAddressesPage />} />
-          <Route path="/order-history" element={<OrderHistoryPage />} />
-          <Route path="/return-refund" element={<ReturnRefundPage />} />
-        </Routes>
-    </Router>
+    <div className="flex flex-col min-h-screen">
+      {isLoggedIn ? <NavbarUser /> : <NavbarGuest />}
+      <main className="flex-grow">
+        <ScrollToTop />
+        <UserRoutes setIsLoggedIn={setIsLoggedIn} /> {/* ✅ fix applied here */}
+      </main>
+      <Footer />
+    </div>
   );
 }
 
 export default App;
+<<<<<<< HEAD
 =======
 import React, { useState } from "react";
 import NavbarGuest from "./components/NavbarGuest";
@@ -79,3 +74,5 @@ function App() {
 
 export default App;
 >>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
+=======
+>>>>>>> Niraj_branch

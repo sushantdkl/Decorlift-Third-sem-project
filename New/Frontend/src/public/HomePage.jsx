@@ -122,6 +122,7 @@ const HomePage = () => {
         className="w-full min-h-screen bg-cover bg-center relative"
         style={{
 <<<<<<< HEAD
+<<<<<<< HEAD
           backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('src/public/pexels-pixabay-276528.jpg')`,
         }}
       >
@@ -197,6 +198,12 @@ const HomePage = () => {
       >
         
 >>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
+=======
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('src/image/pexels-pixabay-276528.jpg')`,
+        }}
+      >
+        
+>>>>>>> Niraj_branch
  
         {/* Content Section */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl px-4 text-center text-white">
@@ -292,6 +299,7 @@ const HomePage = () => {
       </section>
  
 <<<<<<< HEAD
+<<<<<<< HEAD
       {/* Footer */}
       <footer className="bg-gray-100 py-12">
         <div className="container mx-auto px-4">
@@ -335,6 +343,8 @@ const HomePage = () => {
       </footer>
 =======
 >>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
+=======
+>>>>>>> Niraj_branch
     </div>
   )
 }
