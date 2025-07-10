@@ -36,7 +36,7 @@ const CheckoutPage = () => {
       <header className="bg-gray-300 p-6 flex justify-between items-center">
         <div className="flex items-center gap-4">
           <img
-            src="src/public/Newlogo.jpg.png"
+            src="src/image/Newlogo.jpg.png"
             alt="DECORLIFT Logo"
             className="w-16 h-16 object-contain cursor-pointer"
             onClick={() => navigate("/")}
