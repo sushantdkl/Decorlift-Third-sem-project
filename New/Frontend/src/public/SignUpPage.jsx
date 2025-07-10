@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { User, Eye, EyeOff } from "lucide-react";
-import axios from "axios"; // ✅ Ensure axios is imported
+import { Eye, EyeOff } from "lucide-react";
+import axios from "axios"; // ✅ Optional if you uncomment API usage later
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -32,17 +32,18 @@ const SignUpPage = () => {
       alert("Passwords do not match!");
       return;
     }
-      // Store form data in localStorage and redirect
-  localStorage.setItem("pendingUser", JSON.stringify(formData));
-  navigate("/security-setup");
 
+    // Store form data in localStorage and redirect
+    localStorage.setItem("pendingUser", JSON.stringify(formData));
+    navigate("/security-setup");
+
+    // Optional: Uncomment if using backend registration
     // try {
     //   await axios.post("http://localhost:2000/api/users", {
     //     name: `${firstName} ${lastName}`,
     //     email,
     //     password,
     //   });
-
     //   alert("Registered successfully!");
     //   setFormData({
     //     firstName: "",
@@ -51,7 +52,6 @@ const SignUpPage = () => {
     //     password: "",
     //     confirmPassword: "",
     //   });
-
     //   setTimeout(() => navigate("/login"), 1000);
     // } catch (error) {
     //   const errMsg = error.response?.data?.message || "Registration failed";
@@ -61,35 +61,14 @@ const SignUpPage = () => {
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center bg-no-repeat flex flex-col"
+      className="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center"
       style={{
         backgroundImage:
           "linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url(src/public/backgrounds.png)",
       }}
     >
-      {/* Navbar */}
-      <nav className="w-full px-8 py-8 flex items-center justify-between max-w-7xl mx-auto">
-        <img
-          src="src/public/aayush_logo.png"
-          alt="Logo"
-          className="w-20 cursor-pointer"
-          onClick={() => navigate("/")}
-        />
-
-        <ul className="flex space-x-8 uppercase text-white font-sans">
-          <li><Link to="/" className="hover:text-teal-500">Home</Link></li>
-          <li><Link to="/about" className="hover:text-teal-500">About Us</Link></li>
-          <li><Link to="/gallery" className="hover:text-teal-500">Gallery</Link></li>
-          <li><Link to="/services" className="hover:text-teal-500">Our Services</Link></li>
-          <li><Link to="/contact" className="hover:text-teal-500">Contact Us</Link></li>
-          <li><Link to="/signup" className="text-teal-500 font-semibold border-b-4 border-teal-500 pb-1">Sign Up</Link></li>
-        </ul>
-
-
-      </nav>
-
       {/* Sign Up Form */}
-      <div className="bg-white bg-opacity-90 max-w-md w-full mx-auto mt-12 rounded-lg p-8 shadow-lg text-black">
+      <div className="bg-white bg-opacity-90 max-w-md w-full rounded-lg p-8 shadow-lg text-black">
         <h2 className="text-3xl font-semibold text-center mb-6">Sign Up</h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -112,7 +91,7 @@ const SignUpPage = () => {
                 value={formData.lastName}
                 onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                 required
-                className="px-3 py-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-teal-400"
+                className="px-2 py-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-teal-400"
               />
             </div>
           </div>
@@ -136,9 +115,7 @@ const SignUpPage = () => {
               <input
                 type={showPassword ? "text" : "password"}
                 value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 required
                 className={`w-full px-3 py-2 pr-10 rounded-md border ${
                   passwordError ? "border-red-500" : "border-gray-300"
@@ -162,9 +139,7 @@ const SignUpPage = () => {
               <input
                 type={showConfirmPassword ? "text" : "password"}
                 value={formData.confirmPassword}
-                onChange={(e) =>
-                  setFormData({ ...formData, confirmPassword: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                 required
                 className="w-full px-3 py-2 pr-10 rounded-md border border-gray-300 focus:ring-2 focus:ring-teal-400"
               />

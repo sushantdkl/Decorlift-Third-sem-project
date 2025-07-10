@@ -4,9 +4,9 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 export const sequelize = new Sequelize(
-  "Decorlift", // Database name
+  "decorlift", // Database name
   "postgres",
-  "root", // Database user
+  "niraj70055", // Database user
   {
     host: "localhost",
     dialect: 'postgres',// other example mysql,oracle,h2

@@ -1,1 +1,2 @@
-export * from "./user/User.js";
+export * from "./user/user.js";
+export * from "./product/product.js";
