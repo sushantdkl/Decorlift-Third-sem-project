@@ -8,64 +8,6 @@ const AboutPage = () => {
 
   return (
     <div className="font-sans text-black">
-      {/* Hero Section with Navigation */}
-       <div className="font-sans text-black">
-      {/* Banner + Navbar */}
-      <div
-        className="relative h-[28vh] bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('src/public/pexels-pixabay-276528.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-black bg-opacity-75"></div>
-        <div className="relative z-10 flex items-center justify-between px-10 py-6 bg-black bg-opacity-30">
-          <img
-            src="src/public/aayush_logo.png"
-            alt="Logo"
-            className="w-[30px] cursor-pointer"
-            onClick={() => navigate("/")}
-          />
-
-          <ul className="flex space-x-6">
-            <li>
-              <Link to="/" className="text-white uppercase hover:text-teal-500">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" className="text-white uppercase border-b-2 border-teal-500">
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link to="/gallery" className="text-white uppercase hover:text-teal-500">
-                Gallery
-              </Link>
-            </li>
-            <li>
-              <Link to="/services" className="text-white uppercase hover:text-teal-500">
-                Our Services
-              </Link>
-            </li>
-            <li>
-              <Link to="/contact" className="text-white uppercase hover:text-teal-500">
-                Contact Us
-              </Link>
-            </li>
-            <li>
-              <Link to="/login" className="text-white uppercase hover:text-teal-500">
-                Login
-              </Link>
-            </li>
-          </ul>
-
-          <button
-            onClick={() => navigate("/profile")}
-            className="border-2 border-white text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-white hover:text-black text-sm transition"
-          >
-            <User className="w-4 h-4" /> Profile
-          </button>
-        </div>
-      </div>
-</div>
       {/* About Us Title */}
       <div className="w-[78%] mx-auto mt-16 text-center">
         <h1 className="text-6xl font-bold drop-shadow">About us</h1>
@@ -138,7 +80,7 @@ const AboutPage = () => {
       </div>
 
       {/* Stats Section */}
-      <div className="min-h-[500px] bg-fixed bg-center bg-no-repeat bg-cover bg-[url('src/public/pexels-pixabay-276528.jpg')] bg-black/60 bg-blend-overlay text-white">
+      <div className="min-h-[500px] bg-fixed bg-center bg-no-repeat bg-cover bg-[url('src/image/pexels-pixabay-276528.jpg')] bg-black/60 bg-blend-overlay text-white">
         <h1 className="text-center text-5xl font-bold py-10">Our Stats</h1>
         <div className="grid grid-cols-4 text-center w-1/2 mx-auto gap-5">
           <Bath className="text-4xl mx-auto" />
@@ -177,41 +119,8 @@ const AboutPage = () => {
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="bg-[#F6F0EB] w-full text-center py-12">
-        <div className="w-[94%] mx-auto border border-gray-400 p-12">
-          <div className="text-[#032437] text-4xl font-bold border py-4 mb-6">DECORLIFT</div>
-
-          <div className="flex justify-center gap-6 text-2xl text-[#032437] mb-8">
-            <Facebook className="hover:text-[#3b7da2] cursor-pointer" />
-            <Twitter className="hover:text-[#3b7da2] cursor-pointer" />
-            <Instagram className="hover:text-[#3b7da2] cursor-pointer" />
-            <div className="hover:text-[#3b7da2] cursor-pointer text-2xl">G</div>
-          </div>
-
-          <ul className="flex justify-center gap-8 text-[#032437] uppercase text-sm">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About Us</Link>
-            </li>
-            <li>
-              <Link to="/gallery">Gallery</Link>
-            </li>
-            <li>
-              <Link to="/services">Our Services</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact Us</Link>
-            </li>
-            <li className="flex items-center gap-2">
-              <ArrowUp className="w-4 h-4" />
-              <a href="#top">Back to top</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+    
+     
     </div>
   )
 }
