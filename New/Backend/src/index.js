@@ -1,12 +1,12 @@
 import express from "express";
 import bodyParser from "body-parser";
-import { db } from "./database/index.js"; // Ensure this function connects to your database
+import { db, sequelize } from "./database/index.js"; // Ensure this function connects to your database
 import { userRouter, authRouter ,productRouter } from "./route/index.js"; // Combined import for clarity
 import dotenv from "dotenv";
 import { authenticateToken } from "./middleware/token-middleware.js";
 import router from "./route/uploadRoutes.js";
 import { createUploadsFolder } from "./security/helper.js";
- // Importing the cart router
+import bcrypt from "bcrypt";
 // Load environment variables from .env file
 dotenv.config();
 
@@ -28,8 +28,34 @@ app.use("/api/file", router);
 // Create uploads folder if it doesn't exist
 createUploadsFolder();
 
+// Function to create default admin user if not exists
+const createDefaultAdmin = async () => {
+  try {
+    const { User } = await import("./models/index.js");
+    const adminEmail = "sushantdhakal@gmail.com";
+    const admin = await User.findOne({ where: { email: adminEmail } });
+    if (!admin) {
+      const hashedPassword = await bcrypt.hash("admin123", 10);
+      await User.create({
+        name: "Admin",
+        email: adminEmail,
+        password: hashedPassword,
+        securityQuestion: "Default admin question",
+        securityAnswer: "Default admin answer",
+        isAdmin: true,
+      });
+      console.log("Default admin user created");
+    } else {
+      console.log("Default admin user already exists");
+    }
+  } catch (error) {
+    console.error("Error creating default admin user:", error);
+  }
+};
+
 // Start the server and connect to the database
-app.listen(2000, function () {
+app.listen(3000, async function () {
   console.log(`Project running on port 2000`);
-  db();
+  await db();
+  await createDefaultAdmin();
 });

@@ -24,17 +24,19 @@ const create = async (req, res) => {
         const body = req.body
         console.log(req.body)
         //validation
-        if (!body?.email || !body?.name || !body?.password)
+        if (!body?.email || !body?.name || !body?.password || !body?.securityQuestion || !body?.securityAnswer)
             return res.status(500).send({ message: "Invalid paylod" });
         const users = await User.create({
             name: body.name,
             email: body.email,
-            password: body.password
+            password: body.password,
+            securityQuestion: body.securityQuestion,
+            securityAnswer: body.securityAnswer
         });
         res.status(201).send({ data: users, message: "successfully created user" })
     } catch (e) {
-        console.log(e)
-        res.status(500).json({ error: 'Failed to fetch users' });
+        console.error("User creation error:", e);
+        res.status(500).json({ error: e.message || 'Failed to create user' });
     }
 }
 

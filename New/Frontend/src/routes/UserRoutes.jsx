@@ -1,5 +1,8 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
+
 
 // Public Pages
 import HomePage from '../public/HomePage';
@@ -40,18 +43,66 @@ export default function UserRoutes({ setIsLoggedIn }) {
       <Route path="/forgot-password" element={<ResetPasswordPage />} />
 
       {/* Private Routes */}
-      <Route path="/reset-password" element={<ResetPasswordPage />} />
-      <Route path="/shop" element={<ShopPage />} />
-      <Route path="/checkout" element={<CheckoutPage />} />
-      <Route path="/product/:id" element={<ProductDetailPage />} />
-      <Route path="/profile" element={<ProfileInformationPage />} />
-      <Route path="/manage-addresses" element={<ManageAddressesPage />} />
-      <Route path="/order-history" element={<OrderHistoryPage />} />
-      <Route path="/return-refund" element={<ReturnRefundPage />} />
-      <Route path="/dining-chairs" element={<DiningChairsPage />} />
-      <Route path="/architecture" element={<ArchitecturePage />} />
-      <Route path="/office-chairs" element={<OfficeChairsPage />} />
-      <Route path="/sofa-sets" element={<SofaSetsPage />} />
+      <Route path="/reset-password" element={
+        <PrivateRoute>
+          <ResetPasswordPage />
+        </PrivateRoute>
+      } />
+      <Route path="/shop" element={
+        <PrivateRoute>
+          <ShopPage />
+        </PrivateRoute>
+      } />
+      <Route path="/checkout" element={
+        <PrivateRoute>
+          <CheckoutPage />
+        </PrivateRoute>
+      } />
+      <Route path="/product/:id" element={
+        <PrivateRoute>
+          <ProductDetailPage />
+        </PrivateRoute>
+      } />
+      <Route path="/profile" element={
+        <PrivateRoute>
+          <ProfileInformationPage />
+        </PrivateRoute>
+      } />
+      <Route path="/manage-addresses" element={
+        <PrivateRoute>
+          <ManageAddressesPage />
+        </PrivateRoute>
+      } />
+      <Route path="/order-history" element={
+        <PrivateRoute>
+          <OrderHistoryPage />
+        </PrivateRoute>
+      } />
+      <Route path="/return-refund" element={
+        <PrivateRoute>
+          <ReturnRefundPage />
+        </PrivateRoute>
+      } />
+      <Route path="/dining-chairs" element={
+        <PrivateRoute>
+          <DiningChairsPage />
+        </PrivateRoute>
+      } />
+      <Route path="/architecture" element={
+        <PrivateRoute>
+          <ArchitecturePage />
+        </PrivateRoute>
+      } />
+      <Route path="/office-chairs" element={
+        <PrivateRoute>
+          <OfficeChairsPage />
+        </PrivateRoute>
+      } />
+      <Route path="/sofa-sets" element={
+        <PrivateRoute>
+          <SofaSetsPage />
+        </PrivateRoute>
+      } />
     </Routes>
   );
 }

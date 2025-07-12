@@ -33,25 +33,25 @@ const SecuritySetupPage = () => {
       return;
     }
 
-    try {
-      setLoading(true);
-      await axios.post("http://localhost:2000/api/users", {
-        name: `${userData.firstName} ${userData.lastName}`,
-        email: userData.email,
-        password: userData.password,
-        securityQuestion: formData.securityQuestion,
-        securityAnswer: formData.answer.trim(),
-      });
+      try {
+        setLoading(true);
+        await axios.post("http://localhost:3000/api/users", {
+          name: `${userData.firstName} ${userData.lastName}`,
+          email: userData.email,
+          password: userData.password,
+          securityQuestion: formData.securityQuestion,
+          securityAnswer: formData.answer.trim(),
+        });
 
-      localStorage.removeItem("pendingUser");
-      alert("Registered successfully!");
-      navigate("/login");
-    } catch (error) {
-      const errMsg = error.response?.data?.message || "Registration failed";
-      alert(errMsg);
-    } finally {
-      setLoading(false);
-    }
+        localStorage.removeItem("pendingUser");
+        alert("Registered successfully!");
+        navigate("/login");
+      } catch (error) {
+        const errMsg = error.response?.data?.message || "Registration failed";
+        alert(errMsg);
+      } finally {
+        setLoading(false);
+      }
   };
 
   return (

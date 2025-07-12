@@ -1,6 +1,7 @@
-// public/LoginPage.jsx
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+import axios from "axios";
 
 const LoginPage = ({ onLogin }) => {
   const [formData, setFormData] = useState({
@@ -10,13 +11,28 @@ const LoginPage = ({ onLogin }) => {
 
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if (formData.email && formData.password) {
-      console.log("Logging in with:", formData);
-      onLogin(true); // ✅ calling the function passed from App.jsx
-      navigate("/");
+      try {
+        const response = await axios.post("http://localhost:3000/api/auth/login", formData);
+        const { token, user } = response.data;
+
+        if (token) {
+          localStorage.setItem("token", token);
+          onLogin(true);
+          if (user.isAdmin) {
+            navigate("/adminproductpage");
+          } else {
+            navigate("/");
+          }
+        } else {
+          alert("Please register first");
+        }
+      } catch (error) {
+        alert("Please register first");
+      }
     } else {
       alert("Please enter email and password.");
     }
