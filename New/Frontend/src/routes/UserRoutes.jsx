@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 
 
+
 // Public Pages
 import HomePage from '../public/HomePage';
 import AboutPage from '../public/AboutPage';
@@ -27,6 +28,13 @@ import ProfileInformationPage from '../private/ProfileInformationPage';
 import ManageAddressesPage from '../private/ManageAddressesPage';
 import OrderHistoryPage from '../private/OrderHistoryPage';
 import ReturnRefundPage from '../private/ReturnRefundPage';
+import AdminProductPage from '../private/AdminProductPage';
+import AdminRefundPage from '../private/AdminRefundPage';
+import AdminManageUserPage from "../private/AdminManageUserPage";
+import AdminRequestPage from "../private/AdminRequestPage";
+import AdminCustomerPage from "../private/AdminCustomerPage";
+import AdminEditProductPage from "../private/AdminEditProductPage";
+import AdminInventoryPage from "../private/AdminInventoryPage";
 
 export default function UserRoutes({ setIsLoggedIn }) {
   return (
@@ -41,16 +49,17 @@ export default function UserRoutes({ setIsLoggedIn }) {
 <Route path="/login" element={<LoginPage onLogin={setIsLoggedIn} />} /> {/* ✅ PASS IT HERE */}      <Route path="/signup" element={<SignUpPage />} />
       <Route path="/security-setup" element={<SecuritySetupPage />} />
       <Route path="/forgot-password" element={<ResetPasswordPage />} />
+      <Route path="/dining-chairs" element={<DiningChairsPage />} />
+      <Route path="/architecture" element={<ArchitecturePage />} />
+      <Route path="/office-chairs" element={<OfficeChairsPage />} />
+      <Route path="/sofa-sets" element={<SofaSetsPage />} />
+      <Route path="/shop" element={<ShopPage />} />
+
 
       {/* Private Routes */}
       <Route path="/reset-password" element={
         <PrivateRoute>
           <ResetPasswordPage />
-        </PrivateRoute>
-      } />
-      <Route path="/shop" element={
-        <PrivateRoute>
-          <ShopPage />
         </PrivateRoute>
       } />
       <Route path="/checkout" element={
@@ -83,26 +92,46 @@ export default function UserRoutes({ setIsLoggedIn }) {
           <ReturnRefundPage />
         </PrivateRoute>
       } />
-      <Route path="/dining-chairs" element={
+     
+      
+      <Route path="/adminproductpage" element={
         <PrivateRoute>
-          <DiningChairsPage />
+          <AdminProductPage />
         </PrivateRoute>
       } />
-      <Route path="/architecture" element={
+      <Route path="/adminrefundpage" element={
         <PrivateRoute>
-          <ArchitecturePage />
+          <AdminRefundPage />
         </PrivateRoute>
       } />
-      <Route path="/office-chairs" element={
+      <Route path="/adminmanageuserpage" element={
         <PrivateRoute>
-          <OfficeChairsPage />
+          <AdminManageUserPage />
         </PrivateRoute>
       } />
-      <Route path="/sofa-sets" element={
+      <Route path="/adminrequestpage" element={
+
         <PrivateRoute>
-          <SofaSetsPage />
+          <AdminRequestPage />
         </PrivateRoute>
       } />
+      <Route path="/admincustomerpage" element={
+        <PrivateRoute>
+          <AdminCustomerPage />
+        </PrivateRoute>
+      } />
+      <Route path="/admineditproductpage" element={
+        <PrivateRoute>
+          <AdminEditProductPage />    
+        </PrivateRoute>
+      } />
+      <Route path="/admininventorypage" element={
+        <PrivateRoute>
+          <AdminInventoryPage />
+        </PrivateRoute>
+      } />
+      
+      {/* Fallback Route */}
     </Routes>
   );
 }

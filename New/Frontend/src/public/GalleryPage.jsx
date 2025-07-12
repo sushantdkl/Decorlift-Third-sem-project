@@ -115,7 +115,9 @@ const GalleryPage = () => {
         imageSrc={selectedImage?.src}
         imageTitle={selectedImage?.title}
       />
+      <div className="py-10"></div>
     </div>
+
   )
 }
 

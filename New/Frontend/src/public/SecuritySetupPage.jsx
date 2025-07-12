@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
+import axios from 'axios';
 
 
 const SecuritySetupPage = () => {
@@ -35,7 +36,7 @@ const SecuritySetupPage = () => {
 
       try {
         setLoading(true);
-        await axios.post("http://localhost:3000/api/users", {
+        await axios.post("http://localhost:4000/api/users", {
           name: `${userData.firstName} ${userData.lastName}`,
           email: userData.email,
           password: userData.password,

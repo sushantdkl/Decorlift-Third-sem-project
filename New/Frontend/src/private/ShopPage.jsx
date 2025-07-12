@@ -97,6 +97,7 @@ const ShopPage = () => {
           </button>
         </div>
       )}
+      <div className="py-10"></div>
     </div>
   )
 }

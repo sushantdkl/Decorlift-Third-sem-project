@@ -156,6 +156,7 @@ const ArchitecturePage = () => {
           </button>
         </div>
       )}
+      <div className="py-10"></div>
     </div>
   )
 }

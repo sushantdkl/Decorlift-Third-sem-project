@@ -132,6 +132,7 @@ const ContactPage = () => {
           </div>
         </div>
       </div>
+      <div className="py-10"></div>
     </div>
   )
 }

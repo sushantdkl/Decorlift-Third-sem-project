@@ -3,6 +3,8 @@ import { generateToken } from "../../security/jwt-util.js";
 
 import bcrypt from "bcrypt";
 
+import bcrypt from "bcrypt";
+
 const login = async (req, res) => {
   try {
     if (req.body.email == null) {

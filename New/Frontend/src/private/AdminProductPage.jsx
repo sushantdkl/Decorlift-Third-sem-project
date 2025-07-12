@@ -94,7 +94,7 @@ const AdminProductPage = () => {
         <a href="#" className="flex items-center px-5 py-4 border-b border-gray-300 text-gray-700">
           <span>Manage Users</span>
         </a>
-        <a href="#" className="flex items-center px-5 py-4 border-b border-gray-300 text-gray-700">
+        <a href="" className="flex items-center px-5 py-4 border-b border-gray-300 text-gray-700">
           <span>Manage Inventory</span>
         </a>
         <a href="#" className="flex items-center px-5 py-4 border-b border-gray-300 text-gray-700">
@@ -107,14 +107,7 @@ const AdminProductPage = () => {
         </div>
       </nav>
  
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 h-20 bg-[#e8e2e2] border-b-2 border-gray-300 flex items-center px-6 z-10">
-        <div className="w-24 h-24 flex items-center justify-center font-bold text-xl">
-          <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center text-sm font-bold">
-            DL
-          </div>
-        </div>
-      </header>
+  
  
       {/* Main Content */}
       <main className="ml-52 pt-24 px-6 flex-1">

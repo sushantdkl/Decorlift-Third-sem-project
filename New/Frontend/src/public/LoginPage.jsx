@@ -16,7 +16,7 @@ const LoginPage = ({ onLogin }) => {
 
     if (formData.email && formData.password) {
       try {
-        const response = await axios.post("http://localhost:3000/api/auth/login", formData);
+        const response = await axios.post("http://localhost:4000/api/auth/login", formData);
         const { token, user } = response.data;
 
         if (token) {

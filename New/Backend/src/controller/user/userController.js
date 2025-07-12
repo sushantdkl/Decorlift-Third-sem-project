@@ -18,6 +18,8 @@ const getAll = async (req, res) => {
  *  create new user
 */
 
+import bcrypt from "bcrypt";
+
 const create = async (req, res) => {
 
     try {
@@ -26,10 +28,14 @@ const create = async (req, res) => {
         //validation
         if (!body?.email || !body?.name || !body?.password || !body?.securityQuestion || !body?.securityAnswer)
             return res.status(500).send({ message: "Invalid paylod" });
+
+        // Hash the password before saving
+        const hashedPassword = await bcrypt.hash(body.password, 10);
+
         const users = await User.create({
             name: body.name,
             email: body.email,
-            password: body.password,
+            password: hashedPassword,
             securityQuestion: body.securityQuestion,
             securityAnswer: body.securityAnswer
         });
@@ -44,6 +50,8 @@ const create = async (req, res) => {
  *  update existing user
  */
 
+import bcrypt from "bcrypt";
+
 const update = async (req, res) => {
 
     try {
@@ -56,9 +64,11 @@ const update = async (req, res) => {
             return res.status(500).send({ message: "User not found" });
         }
         oldUser.name = body.name;
-        oldUser.password = body.password || oldUser.password;
+        if (body.password) {
+            oldUser.password = await bcrypt.hash(body.password, 10);
+        }
         oldUser.email = body.email
-        oldUser.save();
+        await oldUser.save();
         res.status(201).send({ data: oldUser, message: "user updated successfully" })
     } catch (e) {
         console.log(e)

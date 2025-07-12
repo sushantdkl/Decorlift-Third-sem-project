@@ -19,45 +19,43 @@ const AboutPage = () => {
           <h1 className="text-[#186b63] text-xl font-bold drop-shadow">DINING CHAIR</h1>
           <hr className="w-[100px] border-[3px] border-[#186b63] my-2" />
           <p className="text-gray-700">
-            It can make a room, it can bring style and substance to the interior design theme of your room and that is
-            why it is worth
+            It can make a room, it can bring style and substance to the interior design theme of your room and that is why it is worth it.
             <button
               className="ml-3 px-5 py-3 border border-black bg-white hover:bg-gray-300 text-sm"
               onClick={() => navigate("/dining-chairs")}
             >
-              View All Dining Chairs
+              Browse Dining Chairs
             </button>
           </p>
         </div>
-        <img src="src/public/1.jpg" className="rounded-lg w-full" alt="Dining Chair" />
+        <img src="src/image/1.jpg" className="rounded-lg w-full" alt="Dining Chair" />
 
-        <img src="src/public/8.jpg" className="rounded-lg w-full" alt="Architecture" />
+        <img src="src/image/8.jpg" className="rounded-lg w-full" alt="Architecture" />
         <div>
           <h1 className="text-[#186b63] text-xl font-bold drop-shadow">ARCHITECTURE</h1>
           <hr className="w-[100px] border-[3px] border-[#186b63] my-2" />
           <p className="text-gray-700">
-            Furniture designed to match or to accord with the architectural features of the rooms for which it
+            Furniture designed to match or to accord with the architectural features of the room for which we got you covered.
             <button
               className="ml-3 px-5 py-3 border border-black bg-white hover:bg-gray-300 text-sm"
               onClick={() => navigate("/architecture")}
             >
-              View All Architecture
+              Browse Architecture
             </button>
           </p>
         </div>
 
-        <img src="src/public/9.jpg" className="rounded-lg w-full" alt="Office Chair" />
+        <img src="src/image/9.jpg" className="rounded-lg w-full" alt="Office Chair" />
         <div>
           <h1 className="text-[#186b63] text-xl font-bold drop-shadow">OFFICE CHAIR</h1>
           <hr className="w-[100px] border-[3px] border-[#186b63] my-2" />
           <p className="text-gray-700">
-            Best high tech CEO executive wooden office manager desk set modern organizer furniture supplies for home
-            office
+           Best high tech CEO executive wooden office manager desk set , modern organizer furniture supplies for home office.
             <button
               className="ml-3 px-5 py-3 border border-black bg-white hover:bg-gray-300 text-sm"
               onClick={() => navigate("/office-chairs")}
             >
-              View All Office Chair
+              Browse Office Chair
             </button>
           </p>
         </div>
@@ -66,17 +64,16 @@ const AboutPage = () => {
           <h1 className="text-[#186b63] text-xl font-bold drop-shadow">Sofa Sets</h1>
           <hr className="w-[100px] border-[3px] border-[#186b63] my-2" />
           <p className="text-gray-700">
-            Finnish-american architect and designer Eero Sarinen famously hated the sight of many table and chair legs
-            in a room.
+           Finnish-american architect and designer Eero Sarinem famously hated the sight of many table and chair legs in a room .
             <button
               className="ml-3 px-5 py-3 border border-black bg-white hover:bg-gray-300 text-sm"
               onClick={() => navigate("/sofa-sets")}
             >
-              View All Sofa Sets
+             Browse Sofa Sets
             </button>
           </p>
         </div>
-        <img src="src/public/11.jpg" className="rounded-lg w-full" alt="Sofa" />
+        <img src="src/image/11.jpg" className="rounded-lg w-full" alt="Sofa" />
       </div>
 
       {/* Stats Section */}
@@ -100,13 +97,13 @@ const AboutPage = () => {
         <div>
           <h1 className="text-red-600 text-xl font-bold drop-shadow">FUTURE OF INTERIOR ARCHITECTURES</h1>
           <p className="text-lg text-gray-600 mt-4">
-            People are appreciating their interior spaces more now and we will make better use of their space...
+           People are appreciating their interior spaces more now and we will make better use of their space. We are more aware of the importance of their own homes. I see a lot of bright, lipstick pops emerging from Europe which is exciting in the sea of neutral palettes. In any design, its important to add the unexpected surprises to the products. 
           </p>
         </div>
 
         <div className="flex justify-center items-center">
           <img
-            src="src/public/OvalMirror.png"
+            src="src/image/OvalMirror.png"
             alt="DecorLift History"
             className="rounded-full w-[300px] h-[300px] object-cover border-4 border-teal-200 shadow-lg"
           />
@@ -114,10 +111,11 @@ const AboutPage = () => {
 
         <div>
           <p className="text-lg text-gray-600 mt-4">
-            As our world becomes more automated, people want to enjoy being at home...
+           As our world becomes more automated, people want to enjoy being at home and are looking for ways to enhance the aesthetics of the insides of their home. We are seeing interior design becoming a more personalized process individual to each client.
           </p>
         </div>
       </div>
+      <div className="py-10"></div>
 
     
      
