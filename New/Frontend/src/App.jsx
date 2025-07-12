@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 // import Layout from './components/Layout';
@@ -56,6 +57,8 @@ function App() {
 
 export default App;
 =======
+=======
+>>>>>>> 6753375c8f9ed152eb0af56aff50f012cf48d746
 import React, { useState } from "react";
 import NavbarGuest from "./components/NavbarGuest";
 import NavbarUser from "./components/NavbarUser";
@@ -79,6 +82,7 @@ function App() {
 }
 
 export default App;
+<<<<<<< HEAD
 >>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
 =======
 import React, { useState } from "react";
@@ -105,3 +109,5 @@ function App() {
 
 export default App;
 >>>>>>> 870caabfc862db6c31f275a100a811a424e06bb2
+=======
+>>>>>>> 6753375c8f9ed152eb0af56aff50f012cf48d746

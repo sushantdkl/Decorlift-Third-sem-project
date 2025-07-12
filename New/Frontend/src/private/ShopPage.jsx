@@ -97,6 +97,10 @@ const ShopPage = () => {
           </button>
         </div>
       )}
+<<<<<<< HEAD
+=======
+      <div className="py-10"></div>
+>>>>>>> 6753375c8f9ed152eb0af56aff50f012cf48d746
     </div>
   )
 }

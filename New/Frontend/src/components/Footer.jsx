@@ -1,101 +1,77 @@
-<<<<<<< HEAD
-import { Link } from "react-router-dom";
-import { Instagram, Globe, Twitter, Facebook } from "lucide-react";
+"use client"
+
+import { Link } from "react-router-dom"
+import { Instagram, Globe, Twitter, Facebook, ArrowUp } from "lucide-react"
 
 const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
   return (
-    <footer className="bg-gray-100 py-12">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-8">
-          <div className="inline-block border-2 border-gray-800 px-8 py-2 mb-6">
-            <h3 className="text-2xl font-bold text-gray-800 tracking-wider">DECORLIFT</h3>
+    <footer className="bg-[#f5f1eb] p-6">
+      <div className="border-4 border-gray-600 px-8 py-8 rounded-lg shadow-lg">
+        <div className="text-center">
+          {/* Logo */}
+          <div className="inline-block border-4 border-black px-12 py-4 mb-12">
+            <h3 className="text-3xl font-bold text-black tracking-[0.2em]">DECORLIFT</h3>
           </div>
-          <div className="flex justify-center space-x-6 mb-8">
-            <a href="#" className="text-gray-600 hover:text-gray-800 transition-colors">
-              <Instagram className="w-6 h-6" />
+
+          {/* Social Icons */}
+          <div className="flex justify-center space-x-8 mb-16">
+            <a
+              href="https://www.instagram.com/_sushant_dhakal/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-black hover:text-gray-700 transition-colors"
+            >
+              <Instagram className="w-8 h-8" />
             </a>
-            <a href="#" className="text-gray-600 hover:text-gray-800 transition-colors">
-              <Globe className="w-6 h-6" />
+            <a
+              href="http://localhost:5174/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-black hover:text-gray-700 transition-colors"
+            >
+              <Globe className="w-8 h-8" />
             </a>
-            <a href="#" className="text-gray-600 hover:text-gray-800 transition-colors">
-              <Twitter className="w-6 h-6" />
+            <a
+              href="https://x.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-black hover:text-gray-700 transition-colors"
+            >
+              <Twitter className="w-8 h-8" />
             </a>
-            <a href="#" className="text-gray-600 hover:text-gray-800 transition-colors">
-              <Facebook className="w-6 h-6" />
+            <a
+              href="https://www.facebook.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-black hover:text-gray-700 transition-colors"
+            >
+              <Facebook className="w-8 h-8" />
             </a>
+          </div>
+
+          {/* Navigation + Back to Top */}
+          <div className="flex flex-wrap justify-center items-center gap-6 text-black text-lg font-medium">
+            <Link to="/" className="hover:text-gray-700 transition-colors">Home</Link>
+            <Link to="/about" className="hover:text-gray-700 transition-colors">About Us</Link>
+            <Link to="/Gallery" className="hover:text-gray-700 transition-colors">Gallery</Link>
+            <Link to="/services" className="hover:text-gray-700 transition-colors">Our Services</Link>
+            <Link to="/contact" className="hover:text-gray-700 transition-colors">Contact Us</Link>
+            <button
+              onClick={scrollToTop}
+              className="flex items-center space-x-1 hover:text-gray-700 transition-colors"
+            >
+              <ArrowUp className="w-4 h-4" />
+              <span>Back to top</span>
+            </button>
           </div>
         </div>
-        <nav className="flex flex-wrap justify-center space-x-8 text-gray-600">
-          <Link to="/" className="hover:text-gray-800 transition-colors">
-            Home
-          </Link>
-          <Link to="/about" className="hover:text-gray-800 transition-colors">
-            About Us
-          </Link>
-          <Link to="/gallery" className="hover:text-gray-800 transition-colors">
-            Gallery
-          </Link>
-          <Link to="/services" className="hover:text-gray-800 transition-colors">
-            Our Services
-          </Link>
-          <Link to="/contact" className="hover:text-gray-800 transition-colors">
-            Contact Us
-          </Link>
-        </nav>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
-=======
-import { Link } from "react-router-dom";
-import { Instagram, Globe, Twitter, Facebook } from "lucide-react";
-
-const Footer = () => {
-  return (
-    <footer className="bg-gray-100 py-12">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-8">
-          <div className="inline-block border-2 border-gray-800 px-8 py-2 mb-6">
-            <h3 className="text-2xl font-bold text-gray-800 tracking-wider">DECORLIFT</h3>
-          </div>
-          <div className="flex justify-center space-x-6 mb-8">
-            <a href="#" className="text-gray-600 hover:text-gray-800 transition-colors">
-              <Instagram className="w-6 h-6" />
-            </a>
-            <a href="#" className="text-gray-600 hover:text-gray-800 transition-colors">
-              <Globe className="w-6 h-6" />
-            </a>
-            <a href="#" className="text-gray-600 hover:text-gray-800 transition-colors">
-              <Twitter className="w-6 h-6" />
-            </a>
-            <a href="#" className="text-gray-600 hover:text-gray-800 transition-colors">
-              <Facebook className="w-6 h-6" />
-            </a>
-          </div>
-        </div>
-        <nav className="flex flex-wrap justify-center space-x-8 text-gray-600">
-          <Link to="/" className="hover:text-gray-800 transition-colors">
-            Home
-          </Link>
-          <Link to="/about" className="hover:text-gray-800 transition-colors">
-            About Us
-          </Link>
-          <Link to="/gallery" className="hover:text-gray-800 transition-colors">
-            Gallery
-          </Link>
-          <Link to="/services" className="hover:text-gray-800 transition-colors">
-            Our Services
-          </Link>
-          <Link to="/contact" className="hover:text-gray-800 transition-colors">
-            Contact Us
-          </Link>
-        </nav>
-      </div>
-    </footer>
-  );
-};
-
-export default Footer;
->>>>>>> 870caabfc862db6c31f275a100a811a424e06bb2
+export default Footer

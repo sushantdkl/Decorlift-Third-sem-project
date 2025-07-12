@@ -12,6 +12,14 @@ const login = async (req, res) => {
     }
     if (req.body.password == null) {
       console.log("Password is missing in request");
+import bcrypt from "bcrypt";
+
+const login = async (req, res) => {
+  try {
+    if (req.body.email == null) {
+      return res.status(400).send({ message: "email is required" });
+    }
+    if (req.body.password == null) {
       return res.status(400).send({ message: "password is required" });
     }
     const user = await User.findOne({ where: { email: req.body.email } });
@@ -35,6 +43,7 @@ const login = async (req, res) => {
     });
   } catch (e) {
     console.log("Login error:", e);
+    console.log(e);
     res.status(500).json({ error: "Failed to login" });
   }
 };

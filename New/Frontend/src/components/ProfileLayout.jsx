@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6753375c8f9ed152eb0af56aff50f012cf48d746
 "use client"
 
 import { useState } from "react"
@@ -26,29 +29,7 @@ const ProfileLayout = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-<<<<<<< HEAD
-      {/* Header */}
-      <header className="fixed top-0 left-0 w-full z-50 bg-[#F6F0EB] flex items-center justify-between px-8 py-4 h-[100px] shadow">
-        <div className="flex items-center">
-          <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center">
-            <span className="text-white font-bold text-lg">DL</span>
-          </div>
-        </div>
-        <nav>
-          <ul className="flex space-x-8 text-black font-semibold text-sm">
-            {["Home", "About Us", "Project", "Our Services", "Contact Us"].map((item, index) => (
-              <li key={index}>
-                <Link to={`/${item.toLowerCase().replace(/\s+/g, "-")}`} className="hover:text-teal-600">
-                  {item}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </header>
-=======
 
->>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
 
       {/* Main Container */}
       <div className="flex pt-[100px] min-h-screen">
@@ -133,6 +114,7 @@ const ProfileLayout = ({ children }) => {
 }
 
 export default ProfileLayout
+<<<<<<< HEAD
 =======
 "use client"
 
@@ -247,3 +229,5 @@ const ProfileLayout = ({ children }) => {
 
 export default ProfileLayout
 >>>>>>> 870caabfc862db6c31f275a100a811a424e06bb2
+=======
+>>>>>>> 6753375c8f9ed152eb0af56aff50f012cf48d746
