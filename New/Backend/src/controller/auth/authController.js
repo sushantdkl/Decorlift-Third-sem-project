@@ -1,28 +1,40 @@
 import { User } from "../../models/index.js";
 import { generateToken } from "../../security/jwt-util.js";
 
+import bcrypt from "bcrypt";
+
 const login = async (req, res) => {
   try {
-    //fetching all the data from users table
+    console.log("Login attempt with email:", req.body.email);
     if (req.body.email == null) {
-      return res.status(500).send({ message: "email is required" });
+      console.log("Email is missing in request");
+      return res.status(400).send({ message: "email is required" });
     }
     if (req.body.password == null) {
-      return res.status(500).send({ message: "email is required" });
+      console.log("Password is missing in request");
+      return res.status(400).send({ message: "password is required" });
     }
     const user = await User.findOne({ where: { email: req.body.email } });
     if (!user) {
-      return res.status(500).send({ message: "user not found" });
+      console.log("User not found for email:", req.body.email);
+      return res.status(404).send({ message: "user not found" });
     }
-    if (user.password == req.body.password) {
-      const token = generateToken({ user: user.toJSON() });
-      return res.status(200).send({
-        data: { access_token: token },
-        message: "successfully logged in",
-      });
+    const passwordMatch = await bcrypt.compare(req.body.password, user.password);
+    if (!passwordMatch) {
+      console.log("Invalid password for user:", req.body.email);
+      return res.status(401).send({ message: "invalid password" });
     }
+    const token = generateToken({ user: user.toJSON() });
+    const userData = user.toJSON();
+    delete userData.password;
+    console.log("Login successful for user:", req.body.email);
+    return res.status(200).send({
+      token,
+      user: userData,
+      message: "successfully logged in",
+    });
   } catch (e) {
-    console.log(e);
+    console.log("Login error:", e);
     res.status(500).json({ error: "Failed to login" });
   }
 };
