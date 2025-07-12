@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
-import axios from "axios"; // ✅ Optional if you uncomment API usage later
+
 
 const SignUpPage = () => {
   const navigate = useNavigate();
