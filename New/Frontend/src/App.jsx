@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 // import Layout from './components/Layout';
@@ -79,3 +80,28 @@ function App() {
 
 export default App;
 >>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
+=======
+import React, { useState } from "react";
+import NavbarGuest from "./components/NavbarGuest";
+import NavbarUser from "./components/NavbarUser";
+import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollTop";
+import UserRoutes from "./routes/UserRoutes";
+
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      {isLoggedIn ? <NavbarUser /> : <NavbarGuest />}
+      <main className="flex-grow">
+        <ScrollToTop />
+        <UserRoutes setIsLoggedIn={setIsLoggedIn} /> {/* ✅ fix applied here */}
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+export default App;
+>>>>>>> 870caabfc862db6c31f275a100a811a424e06bb2

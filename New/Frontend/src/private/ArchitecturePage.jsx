@@ -1,12 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { User, Search, Facebook, Twitter, Instagram, ArrowUp } from "lucide-react"
+import { Search } from "lucide-react"
 
 const ArchitecturePage = () => {
-  const navigate = useNavigate()
   const [searchTerm, setSearchTerm] = useState("")
+  const [showAll, setShowAll] = useState(false)
 
   const architectureProjects = [
     {
@@ -95,66 +94,14 @@ const ArchitecturePage = () => {
     },
   ]
 
+  const filteredProjects = architectureProjects.filter((item) =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
+  const displayedProjects = showAll ? filteredProjects : filteredProjects.slice(0, 4)
+
   return (
     <div className="text-gray-800 bg-gray-100">
-      {/* Banner and Navbar */}
-      <div
-        className="w-full h-[28vh] bg-cover bg-center relative"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)), url('src/image/pexels-pixabay-276528.jpg')",
-        }}
-      >
-        <div className="w-11/12 mx-auto py-8 px-4 flex justify-between items-center bg-black bg-opacity-30">
-          <img
-            src="src/image/aayush_logo.png"
-            alt="Logo"
-            className="w-32 cursor-pointer"
-            onClick={() => navigate("/")}
-          />
-
-          <ul className="flex space-x-6">
-            <li>
-              <Link to="/" className="text-white uppercase hover:underline">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" className="text-white uppercase hover:underline">
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link to="/gallery" className="text-white uppercase hover:underline">
-                Gallery
-              </Link>
-            </li>
-            <li>
-              <Link to="/services" className="text-white uppercase hover:underline">
-                Our Services
-              </Link>
-            </li>
-            <li>
-              <Link to="/contact" className="text-white uppercase hover:underline">
-                Contact Us
-              </Link>
-            </li>
-            <li>
-              <Link to="/login" className="text-white uppercase hover:underline">
-                Login
-              </Link>
-            </li>
-          </ul>
-
-          <button
-            onClick={() => navigate("/profile")}
-            className="text-white border border-white rounded-full px-4 py-2 flex items-center hover:bg-white hover:text-black transition text-sm"
-          >
-            <User className="w-4 h-4 mr-2" /> Profile
-          </button>
-        </div>
-      </div>
-
       {/* Page Header */}
       <div className="max-w-7xl mx-auto my-10 px-4 flex flex-col md:flex-row justify-between items-center">
         <h1 className="text-3xl font-bold">Architecture</h1>
@@ -164,73 +111,53 @@ const ArchitecturePage = () => {
             className="pl-4 pr-10 py-2 border-2 border-gray-300 rounded-full w-64 focus:outline-none focus:border-blue-500"
             placeholder="Search architecture..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value)
+              setShowAll(false) // Reset to limited view on new search
+            }}
           />
           <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
         </div>
       </div>
 
-      {/* Product Gallery */}
+      {/* Project Gallery */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 pb-10">
-        {architectureProjects.map((item) => (
-          <div
-            key={item.id}
-            className="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transform hover:-translate-y-1 transition cursor-pointer"
-          >
-            <img
-              src={item.image || "/placeholder.svg"}
-              alt={item.title}
-              className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
-            />
-            <div className="p-4">
-              <div className="font-semibold text-lg text-gray-800 mb-1">{item.title}</div>
-              <div className="text-sm text-gray-600 mb-2">{item.description}</div>
-              <div className="text-blue-500 font-semibold">{item.price}</div>
+        {displayedProjects.length === 0 ? (
+          <p className="col-span-full text-center text-gray-500">No projects found.</p>
+        ) : (
+          displayedProjects.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transform hover:-translate-y-1 transition cursor-pointer"
+            >
+              <img
+                src={item.image || "/placeholder.svg"}
+                alt={item.title}
+                className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+              />
+              <div className="p-4">
+                <div className="font-semibold text-lg text-gray-800 mb-1">{item.title}</div>
+                <div className="text-sm text-gray-600 mb-2">{item.description}</div>
+                <div className="text-blue-500 font-semibold">{item.price}</div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
 
-      <div className="text-center mb-20">
-        <button className="inline-block border-2 border-gray-800 px-6 py-2 rounded hover:bg-gray-800 hover:text-white transition">
-          View All Projects
-        </button>
-      </div>
-
-      {/* Footer */}
-      <div className="bg-[#F6F0EB] py-10">
-        <div className="max-w-6xl mx-auto px-4 border border-gray-300 p-6">
-          <div className="text-center text-4xl font-bold text-[#032437] tracking-wider mb-6">DECORLIFT</div>
-          <div className="flex justify-center space-x-6 mb-6 text-[#032437] text-xl">
-            <Facebook className="hover:text-blue-600 cursor-pointer" />
-            <Twitter className="hover:text-blue-600 cursor-pointer" />
-            <Instagram className="hover:text-blue-600 cursor-pointer" />
-            <div className="hover:text-blue-600 cursor-pointer text-xl font-bold">G</div>
-          </div>
-          <div className="flex flex-wrap justify-center space-x-6">
-            <Link to="/" className="text-[#032437] uppercase hover:underline">
-              Home
-            </Link>
-            <Link to="/about" className="text-[#032437] uppercase hover:underline">
-              About Us
-            </Link>
-            <Link to="/gallery" className="text-[#032437] uppercase hover:underline">
-              Gallery
-            </Link>
-            <Link to="/services" className="text-[#032437] uppercase hover:underline">
-              Our Services
-            </Link>
-            <Link to="/contact" className="text-[#032437] uppercase hover:underline">
-              Contact Us
-            </Link>
-            <a href="#top" className="text-[#032437] flex items-center gap-2 hover:underline">
-              <ArrowUp className="w-4 h-4" /> Back to top
-            </a>
-          </div>
+      {/* View All Button */}
+      {filteredProjects.length > 4 && !showAll && (
+        <div className="text-center mb-20">
+          <button
+            onClick={() => setShowAll(true)}
+            className="inline-block border-2 border-gray-800 px-6 py-2 rounded hover:bg-gray-800 hover:text-white transition"
+          >
+            View All Projects
+          </button>
         </div>
-      </div>
+      )}
     </div>
   )
 }
 
-export default ArchitecturePage;
+export default ArchitecturePage
