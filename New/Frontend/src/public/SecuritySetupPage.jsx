@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
 import axios from 'axios';
 
+
 const SecuritySetupPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -33,25 +34,27 @@ const SecuritySetupPage = () => {
       return;
     }
 
-    try {
-      setLoading(true);
-      await axios.post("http://localhost:2000/api/users", {
-        name: `${userData.firstName} ${userData.lastName}`,
-        email: userData.email,
-        password: userData.password,
-        securityQuestion: formData.securityQuestion,
-        securityAnswer: formData.answer.trim(),
-      });
+      try {
+        setLoading(true);
+        await axios.post("http://localhost:4000/api/users", {
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          email: userData.email,
+          password: userData.password,
+          gender: userData.gender,
+          securityQuestion: formData.securityQuestion,
+          securityAnswer: formData.answer.trim(),
+        });
 
-      localStorage.removeItem("pendingUser");
-      alert("Registered successfully!");
-      navigate("/login");
-    } catch (error) {
-      const errMsg = error.response?.data?.message || "Registration failed";
-      alert(errMsg);
-    } finally {
-      setLoading(false);
-    }
+        localStorage.removeItem("pendingUser");
+        alert("Registered successfully!");
+        navigate("/login");
+      } catch (error) {
+        const errMsg = error.response?.data?.message || "Registration failed";
+        alert(errMsg);
+      } finally {
+        setLoading(false);
+      }
   };
 
   return (
@@ -60,7 +63,7 @@ const SecuritySetupPage = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('src/public/background.png')`
+          backgroundImage: `url('src/image/background.png')`
         }}
       >
         <div className="absolute inset-0 bg-black/40"></div>
