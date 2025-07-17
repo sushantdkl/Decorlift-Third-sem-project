@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "await": "^0.2.6"
+    "await": "^0.2.6",
+    "esbuild": "^0.25.5"
   }
 }

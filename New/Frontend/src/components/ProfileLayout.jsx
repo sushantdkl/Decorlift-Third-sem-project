@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useNavigate, useLocation, Link } from "react-router-dom"
 import { User, History, MapPin, LogOut } from "lucide-react"
+import { logout } from "../services/authService"
 
 const ProfileLayout = ({ children }) => {
   const navigate = useNavigate()
@@ -14,7 +15,8 @@ const ProfileLayout = ({ children }) => {
   }
 
   const confirmLogout = () => {
-    navigate("/login")
+    logout()
+    navigate("/")
   }
 
   const cancelLogout = () => {
@@ -25,33 +27,7 @@ const ProfileLayout = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-<<<<<<< HEAD
-      {/* Header */}
-      <header className="fixed top-0 left-0 w-full z-50 bg-[#F6F0EB] flex items-center justify-between px-8 py-4 h-[100px] shadow">
-        <div className="flex items-center">
-          <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center">
-            <span className="text-white font-bold text-lg">DL</span>
-          </div>
-        </div>
-        <nav>
-          <ul className="flex space-x-8 text-black font-semibold text-sm">
-            {["Home", "About Us", "Project", "Our Services", "Contact Us"].map((item, index) => (
-              <li key={index}>
-                <Link to={`/${item.toLowerCase().replace(/\s+/g, "-")}`} className="hover:text-teal-600">
-                  {item}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </header>
-=======
-
->>>>>>> d17139aa86b154f6c2784353bed1549301db0d12
-
-      {/* Main Container */}
       <div className="flex pt-[100px] min-h-screen">
-        {/* Sidebar */}
         <aside className="w-[250px] bg-[#f0f4f4] p-5 flex flex-col shadow-md">
           <div className="flex items-center space-x-4 mb-10 mt-5">
             <div className="w-12 h-12 rounded-full bg-gray-400"></div>
@@ -101,11 +77,9 @@ const ProfileLayout = ({ children }) => {
           </div>
         </aside>
 
-        {/* Content */}
         <main className="flex-1 bg-white shadow-sm">{children}</main>
       </div>
 
-      {/* Logout Popup */}
       {showLogoutPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white rounded-lg p-6 shadow-lg text-center max-w-xs">

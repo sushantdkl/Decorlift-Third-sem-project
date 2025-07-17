@@ -1,93 +1,73 @@
 "use client"
- 
-import { useState } from "react"
- 
-const usersData = [
-  // Sample data, you can replace with real user data
-  { id: 1, name: "John Doe", email: "john@example.com", address: "123, Elm Street" },
-  { id: 2, name: "Jane Smith", email: "jane@example.com", address: "456, Oak Avenue" },
-  { id: 3, name: "Alice Johnson", email: "alice@example.com", address: "789, Pine Lane" },
-  { id: 4, name: "Bob Brown", email: "bob@example.com", address: "101, Maple Road" },
-  { id: 5, name: "Charlie Davis", email: "charlie@example.com", address: "202, Cedar Boulevard" },
-  { id: 6, name: "Emma Wilson", email: "emma@example.com", address: "303, Birch Street" },
-  { id: 7, name: "David Miller", email: "david@example.com", address: "404, Spruce Avenue" },
-  { id: 8, name: "Sarah Garcia", email: "sarah@example.com", address: "505, Willow Lane" },
-]
- 
+
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { getUsers, deleteUser } from "../services/userService.js"
+
 const AdminManageUserPage = () => {
   const [showModal, setShowModal] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
- 
+  const [users, setUsers] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    fetchUsers()
+  }, [])
+
+  const fetchUsers = async () => {
+    try {
+      const response = await getUsers()
+      setUsers(response.data.data)
+      setLoading(false)
+    } catch (err) {
+      setError("Failed to fetch users")
+      setLoading(false)
+      console.error("Error fetching users:", err)
+    }
+  }
+
+  const handleDelete = async (userId) => {
+    if (confirm("Are you sure you want to delete this user?")) {
+      try {
+        await deleteUser(userId)
+        fetchUsers()
+      } catch (err) {
+        console.error("Failed to delete user", err)
+        alert("Failed to delete user. Please try again.")
+      }
+    }
+  }
+
   const handleLogout = () => {
     alert("Logging out...")
     setShowModal(false)
-    // Redirect or logout logic here
+    localStorage.removeItem("token")
+    navigate("/login")
   }
- 
-  // Filter users based on search term
-  const filteredUsers = usersData.filter(
+
+  const filteredUsers = (users || []).filter(
     (user) =>
-      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.address.toLowerCase().includes(searchQuery.toLowerCase()),
-  )
- 
+      user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.address?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.gender?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.mobile?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  if (loading) {
+    return <div className="flex min-h-screen items-center justify-center">Loading...</div>
+  }
+
+  if (error) {
+    return <div className="flex min-h-screen items-center justify-center text-red-600">{error}</div>
+  }
+
   return (
-    <div className="flex min-h-screen bg-[#f3efeb]">
-      {/* Sidebar */}
-      <nav className="w-52 fixed top-0 left-0 h-full bg-[#f3efeb] border-r-2 border-gray-300 pt-20">
-        <a href="#" className="flex items-center px-5 py-4 border-b border-gray-300 text-gray-700">
-          <span>Admin</span>
-        </a>
-        <a href="#" className="flex items-center px-5 py-4 border-b border-gray-300 text-gray-700 hover:bg-gray-200">
-          <span>Products</span>
-        </a>
-        <a href="#" className="flex items-center px-5 py-4 bg-[#7a9b8e] text-white">
-          <span>Manage Users</span>
-        </a>
-        <a href="#" className="flex items-center px-5 py-4 border-b border-gray-300 text-gray-700 hover:bg-gray-200">
-          <span>Manage Inventory</span>
-        </a>
-        <a href="#" className="flex items-center px-5 py-4 border-b border-gray-300 text-gray-700 hover:bg-gray-200">
-          <span>Requests</span>
-        </a>
-        <div className="absolute bottom-5 w-full text-center">
-          <button
-            onClick={() => setShowModal(true)}
-            className="text-gray-600 font-medium hover:text-red-600 flex items-center justify-center gap-2 w-full"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              viewBox="0 0 24 24"
-            >
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-              <polyline points="16 17 21 12 16 7" />
-              <line x1="21" y1="12" x2="9" y2="12" />
-            </svg>
-            Logout
-          </button>
-        </div>
-      </nav>
- 
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 h-20 bg-[#e8e2e2] border-b-2 border-gray-300 flex items-center px-6 z-10">
-        <div className="w-24 h-24 flex items-center justify-center font-bold text-xl">
-          <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center text-sm font-bold border-2 border-gray-600">
-            DL
-          </div>
-        </div>
-        <span className="ml-3 text-xl font-bold text-gray-800">DECORLIFT</span>
-      </header>
- 
+    <div className="min-h-screen bg-[#f3efeb]">
       {/* Main Content */}
-      <main className="flex-1 ml-52 pt-24 p-6">
+      <main className="flex-1 p-6">
         {/* Search Bar */}
         <div className="flex justify-end mb-6">
           <input
@@ -98,7 +78,7 @@ const AdminManageUserPage = () => {
             className="px-4 py-2 border-2 border-gray-300 rounded-full w-60 focus:outline-none focus:border-[#7a9b8e] text-sm"
           />
         </div>
- 
+
         {/* Users Table */}
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
           <table className="w-full border-collapse text-sm">
@@ -107,41 +87,49 @@ const AdminManageUserPage = () => {
                 <th className="border border-black px-3 py-2 text-left font-bold w-16">S\N</th>
                 <th className="border border-black px-3 py-2 text-left font-bold">Name</th>
                 <th className="border border-black px-3 py-2 text-left font-bold">E-mail</th>
-                <th className="border border-black px-3 py-2 text-left font-bold">Address</th>
-                <th className="border border-black px-3 py-2 w-16">{/* Actions column */}</th>
+                <th className="border border-black px-3 py-2 text-left font-bold">Gender</th>
+                <th className="border border-black px-3 py-2 text-left font-bold">Mobile</th>
+                <th className="border border-black px-3 py-2 w-32">{/* Actions */}</th>
               </tr>
             </thead>
             <tbody>
-              {filteredUsers.length === 0 && (
+              {filteredUsers.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="text-center py-8 text-gray-600 border border-black">
+                  <td colSpan="6" className="text-center py-8 text-gray-600 border border-black">
                     No users found.
                   </td>
                 </tr>
+              ) : (
+                filteredUsers.map((user, idx) => (
+                  <tr key={user.id} className={idx % 2 === 0 ? "bg-gray-200 bg-opacity-50" : "bg-white"}>
+                    <td className="border border-black px-3 py-2">{idx + 1}</td>
+                    <td className="border border-black px-3 py-2 font-medium">{user.name}</td>
+                    <td className="border border-black px-3 py-2">{user.email}</td>
+                    <td className="border border-black px-3 py-2">{user.gender || "N/A"}</td>
+                    <td className="border border-black px-3 py-2">{user.mobile || "N/A"}</td>
+                    <td className="border border-black px-3 py-2 text-center">
+                      <button
+                        onClick={() => handleDelete(user.id)}
+                        className="text-red-600 hover:underline"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
               )}
-              {filteredUsers.map((user, idx) => (
-                <tr key={user.id} className={idx % 2 === 0 ? "bg-gray-200 bg-opacity-50" : "bg-white"}>
-                  <td className="border border-black px-3 py-2">{idx + 1}</td>
-                  <td className="border border-black px-3 py-2 font-medium">{user.name}</td>
-                  <td className="border border-black px-3 py-2">{user.email}</td>
-                  <td className="border border-black px-3 py-2">{user.address}</td>
-                  <td className="border border-black px-3 py-2">
-                    {/* You can add action buttons here like Edit/Delete */}
-                  </td>
-                </tr>
-              ))}
             </tbody>
           </table>
         </div>
- 
+
         {/* Results count */}
         {searchQuery && (
           <div className="mt-4 text-sm text-gray-600">
-            Showing {filteredUsers.length} of {usersData.length} users
+            Showing {filteredUsers.length} of {users.length} users
           </div>
         )}
       </main>
- 
+
       {/* Logout Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -167,7 +155,5 @@ const AdminManageUserPage = () => {
     </div>
   )
 }
- 
+
 export default AdminManageUserPage
- 
- 

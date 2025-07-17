@@ -1,189 +1,194 @@
-import { useState } from "react"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Search, Edit } from "lucide-react"
- 
-const inventoryData = [
-  {
-    id: 1,
-    name: "White Aesthetic Chair",
-    category: "Chair",
-    price: "24,999",
-    stock: 15,
-    status: "In Stock",
-    image: "/placeholder.svg?height=60&width=60",
-  },
-  {
-    id: 2,
-    name: "Modern Decoration Piece",
-    category: "Decoration",
-    price: "24,999",
-    stock: 8,
-    status: "Low Stock",
-    image: "/placeholder.svg?height=60&width=60",
-  },
-  {
-    id: 3,
-    name: "Comfort Chair",
-    category: "Chair",
-    price: "24,999",
-    stock: 22,
-    status: "In Stock",
-    image: "/placeholder.svg?height=60&width=60",
-  },
-  {
-    id: 4,
-    name: "Luxury Sofa",
-    category: "Sofa",
-    price: "24,999",
-    stock: 5,
-    status: "Low Stock",
-    image: "/placeholder.svg?height=60&width=60",
-  },
-  {
-    id: 5,
-    name: "Wall Decoration",
-    category: "Decoration",
-    price: "24,999",
-    stock: 0,
-    status: "Out of Stock",
-    image: "/placeholder.svg?height=60&width=60",
-  },
-]
- 
-export default function InventoryPage() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [filterStatus, setFilterStatus] = useState("All")
- 
+import { useState, useEffect } from "react";
+import { Search, Edit } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { userapi } from "../services/userapi.js";
+
+export default function AdminInventoryPage() {
+  const [inventoryData, setInventoryData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterStatus, setFilterStatus] = useState("All");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchInventory();
+  }, []);
+
+  const fetchInventory = async () => {
+    try {
+      const response = await userapi.get("/api/products");
+      const products = response.data.data.map((product) => ({
+        id: product.id,
+        name: product.name,
+        category: product.category || "Uncategorized",
+        price: product.price.toLocaleString(),
+        stock: product.stock || 0,
+        status: getProductStatus(product.stock || 0),
+        image: product.image || "/placeholder.svg",
+        raw: product, // preserve full product object
+      }));
+      setInventoryData(products);
+      setLoading(false);
+    } catch (err) {
+      setError("Failed to fetch inventory");
+      setLoading(false);
+      console.error("Error fetching inventory:", err);
+    }
+  };
+
+  const getProductStatus = (stock) => {
+    if (stock === 0) return "Out of Stock";
+    if (stock <= 10) return "Low Stock";
+    return "In Stock";
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "In Stock":
+        return "bg-green-100 text-green-800";
+      case "Low Stock":
+        return "bg-yellow-100 text-yellow-800";
+      case "Out of Stock":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
+
   const filteredInventory = inventoryData.filter((item) => {
     const matchesSearch =
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.category.toLowerCase().includes(searchQuery.toLowerCase())
- 
-    const matchesStatus = filterStatus === "All" || item.status === filterStatus
- 
-    return matchesSearch && matchesStatus
-  })
- 
-  const getStatusVariant = (status) => {
-    switch (status) {
-      case "In Stock":
-        return "default"
-      case "Low Stock":
-        return "secondary"
-      case "Out of Stock":
-        return "destructive"
-      default:
-        return "outline"
-    }
+      item.category.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesStatus = filterStatus === "All" || item.status === filterStatus;
+    return matchesSearch && matchesStatus;
+  });
+
+  const handleEdit = (product) => {
+    navigate(`/admin/edit-product/${product.id}`);
+  };
+
+  if (loading) {
+    return <div className="flex min-h-screen items-center justify-center">Loading...</div>;
   }
- 
+
+  if (error) {
+    return <div className="flex min-h-screen items-center justify-center text-red-600">{error}</div>;
+  }
+
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-semibold mb-6 text-gray-800">Manage Inventory</h1>
- 
-      <div className="flex justify-between items-center mb-6 gap-4">
-        <Select value={filterStatus} onValueChange={setFilterStatus}>
-          <SelectTrigger className="w-48">
-            <SelectValue placeholder="Filter by status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="All">All Status</SelectItem>
-            <SelectItem value="In Stock">In Stock</SelectItem>
-            <SelectItem value="Low Stock">Low Stock</SelectItem>
-            <SelectItem value="Out of Stock">Out of Stock</SelectItem>
-          </SelectContent>
-        </Select>
- 
-        <div className="relative w-60">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-          <Input
+      <h2 className="text-2xl font-semibold mb-6">Manage Inventory</h2>
+
+      {/* Filters */}
+      <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
+        <select
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value)}
+          className="border border-gray-300 rounded px-4 py-2 text-sm focus:ring-2 focus:ring-teal-500"
+        >
+          <option value="All">All Status</option>
+          <option value="In Stock">In Stock</option>
+          <option value="Low Stock">Low Stock</option>
+          <option value="Out of Stock">Out of Stock</option>
+        </select>
+        <div className="relative w-full max-w-xs">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <input
             type="text"
             placeholder="Search products..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 rounded-full border-2 focus:border-[#7a9b8e]"
+            className="w-full pl-10 pr-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-teal-500"
           />
         </div>
       </div>
- 
-      <Card>
-        <CardContent className="p-0">
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-sm">
-              <thead>
-                <tr className="bg-gray-50">
-                  <th className="border border-gray-300 px-3 py-3 text-left font-semibold w-16">ID</th>
-                  <th className="border border-gray-300 px-3 py-3 text-left font-semibold w-20">Image</th>
-                  <th className="border border-gray-300 px-3 py-3 text-left font-semibold">Product Name</th>
-                  <th className="border border-gray-300 px-3 py-3 text-left font-semibold">Category</th>
-                  <th className="border border-gray-300 px-3 py-3 text-left font-semibold">Price (Rs.)</th>
-                  <th className="border border-gray-300 px-3 py-3 text-left font-semibold">Stock</th>
-                  <th className="border border-gray-300 px-3 py-3 text-left font-semibold">Status</th>
-                  <th className="border border-gray-300 px-3 py-3 text-center font-semibold w-24">Actions</th>
+
+      {/* Table */}
+      <div className="overflow-x-auto border border-gray-200 rounded-md shadow-sm">
+        <table className="w-full table-auto text-sm">
+          <thead className="bg-gray-100 text-gray-700">
+            <tr>
+              <th className="px-4 py-3 border">ID</th>
+              <th className="px-4 py-3 border">Image</th>
+              <th className="px-4 py-3 border">Name</th>
+              <th className="px-4 py-3 border">Category</th>
+              <th className="px-4 py-3 border">Price (Rs.)</th>
+              <th className="px-4 py-3 border">Stock</th>
+              <th className="px-4 py-3 border">Status</th>
+              <th className="px-4 py-3 border text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredInventory.length === 0 ? (
+              <tr>
+                <td colSpan={8} className="text-center py-6 text-gray-500">
+                  No inventory items found.
+                </td>
+              </tr>
+            ) : (
+              filteredInventory.map((item, index) => (
+                <tr
+                  key={item.id}
+                  className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+                >
+                  <td className="px-4 py-3 border">{item.id}</td>
+                  <td className="px-4 py-3 border">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-12 h-12 object-cover rounded border"
+                    />
+                  </td>
+                  <td className="px-4 py-3 border">{item.name}</td>
+                  <td className="px-4 py-3 border">{item.category}</td>
+                  <td className="px-4 py-3 border">{item.price}</td>
+                  <td className="px-4 py-3 border text-center">{item.stock}</td>
+                  <td className="px-4 py-3 border">
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
+                        item.status
+                      )}`}
+                    >
+                      {item.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 border text-center">
+                    <button
+                      onClick={() => handleEdit(item.raw)}
+                      className="text-teal-600 hover:underline flex items-center justify-center gap-1 text-sm"
+                    >
+                      <Edit className="w-4 h-4" />
+                      Edit
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {filteredInventory.length === 0 ? (
-                  <tr>
-                    <td colSpan={8} className="text-center py-8 text-gray-600 border border-gray-300">
-                      No inventory items found.
-                    </td>
-                  </tr>
-                ) : (
-                  filteredInventory.map((item, idx) => (
-                    <tr key={item.id} className={idx % 2 === 0 ? "bg-gray-50" : "bg-white"}>
-                      <td className="border border-gray-300 px-3 py-3 font-medium">{item.id}</td>
-                      <td className="border border-gray-300 px-3 py-3">
-                        <img
-                          src={item.image || "/placeholder.svg"}
-                          alt={item.name}
-                          className="w-12 h-12 object-cover rounded border"
-                        />
-                      </td>
-                      <td className="border border-gray-300 px-3 py-3 font-medium">{item.name}</td>
-                      <td className="border border-gray-300 px-3 py-3">{item.category}</td>
-                      <td className="border border-gray-300 px-3 py-3 font-medium">{item.price}</td>
-                      <td className="border border-gray-300 px-3 py-3 text-center font-medium">{item.stock}</td>
-                      <td className="border border-gray-300 px-3 py-3">
-                        <Badge variant={getStatusVariant(item.status)}>{item.status}</Badge>
-                      </td>
-                      <td className="border border-gray-300 px-3 py-3 text-center">
-                        <Button variant="ghost" size="sm" onClick={() => console.log("Edit inventory:", item.id)}>
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
- 
-      <div className="mt-4 flex justify-between items-center text-sm text-gray-600">
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Summary */}
+      <div className="mt-4 flex justify-between text-sm text-gray-600 flex-wrap gap-3">
         <span>
           Showing {filteredInventory.length} of {inventoryData.length} items
         </span>
-        <div className="flex gap-4 text-xs">
-          <div className="flex items-center gap-1">
-            <div className="w-3 h-3 bg-green-100 rounded"></div>
-            In Stock: {inventoryData.filter((item) => item.status === "In Stock").length}
+        <div className="flex gap-4">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-green-100" />
+            In Stock: {inventoryData.filter((i) => i.status === "In Stock").length}
           </div>
-          <div className="flex items-center gap-1">
-            <div className="w-3 h-3 bg-yellow-100 rounded"></div>
-            Low Stock: {inventoryData.filter((item) => item.status === "Low Stock").length}
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-yellow-100" />
+            Low Stock: {inventoryData.filter((i) => i.status === "Low Stock").length}
           </div>
-          <div className="flex items-center gap-1">
-            <div className="w-3 h-3 bg-red-100 rounded"></div>
-            Out of Stock: {inventoryData.filter((item) => item.status === "Out of Stock").length}
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-red-100" />
+            Out of Stock: {inventoryData.filter((i) => i.status === "Out of Stock").length}
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
