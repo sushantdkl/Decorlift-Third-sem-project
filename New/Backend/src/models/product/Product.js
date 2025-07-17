@@ -1,7 +1,5 @@
-// models/Product.js
 import { DataTypes } from "sequelize";
 import { sequelize } from "../../database/index.js";
-
 export const Product = sequelize.define("Product", {
   id: {
     type: DataTypes.INTEGER,
@@ -12,17 +10,30 @@ export const Product = sequelize.define("Product", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  price: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
   description: {
     type: DataTypes.TEXT,
     allowNull: true,
   },
- 
+  price: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
   image: {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  stock: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  category: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  requested: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  }
 });
+ 
+ 
