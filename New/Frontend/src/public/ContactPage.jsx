@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { MapPin, Phone, Building, Mail, Clock } from "lucide-react"
+import { userapi } from "../services/userapi.js"
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -12,10 +13,22 @@ const ContactPage = () => {
     subject: "",
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log("Contact form submitted:", formData)
-    // Handle form submission here
+    try {
+      await userapi.post("/api/contact", formData)
+      alert("Your message has been sent successfully!")
+      setFormData({
+        name: "",
+        message: "",
+        email: "",
+        phone: "",
+        subject: "",
+      })
+    } catch (error) {
+      console.error("Failed to send message", error)
+      alert("Failed to send message. Please try again.")
+    }
   }
 
   const handleInputChange = (e) => {

@@ -14,14 +14,14 @@ const AboutPage = () => {
       </div>
 
       {/* Products Grid */}
-      <div className="w-[78%] mx-auto grid grid-cols-4 gap-10 my-20">
-        <div>
+      <div className="w-[78%] mx-auto grid grid-cols-4 gap-10 my-20 items-center">
+        <div className="flex flex-col justify-center">
           <h1 className="text-[#186b63] text-xl font-bold drop-shadow">DINING CHAIR</h1>
           <hr className="w-[100px] border-[3px] border-[#186b63] my-2" />
           <p className="text-gray-700">
             It can make a room, it can bring style and substance to the interior design theme of your room and that is why it is worth it.
             <button
-              className="ml-3 px-5 py-3 border border-black bg-white hover:bg-gray-300 text-sm"
+              className="mt-4 px-5 py-3 border border-black bg-white hover:bg-gray-300 text-sm self-start"
               onClick={() => navigate("/dining-chairs")}
             >
               Browse Dining Chairs
@@ -31,13 +31,13 @@ const AboutPage = () => {
         <img src="src/image/1.jpg" className="rounded-lg w-full" alt="Dining Chair" />
 
         <img src="src/image/8.jpg" className="rounded-lg w-full" alt="Architecture" />
-        <div>
+        <div className="flex flex-col justify-center">
           <h1 className="text-[#186b63] text-xl font-bold drop-shadow">ARCHITECTURE</h1>
           <hr className="w-[100px] border-[3px] border-[#186b63] my-2" />
           <p className="text-gray-700">
             Furniture designed to match or to accord with the architectural features of the room for which we got you covered.
             <button
-              className="ml-3 px-5 py-3 border border-black bg-white hover:bg-gray-300 text-sm"
+              className="mt-4 px-5 py-3 border border-black bg-white hover:bg-gray-300 text-sm self-start"
               onClick={() => navigate("/architecture")}
             >
               Browse Architecture
@@ -46,13 +46,13 @@ const AboutPage = () => {
         </div>
 
         <img src="src/image/9.jpg" className="rounded-lg w-full" alt="Office Chair" />
-        <div>
+        <div className="flex flex-col justify-center">
           <h1 className="text-[#186b63] text-xl font-bold drop-shadow">OFFICE CHAIR</h1>
           <hr className="w-[100px] border-[3px] border-[#186b63] my-2" />
           <p className="text-gray-700">
            Best high tech CEO executive wooden office manager desk set , modern organizer furniture supplies for home office.
             <button
-              className="ml-3 px-5 py-3 border border-black bg-white hover:bg-gray-300 text-sm"
+              className="mt-4 px-5 py-3 border border-black bg-white hover:bg-gray-300 text-sm self-start"
               onClick={() => navigate("/office-chairs")}
             >
               Browse Office Chair
@@ -60,13 +60,13 @@ const AboutPage = () => {
           </p>
         </div>
 
-        <div>
+        <div className="flex flex-col justify-center">
           <h1 className="text-[#186b63] text-xl font-bold drop-shadow">Sofa Sets</h1>
           <hr className="w-[100px] border-[3px] border-[#186b63] my-2" />
           <p className="text-gray-700">
            Finnish-american architect and designer Eero Sarinem famously hated the sight of many table and chair legs in a room .
             <button
-              className="ml-3 px-5 py-3 border border-black bg-white hover:bg-gray-300 text-sm"
+              className="mt-4 px-5 py-3 border border-black bg-white hover:bg-gray-300 text-sm self-start"
               onClick={() => navigate("/sofa-sets")}
             >
              Browse Sofa Sets

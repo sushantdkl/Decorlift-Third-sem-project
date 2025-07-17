@@ -1,95 +1,127 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { ArrowLeft, CheckCircle, XCircle, Search, Edit } from "lucide-react"
-
-const refundExchangeRequests = [
-  {
-    id: "1",
-    productName: "White Aesthetic Chair",
-    image: "/placeholder.svg",
-    customerName: "John Doe",
-    email: "john@example.com",
-    phone: "+91 9876543210",
-    address: "375 taking chair phase 2, Gurgaon, Haryana - 122015",
-    requestType: "refund",
-    reason: "Product damaged during delivery",
-    orderDate: "2024-01-10",
-    requestDate: "2024-01-15",
-    status: "pending",
-    amount: "Rs. 24,999",
-  },
-  {
-    id: "2",
-    productName: "Modern Decoration Piece",
-    image: "/placeholder.svg",
-    customerName: "Jane Smith",
-    email: "jane@example.com",
-    phone: "+91 9876543211",
-    address: "456 Oak Avenue, Delhi - 110001",
-    requestType: "exchange",
-    reason: "Wrong color received",
-    orderDate: "2024-01-08",
-    requestDate: "2024-01-12",
-    status: "approved",
-    amount: "Rs. 18,999",
-  },
-]
+import { useState, useEffect } from "react";
+import { 
+  ArrowLeft, 
+  CheckCircle, 
+  XCircle, 
+  Search 
+} from "lucide-react";
+import { 
+  getRefundRequests, 
+  approveRefundRequest, 
+  declineRefundRequest 
+} from "../services/refundService";
 
 const statusColors = {
   pending: "bg-yellow-100 text-yellow-800",
   approved: "bg-green-100 text-green-800",
   declined: "bg-red-100 text-red-800",
-}
+};
 
 const typeColors = {
   refund: "bg-red-100 text-red-800",
   exchange: "bg-green-100 text-green-800",
-}
+};
 
 export default function RefundExchangePage() {
-  const [activeView, setActiveView] = useState("list")
-  const [selectedRequest, setSelectedRequest] = useState(null)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [filterStatus, setFilterStatus] = useState("All")
-  const [filterType, setFilterType] = useState("All")
+  const [activeView, setActiveView] = useState("list");
+  const [selectedRequest, setSelectedRequest] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterStatus, setFilterStatus] = useState("All");
+  const [filterType, setFilterType] = useState("All");
+  const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const filteredRequests = refundExchangeRequests.filter((request) => {
+  // Fetch requests from API
+  const fetchRequests = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await getRefundRequests();
+      setRequests(response.data.data);
+    } catch (err) {
+      setError("Failed to fetch requests");
+      console.error("Fetch error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRequests();
+  }, []);
+
+  const filteredRequests = requests.filter((request) => {
     const matchesSearch =
       request.productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       request.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      request.email.toLowerCase().includes(searchQuery.toLowerCase())
+      request.email.toLowerCase().includes(searchQuery.toLowerCase());
 
-    const matchesStatus = filterStatus === "All" || request.status === filterStatus
-    const matchesType = filterType === "All" || request.requestType === filterType
+    const matchesStatus = filterStatus === "All" || request.status === filterStatus;
+    const matchesType = filterType === "All" || request.requestType === filterType;
 
-    return matchesSearch && matchesStatus && matchesType
-  })
+    return matchesSearch && matchesStatus && matchesType;
+  });
 
   const handleRequestClick = (request) => {
-    setSelectedRequest(request)
-    setActiveView("details")
-  }
+    setSelectedRequest(request);
+    setActiveView("details");
+  };
 
   const handleBackToList = () => {
-    setActiveView("list")
-    setSelectedRequest(null)
+    setActiveView("list");
+    setSelectedRequest(null);
+  };
+
+  const handleApprove = async () => {
+    if (!selectedRequest) return;
+    try {
+      await approveRefundRequest(selectedRequest.id);
+      alert("Request approved successfully!");
+      await fetchRequests();
+      handleBackToList();
+    } catch (err) {
+      alert("Failed to approve request.");
+      console.error(err);
+    }
+  };
+
+  const handleDecline = async () => {
+    if (!selectedRequest) return;
+    try {
+      await declineRefundRequest(selectedRequest.id);
+      alert("Request declined!");
+      await fetchRequests();
+      handleBackToList();
+    } catch (err) {
+      alert("Failed to decline request.");
+      console.error(err);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        Loading...
+      </div>
+    );
   }
 
-  const handleApprove = () => {
-    alert("Request approved successfully!")
-    handleBackToList()
-  }
-
-  const handleDecline = () => {
-    alert("Request declined!")
-    handleBackToList()
+  if (error) {
+    return (
+      <div className="flex min-h-screen items-center justify-center text-red-600">
+        {error}
+      </div>
+    );
   }
 
   return (
     <div className="p-6">
       {activeView === "list" ? (
         <>
+          {/* Header and filters */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
             <h1 className="text-2xl font-semibold text-gray-800">Refund / Exchange</h1>
             <div className="flex flex-wrap gap-4 items-center">
@@ -127,7 +159,12 @@ export default function RefundExchangePage() {
             </div>
           </div>
 
+          {/* List of requests */}
           <div className="space-y-4">
+            {filteredRequests.length === 0 && (
+              <p className="text-center text-gray-500 py-10">No requests found.</p>
+            )}
+
             {filteredRequests.map((request) => (
               <div
                 key={request.id}
@@ -136,7 +173,7 @@ export default function RefundExchangePage() {
               >
                 <div className="w-24 h-24 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
                   <img
-                    src={request.image}
+                    src={request.image || "/placeholder.svg"}
                     alt={request.productName}
                     className="w-full h-full object-cover"
                   />
@@ -175,13 +212,11 @@ export default function RefundExchangePage() {
                 </div>
               </div>
             ))}
-            {filteredRequests.length === 0 && (
-              <p className="text-center text-gray-500 py-10">No requests found.</p>
-            )}
           </div>
         </>
       ) : (
         <>
+          {/* Detail View */}
           <div className="flex items-center mb-6">
             <button
               onClick={handleBackToList}
@@ -200,7 +235,7 @@ export default function RefundExchangePage() {
               <div>
                 <div className="border border-gray-200 rounded-lg overflow-hidden mb-4 h-80 flex items-center justify-center bg-gray-100">
                   <img
-                    src={selectedRequest.image}
+                    src={selectedRequest.image || "/placeholder.svg"}
                     alt={selectedRequest.productName}
                     className="w-full h-full object-cover"
                   />
@@ -308,5 +343,5 @@ export default function RefundExchangePage() {
         </>
       )}
     </div>
-  )
+  );
 }
