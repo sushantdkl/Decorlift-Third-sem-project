@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useNavigate, useLocation, Link } from "react-router-dom"
 import { User, History, MapPin, LogOut } from "lucide-react"
+import { logout } from "../services/authService"
 
 const ProfileLayout = ({ children }) => {
   const navigate = useNavigate()
@@ -14,7 +15,8 @@ const ProfileLayout = ({ children }) => {
   }
 
   const confirmLogout = () => {
-    navigate("/login")
+    logout()
+    navigate("/")
   }
 
   const cancelLogout = () => {
@@ -25,11 +27,7 @@ const ProfileLayout = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-
-
-      {/* Main Container */}
       <div className="flex pt-[100px] min-h-screen">
-        {/* Sidebar */}
         <aside className="w-[250px] bg-[#f0f4f4] p-5 flex flex-col shadow-md">
           <div className="flex items-center space-x-4 mb-10 mt-5">
             <div className="w-12 h-12 rounded-full bg-gray-400"></div>
@@ -79,11 +77,9 @@ const ProfileLayout = ({ children }) => {
           </div>
         </aside>
 
-        {/* Content */}
         <main className="flex-1 bg-white shadow-sm">{children}</main>
       </div>
 
-      {/* Logout Popup */}
       {showLogoutPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white rounded-lg p-6 shadow-lg text-center max-w-xs">
