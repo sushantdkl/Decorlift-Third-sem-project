@@ -1,53 +1,46 @@
 "use client"
 
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useState, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { getProductById, getProducts } from "../services/productService"
 
 const ProductDetailPage = () => {
   const navigate = useNavigate()
+  const { id } = useParams()
   const [quantity, setQuantity] = useState(1)
+  const [product, setProduct] = useState(null)
+  const [relatedItems, setRelatedItems] = useState([])
 
-  const product = {
-    id: 1,
-    title: "White Aesthetic Chair",
-    subtitle: "Combination of wood and wool",
-    description:
-      "Finnish-American architect and designer Eero Saarinen famously hated the sight of many table and chair legs in a room.",
-    price: 4999,
-    stock: 5,
-    image: "/image/WhiteChair.png",
-  }
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await getProductById(id)
+        setProduct(response.data.data)
+      } catch (error) {
+        console.error("Failed to fetch product:", error)
+      }
+    }
 
-  const relatedItems = [
-    {
-      id: 2,
-      title: "Dining Chair",
-      category: "Furniture",
-      description: "Elegant sitting chair options for your living room",
-      price: 24000,
-      image: "/image/7.jpg",
-    },
-    {
-      id: 8,
-      title: "L-Shape Sofa",
-      category: "Furniture",
-      description: "Premium L-shaped sofa set for spacious living rooms",
-      price: 85000,
-      image: "/image/7.jpg",
-    },
-    {
-      id: 10,
-      title: "Recliner Sofa",
-      category: "Furniture",
-      description: "Luxury recliner sofa with premium leather finish",
-      price: 95000,
-      image: "/image/7.jpg",
-    },
-  ]
+    const fetchRelatedItems = async () => {
+      try {
+        const response = await getProducts()
+        // Filter out the current product and take the first 3
+        const related = response.data.data
+          .filter((p) => p.id !== parseInt(id))
+          .slice(0, 3)
+        setRelatedItems(related)
+      } catch (error) {
+        console.error("Failed to fetch related items:", error)
+      }
+    }
+
+    fetchProduct()
+    fetchRelatedItems()
+  }, [id])
 
   const handleQuantityChange = (change) => {
     const newQuantity = quantity + change
-    if (newQuantity >= 1 && newQuantity <= product.stock) {
+    if (product && newQuantity >= 1 && newQuantity <= product.stock) {
       setQuantity(newQuantity)
     }
   }
@@ -74,6 +67,10 @@ const ProductDetailPage = () => {
     navigate(`/checkout?${query.toString()}`)
   }
 
+  if (!product) {
+    return <div>Loading...</div>
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       {/* Main Content */}
@@ -81,7 +78,7 @@ const ProductDetailPage = () => {
         {/* Product Image */}
         <div className="border-2 border-gray-300 rounded-lg overflow-hidden bg-white">
           <img
-            src={product.image || "/placeholder.svg"}
+            src={product.image ? `src/image/${product.image}` : "src/image/placeholder.svg"}
             alt={product.title}
             className="w-full h-auto object-cover"
           />
@@ -92,7 +89,9 @@ const ProductDetailPage = () => {
           <h2 className="text-4xl font-bold text-gray-800 mb-3">{product.title}</h2>
           <p className="text-lg text-gray-500 mb-5">{product.subtitle}</p>
           <p className="text-gray-600 mb-8 leading-relaxed">{product.description}</p>
-          <div className="text-3xl font-bold text-gray-900 mb-8">Rs. {product.price.toLocaleString()}</div>
+          <div className="text-3xl font-bold text-gray-900 mb-8">
+            Rs. {product.price.toLocaleString()}
+          </div>
 
           {/* Quantity Selector */}
           <div className="flex items-center space-x-4 mb-10">
@@ -142,7 +141,7 @@ const ProductDetailPage = () => {
             >
               <div className="h-48 flex items-center justify-center bg-gray-200 overflow-hidden">
                 <img
-                  src={item.image || "/placeholder.svg"}
+                  src={item.image ? `src/image/${item.image}` : "src/image/placeholder.svg"}
                   alt={item.title}
                   className="object-contain h-full"
                 />
@@ -151,7 +150,9 @@ const ProductDetailPage = () => {
                 <div className="text-xs text-gray-400 uppercase mb-1">{item.category}</div>
                 <h4 className="text-xl font-semibold text-gray-800 mb-1">{item.title}</h4>
                 <p className="text-sm text-gray-600 mb-2">{item.description}</p>
-                <p className="text-lg font-bold text-blue-600">Rs. {item.price.toLocaleString()}</p>
+                <p className="text-lg font-bold text-blue-600">
+                  Rs. {item.price.toLocaleString()}
+                </p>
               </div>
             </div>
           ))}

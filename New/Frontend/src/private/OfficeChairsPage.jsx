@@ -8,15 +8,15 @@ const OfficeChairsPage = () => {
   const [showAll, setShowAll] = useState(false)
 
   const products = [
-    { id: 1, title: "Dining Chair", description: "Elegant sitting chair options for your living room", price: "Rs. 24,000", image: "src/image/11.jpg" },
-    { id: 2, title: "Decoration", description: "Elegant sitting chair options for your living room", price: "Rs. 24,000", image: "src/image/11.jpg" },
-    { id: 3, title: "Chair", description: "Elegant sitting chair options for your living room", price: "Rs. 34,000", image: "src/image/11.jpg" },
-    { id: 4, title: "Sofa", description: "Elegant sitting chair options for your living room", price: "Rs. 54,000", image: "src/image/11.jpg" },
-    { id: 5, title: "Executive Chair", description: "Premium executive chair with leather finish", price: "Rs. 45,000", image: "src/image/11.jpg" },
-    { id: 6, title: "Ergonomic Chair", description: "Comfortable ergonomic design for long hours", price: "Rs. 32,000", image: "src/image/11.jpg" },
-    { id: 7, title: "Conference Chair", description: "Professional chair for meeting rooms", price: "Rs. 28,000", image: "src/image/11.jpg" },
-    { id: 8, title: "Gaming Chair", description: "High-performance chair for gaming", price: "Rs. 38,000", image: "src/image/11.jpg" },
-    { id: 9, title: "Reception Chair", description: "Stylish chair for reception areas", price: "Rs. 22,000", image: "src/image/11.jpg" },
+    { id: 1, title: "Executive Chair", description: "Elegant executive chair options for your office", price: "Rs. 24,000", image: "src/image/executive_chair.jpg" },
+    { id: 2, title: "Ergonomic Chair", description: "Comfortable ergonomic chair for long hours", price: "Rs. 24,000", image: "src/image/ergonomic_chair.jpg" },
+    { id: 3, title: "Conference Chair", description: "Professional chair for meeting rooms", price: "Rs. 34,000", image: "src/image/conference_chair.jpg" },
+    { id: 4, title: "Gaming Chair", description: "High-performance chair for gaming", price: "Rs. 54,000", image: "src/image/gaming_chair.jpg" },
+    { id: 5, title: "Reception Chair", description: "Stylish chair for reception areas", price: "Rs. 45,000", image: "src/image/reception_chair.jpg" },
+    { id: 6, title: "Task Chair", description: "Versatile task chair for office work", price: "Rs. 32,000", image: "src/image/task_chair.jpg" },
+    { id: 7, title: "Swivel Chair", description: "Comfortable swivel chair with adjustable height", price: "Rs. 28,000", image: "src/image/swivel_chair.jpg" },
+    { id: 8, title: "Mesh Chair", description: "Breathable mesh chair for better comfort", price: "Rs. 38,000", image: "src/image/mesh_chair.jpg" },
+    { id: 9, title: "Leather Office Chair", description: "Premium leather office chair with durable finish", price: "Rs. 22,000", image: "src/image/leather_office_chair.jpg" },
   ]
 
   // Filter based on search input

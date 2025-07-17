@@ -1,70 +1,60 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, Edit } from "lucide-react";
-
-const inventoryData = [
-  {
-    id: 1,
-    name: "White Aesthetic Chair",
-    category: "Chair",
-    price: "24,999",
-    stock: 15,
-    status: "In Stock",
-    image: "/placeholder.svg",
-  },
-  {
-    id: 2,
-    name: "Modern Decoration Piece",
-    category: "Decoration",
-    price: "24,999",
-    stock: 8,
-    status: "Low Stock",
-    image: "/placeholder.svg",
-  },
-  {
-    id: 3,
-    name: "Comfort Chair",
-    category: "Chair",
-    price: "24,999",
-    stock: 22,
-    status: "In Stock",
-    image: "/placeholder.svg",
-  },
-  {
-    id: 4,
-    name: "Luxury Sofa",
-    category: "Sofa",
-    price: "24,999",
-    stock: 5,
-    status: "Low Stock",
-    image: "/placeholder.svg",
-  },
-  {
-    id: 5,
-    name: "Wall Decoration",
-    category: "Decoration",
-    price: "24,999",
-    stock: 0,
-    status: "Out of Stock",
-    image: "/placeholder.svg",
-  },
-];
-
-const getStatusColor = (status) => {
-  switch (status) {
-    case "In Stock":
-      return "bg-green-100 text-green-800";
-    case "Low Stock":
-      return "bg-yellow-100 text-yellow-800";
-    case "Out of Stock":
-      return "bg-red-100 text-red-800";
-    default:
-      return "bg-gray-100 text-gray-800";
-  }
-};
+import { useNavigate } from "react-router-dom";
+import { userapi } from "../services/userapi.js";
 
 export default function AdminInventoryPage() {
+  const [inventoryData, setInventoryData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchInventory();
+  }, []);
+
+  const fetchInventory = async () => {
+    try {
+      const response = await userapi.get("/api/products");
+      const products = response.data.data.map((product) => ({
+        id: product.id,
+        name: product.name,
+        category: product.category || "Uncategorized",
+        price: product.price.toLocaleString(),
+        stock: product.stock || 0,
+        status: getProductStatus(product.stock || 0),
+        image: product.image || "/placeholder.svg",
+        raw: product, // preserve full product object
+      }));
+      setInventoryData(products);
+      setLoading(false);
+    } catch (err) {
+      setError("Failed to fetch inventory");
+      setLoading(false);
+      console.error("Error fetching inventory:", err);
+    }
+  };
+
+  const getProductStatus = (stock) => {
+    if (stock === 0) return "Out of Stock";
+    if (stock <= 10) return "Low Stock";
+    return "In Stock";
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "In Stock":
+        return "bg-green-100 text-green-800";
+      case "Low Stock":
+        return "bg-yellow-100 text-yellow-800";
+      case "Out of Stock":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
 
   const filteredInventory = inventoryData.filter((item) => {
     const matchesSearch =
@@ -73,6 +63,18 @@ export default function AdminInventoryPage() {
     const matchesStatus = filterStatus === "All" || item.status === filterStatus;
     return matchesSearch && matchesStatus;
   });
+
+  const handleEdit = (product) => {
+    navigate(`/admin/edit-product/${product.id}`);
+  };
+
+  if (loading) {
+    return <div className="flex min-h-screen items-center justify-center">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="flex min-h-screen items-center justify-center text-red-600">{error}</div>;
+  }
 
   return (
     <div className="p-6">
@@ -90,7 +92,6 @@ export default function AdminInventoryPage() {
           <option value="Low Stock">Low Stock</option>
           <option value="Out of Stock">Out of Stock</option>
         </select>
-
         <div className="relative w-full max-w-xs">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
@@ -154,7 +155,7 @@ export default function AdminInventoryPage() {
                   </td>
                   <td className="px-4 py-3 border text-center">
                     <button
-                      onClick={() => console.log("Edit product:", item.id)}
+                      onClick={() => handleEdit(item.raw)}
                       className="text-teal-600 hover:underline flex items-center justify-center gap-1 text-sm"
                     >
                       <Edit className="w-4 h-4" />

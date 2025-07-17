@@ -1,19 +1,14 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Plus } from "lucide-react"
 import ProfileLayout from "../components/ProfileLayout"
+import { userapi } from "../services/userapi.js"
 
 const ManageAddressesPage = () => {
   const [showAddForm, setShowAddForm] = useState(false)
-  const [addresses, setAddresses] = useState([
-    {
-      id: 1,
-      name: "Customer Name",
-      address: "375 udyog vihar phase 2, Gurgaon, Haryana - 122015",
-      phone: "98xxxxxxxx",
-    },
-  ])
+  const [addresses, setAddresses] = useState([])
+  const [editingAddress, setEditingAddress] = useState(null)
 
   const [newAddress, setNewAddress] = useState({
     name: "",
@@ -24,6 +19,20 @@ const ManageAddressesPage = () => {
     landmark: "",
   })
 
+  // Fetch addresses from API
+  const fetchAddresses = async () => {
+    try {
+      const response = await userapi.get("/api/addresses")
+      setAddresses(response.data.data)
+    } catch (error) {
+      console.error("Failed to fetch addresses", error)
+    }
+  }
+
+  useEffect(() => {
+    fetchAddresses()
+  }, [])
+
   const handleInputChange = (field, value) => {
     setNewAddress((prev) => ({
       ...prev,
@@ -31,15 +40,21 @@ const ManageAddressesPage = () => {
     }))
   }
 
-  const handleSave = () => {
-    if (newAddress.name && newAddress.mobile && newAddress.address && newAddress.city) {
-      const address = {
-        id: addresses.length + 1,
-        name: newAddress.name,
-        address: `${newAddress.address}, ${newAddress.city}`,
-        phone: newAddress.mobile,
+  const handleSave = async () => {
+    if (!newAddress.name || !newAddress.mobile || !newAddress.address || !newAddress.city) {
+      alert("Please fill in all required fields: Name, Mobile, Address, City")
+      return
+    }
+
+    try {
+      if (editingAddress) {
+        // Update existing address
+        await userapi.put(`/api/addresses/${editingAddress.id}`, newAddress)
+      } else {
+        // Add new address
+        await userapi.post("/api/addresses", newAddress)
       }
-      setAddresses((prev) => [...prev, address])
+      // Reset form and reload addresses
       setNewAddress({
         name: "",
         mobile: "",
@@ -49,16 +64,36 @@ const ManageAddressesPage = () => {
         landmark: "",
       })
       setShowAddForm(false)
+      setEditingAddress(null)
+      fetchAddresses()
+    } catch (error) {
+      console.error("Failed to save address", error)
+      alert("Failed to save address. Please try again.")
     }
   }
 
-  const handleDelete = (id) => {
-    setAddresses((prev) => prev.filter((addr) => addr.id !== id))
+  const handleDelete = async (id) => {
+    if (!confirm("Are you sure you want to delete this address?")) return
+    try {
+      await userapi.delete(`/api/addresses/${id}`)
+      fetchAddresses()
+    } catch (error) {
+      console.error("Failed to delete address", error)
+      alert("Failed to delete address. Please try again.")
+    }
   }
 
-  const handleEdit = (id) => {
-    // You can implement edit functionality here
-    console.log("Edit address with id:", id)
+  const handleEdit = (address) => {
+    setEditingAddress(address)
+    setNewAddress({
+      name: address.name,
+      mobile: address.mobile,
+      address: address.address,
+      city: address.city,
+      alternatePhone: address.alternatePhone,
+      landmark: address.landmark,
+    })
+    setShowAddForm(true)
   }
 
   return (
@@ -76,13 +111,24 @@ const ManageAddressesPage = () => {
               {!showAddForm ? (
                 <button
                   type="button"
-                  onClick={() => setShowAddForm(true)}
+                  onClick={() => {
+                    setShowAddForm(true)
+                    setEditingAddress(null)
+                    setNewAddress({
+                      name: "",
+                      mobile: "",
+                      address: "",
+                      city: "",
+                      alternatePhone: "",
+                      landmark: "",
+                    })
+                  }}
                   className="flex items-center gap-2 border border-teal-600 text-teal-600 font-semibold px-4 py-2 rounded hover:bg-teal-600 hover:text-white w-full justify-center"
                 >
                   <Plus className="w-4 h-4" /> ADD A NEW ADDRESS
                 </button>
               ) : (
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
                   <div className="flex gap-4">
                     <input
                       type="text"
@@ -90,6 +136,7 @@ const ManageAddressesPage = () => {
                       value={newAddress.name}
                       onChange={(e) => handleInputChange("name", e.target.value)}
                       className="flex-1 p-3 border rounded bg-gray-100 text-sm text-gray-700 focus:outline-none focus:border-teal-500"
+                      required
                     />
                     <input
                       type="tel"
@@ -97,6 +144,7 @@ const ManageAddressesPage = () => {
                       value={newAddress.mobile}
                       onChange={(e) => handleInputChange("mobile", e.target.value)}
                       className="flex-1 p-3 border rounded bg-gray-100 text-sm text-gray-700 focus:outline-none focus:border-teal-500"
+                      required
                     />
                   </div>
 
@@ -105,6 +153,7 @@ const ManageAddressesPage = () => {
                     value={newAddress.address}
                     onChange={(e) => handleInputChange("address", e.target.value)}
                     className="w-full p-3 border rounded bg-gray-100 text-sm text-gray-700 min-h-[80px] resize-y focus:outline-none focus:border-teal-500"
+                    required
                   />
 
                   <div className="flex gap-4">
@@ -114,6 +163,7 @@ const ManageAddressesPage = () => {
                       value={newAddress.city}
                       onChange={(e) => handleInputChange("city", e.target.value)}
                       className="flex-1 p-3 border rounded bg-gray-100 text-sm text-gray-700 focus:outline-none focus:border-teal-500"
+                      required
                     />
                     <input
                       type="tel"
@@ -138,11 +188,14 @@ const ManageAddressesPage = () => {
                       onClick={handleSave}
                       className="bg-teal-600 text-white px-8 py-2 rounded font-semibold hover:bg-teal-700"
                     >
-                      Save
+                      {editingAddress ? "Update" : "Save"}
                     </button>
                     <button
                       type="button"
-                      onClick={() => setShowAddForm(false)}
+                      onClick={() => {
+                        setShowAddForm(false)
+                        setEditingAddress(null)
+                      }}
                       className="bg-gray-600 text-white px-6 py-2 rounded font-semibold hover:bg-gray-700"
                     >
                       Cancel
@@ -155,14 +208,24 @@ const ManageAddressesPage = () => {
             {/* Saved Addresses Section */}
             <div className="flex-1 max-w-md">
               <div className="space-y-4">
+                {addresses.length === 0 && <p className="text-gray-600">No addresses saved yet.</p>}
                 {addresses.map((address) => (
-                  <div key={address.id} className="p-4 border border-gray-200 rounded-lg bg-gray-50">
+                  <div
+                    key={address.id}
+                    className="p-4 border border-gray-200 rounded-lg bg-gray-50"
+                  >
                     <p className="font-medium text-gray-900 mb-1">{address.name}</p>
-                    <p className="text-sm text-gray-600 mb-2">{address.address}</p>
-                    <p className="text-sm text-gray-600">Number: {address.phone}</p>
+                    <p className="text-sm text-gray-600 mb-2">{`${address.address}, ${address.city}`}</p>
+                    <p className="text-sm text-gray-600">Number: {address.mobile}</p>
+                    {address.alternatePhone && (
+                      <p className="text-sm text-gray-600">Alternate: {address.alternatePhone}</p>
+                    )}
+                    {address.landmark && (
+                      <p className="text-sm text-gray-600">Landmark: {address.landmark}</p>
+                    )}
                     <div className="flex space-x-2 mt-3">
                       <button
-                        onClick={() => handleEdit(address.id)}
+                        onClick={() => handleEdit(address)}
                         className="text-xs text-teal-600 hover:text-teal-700 font-medium"
                       >
                         Edit

@@ -6,18 +6,18 @@ import { useNavigate } from "react-router-dom"
 import { X } from "lucide-react"
 
 const galleryItems = [
-  { src: "src/public/1.jpg", title: "Nordic Moss" },
-  { src: "src/public/2.jpg", title: "Study unit" },
-  { src: "src/public/3.jpg", title: "Progetti" },
-  { src: "src/public/4.jpg", title: "Decoration" },
-  { src: "src/public/5.jpg", title: "Golden wall" },
-  { src: "src/public/6.jpg", title: "Aurora" },
-  { src: "src/public/7.jpg", title: "Sofa" },
-  { src: "src/public/8.jpg", title: "Cunkie" },
-  { src: "src/public/9.jpg", title: "Dining table" },
-  { src: "src/public/10.jpg", title: "Portrait" },
-  { src: "src/public/11.jpg", title: "Live space" },
-  { src: "src/public/12.jpg", title: "Gwarnic" },
+  { src: "src/image/1.jpg", title: "Nordic Moss" },
+  { src: "src/image/2.jpg", title: "Study unit" },
+  { src: "src/image/3.jpg", title: "Progetti" },
+  { src: "src/image/4.jpg", title: "Decoration" },
+  { src: "src/image/5.jpg", title: "Golden wall" },
+  { src: "src/image/6.jpg", title: "Aurora" },
+  { src: "src/image/7.jpg", title: "Sofa" },
+  { src: "src/image/8.jpg", title: "Cunkie" },
+  { src: "src/image/9.jpg", title: "Dining table" },
+  { src: "src/image/10.jpg", title: "Portrait" },
+  { src: "src/image/11.jpg", title: "Live space" },
+  { src: "src/image/12.jpg", title: "Gwarnic" },
 ]
 
 const ImageModal = ({ isOpen, onClose, imageSrc, imageTitle }) => {

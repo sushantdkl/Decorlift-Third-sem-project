@@ -37,9 +37,11 @@ const SecuritySetupPage = () => {
       try {
         setLoading(true);
         await axios.post("http://localhost:4000/api/users", {
-          name: `${userData.firstName} ${userData.lastName}`,
+          firstName: userData.firstName,
+          lastName: userData.lastName,
           email: userData.email,
           password: userData.password,
+          gender: userData.gender,
           securityQuestion: formData.securityQuestion,
           securityAnswer: formData.answer.trim(),
         });
@@ -61,7 +63,7 @@ const SecuritySetupPage = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('src/public/background.png')`
+          backgroundImage: `url('src/image/background.png')`
         }}
       >
         <div className="absolute inset-0 bg-black/40"></div>
