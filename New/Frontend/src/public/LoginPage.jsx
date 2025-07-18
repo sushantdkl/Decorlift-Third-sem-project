@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import axios from "axios";
+import { Eye, EyeOff } from "lucide-react"; // 👁️ Icons
 
 const LoginPage = ({ onLogin }) => {
   const [formData, setFormData] = useState({
@@ -9,16 +9,15 @@ const LoginPage = ({ onLogin }) => {
     password: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false); // 🔒 Initially off
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     if (formData.email && formData.password) {
       try {
         const response = await axios.post("http://localhost:4000/api/auth/login", formData);
         const { token, user } = response.data;
-
         if (token) {
           localStorage.setItem("token", token);
           onLogin(true);
@@ -31,16 +30,12 @@ const LoginPage = ({ onLogin }) => {
           alert("Unexpected error occurred. Please try again.");
         }
       } catch (error) {
-        if (error.response) {
-          if (error.response.status === 404) {
-            alert("Please register first");
-          } else if (error.response.status === 401) {
-            alert("Password does not match");
-          } else {
-            alert("Login failed: " + (error.response.data.message || "Unknown error"));
-          }
+        if (error.response?.status === 404) {
+          alert("Please register first");
+        } else if (error.response?.status === 401) {
+          alert("Password does not match");
         } else {
-          alert("Network error. Please try again later.");
+          alert("Login failed: " + (error.response?.data?.message || "Unknown error"));
         }
       }
     } else {
@@ -50,13 +45,12 @@ const LoginPage = ({ onLogin }) => {
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center"
+      className="min-h-screen bg-cover bg-center flex items-center justify-center"
       style={{
         backgroundImage:
           "linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('src/public/backgrounds.png')",
       }}
     >
-      {/* Login Form */}
       <div className="w-[400px] bg-white bg-opacity-90 p-8 rounded-lg text-black">
         <h2 className="text-center text-2xl font-bold mb-6">Sign In</h2>
 
@@ -77,15 +71,25 @@ const LoginPage = ({ onLogin }) => {
           <label htmlFor="password" className="block font-semibold mb-2">
             Password
           </label>
-          <input
-            type="password"
-            id="password"
-            value={formData.password}
-            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-            required
-            className="w-full p-2 mb-2 rounded bg-gray-100 text-sm"
-            placeholder="Enter your password"
-          />
+
+          <div className="relative mb-2">
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              required
+              className="w-full p-2 pr-10 rounded bg-gray-100 text-sm"
+              placeholder="Enter your password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
 
           <Link
             to="/forgot-password"
@@ -114,3 +118,5 @@ const LoginPage = ({ onLogin }) => {
 };
 
 export default LoginPage;
+
+
