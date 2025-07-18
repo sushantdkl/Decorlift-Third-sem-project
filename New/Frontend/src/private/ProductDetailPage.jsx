@@ -15,7 +15,8 @@ const ProductDetailPage = () => {
     const fetchProduct = async () => {
       try {
         const response = await getProductById(id)
-        setProduct(response.data.data)
+        console.log(response)
+        setProduct(response.data)
       } catch (error) {
         console.error("Failed to fetch product:", error)
       }
@@ -25,7 +26,7 @@ const ProductDetailPage = () => {
       try {
         const response = await getProducts()
         // Filter out the current product and take the first 3
-        const related = response.data.data
+        const related = response.data
           .filter((p) => p.id !== parseInt(id))
           .slice(0, 3)
         setRelatedItems(related)
@@ -78,20 +79,22 @@ const ProductDetailPage = () => {
         {/* Product Image */}
         <div className="border-2 border-gray-300 rounded-lg overflow-hidden bg-white">
           <img
-            src={product.image ? `src/image/${product.image}` : "src/image/placeholder.svg"}
-            alt={product.title}
+            src={product.image ? `../../uploads/${product.image}` : "src/image/placeholder.svg"}
+            alt={product.name}
             className="w-full h-auto object-cover"
           />
         </div>
 
         {/* Product Details */}
         <section className="flex flex-col justify-start">
-          <h2 className="text-4xl font-bold text-gray-800 mb-3">{product.title}</h2>
+          <h2 className="text-4xl font-bold text-gray-800 mb-3">{product.name}</h2>
           <p className="text-lg text-gray-500 mb-5">{product.subtitle}</p>
           <p className="text-gray-600 mb-8 leading-relaxed">{product.description}</p>
           <div className="text-3xl font-bold text-gray-900 mb-8">
             Rs. {product.price.toLocaleString()}
           </div>
+
+          <h2 className="text-xl text-gray-800 mb-3">stock: {product.stock}</h2>
 
           {/* Quantity Selector */}
           <div className="flex items-center space-x-4 mb-10">

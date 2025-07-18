@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useLocation, Link, useNavigate, Outlet } from "react-router-dom";
 import {
   LogOut,
   LayoutDashboard,
@@ -99,7 +99,7 @@ const AdminProfileLayout = ({ children }) => {
         </aside>
 
         {/* Main Content Area */}
-        <main className="flex-1 bg-white shadow-sm p-6">{children}</main>
+        <main className="flex-1 bg-white shadow-sm p-6"><Outlet/></main>
       </div>
 
       {/* Logout Confirmation Modal */}

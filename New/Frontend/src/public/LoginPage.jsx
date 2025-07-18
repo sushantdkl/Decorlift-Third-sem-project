@@ -53,7 +53,7 @@ const LoginPage = ({ onLogin }) => {
       className="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center"
       style={{
         backgroundImage:
-          "linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('src/public/backgrounds.png')",
+          "linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('src/image/backgrounds.png')",
       }}
     >
       {/* Login Form */}

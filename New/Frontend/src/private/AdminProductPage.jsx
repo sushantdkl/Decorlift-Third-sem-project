@@ -12,7 +12,6 @@ const AdminProductPage = () => {
   const [error, setError] = useState(null);
   const [showRequestOptions, setShowRequestOptions] = useState(false);
   const navigate = useNavigate();
-
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -21,6 +20,7 @@ const AdminProductPage = () => {
     try {
       const response = await userapi.get("/api/products");
       setProducts(response.data.data);
+      console.log(response.data.data);
       setLoading(false);
     } catch (err) {
       setError("Failed to fetch products");
@@ -83,7 +83,7 @@ const AdminProductPage = () => {
             >
               <div className="aspect-square bg-gray-100">
                 <img
-                  src={product.image || "/placeholder.svg"}
+                  src={`../../uploads/${product.image}`}
                   alt={product.name || "Product Image"}
                   className="w-full h-full object-cover"
                 />

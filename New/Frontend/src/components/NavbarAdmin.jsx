@@ -15,7 +15,9 @@ const NavbarAdmin = () => {
   };
 
   const confirmLogout = () => {
-    setShowLogoutConfirm(false);
+    setShowLogoutConfirm(false)
+    localStorage.removeItem("token"); // Remove token from localStorage
+    localStorage.removeItem("user"); // Remove user data from localStorage
     navigate("/"); // Go to homepage on logout
   };
 

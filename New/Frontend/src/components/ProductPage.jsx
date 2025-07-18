@@ -60,7 +60,7 @@ const ProductPage = ({ category, pageTitle }) => {
         {productsToShow.map(({ id, name, description, price, image }) => (
           <div key={id} className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer group relative">
             <img
-              src={image || "/placeholder.svg"}
+              src={`../../uploads/${image}`}
               alt={name}
               className="w-full h-48 object-cover group-hover:scale-105 transition-transform"
             />

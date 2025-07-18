@@ -109,6 +109,7 @@ export default function AddProductPage() {
             <option value="dining-chair">Dining Chair</option>
             <option value="sofa-set">Sofa Set</option>
             <option value="shop">Shop</option>
+            <option value="featured-product">Featured Product</option>
           </select>
           <button
             onClick={handleSubmit}

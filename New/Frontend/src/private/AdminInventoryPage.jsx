@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Search, Edit } from "lucide-react";
+import { Search, Edit, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { userapi } from "../services/userapi.js";
 
@@ -65,7 +65,21 @@ export default function AdminInventoryPage() {
   });
 
   const handleEdit = (product) => {
-    navigate(`/admin/edit-product/${product.id}`);
+    navigate(`/admin/edit-product/${product.id}`, { state: { product } });
+  };
+
+  const handleDelete = async (productId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+    if (!confirmDelete) return;
+
+    try {
+      await userapi.delete(`/api/products/${productId}`);
+      setInventoryData((prev) => prev.filter((item) => item.id !== productId));
+      alert("Product deleted successfully!");
+    } catch (err) {
+      console.error("Failed to delete product:", err);
+      alert("Failed to delete product");
+    }
   };
 
   if (loading) {
@@ -135,7 +149,7 @@ export default function AdminInventoryPage() {
                   <td className="px-4 py-3 border">{item.id}</td>
                   <td className="px-4 py-3 border">
                     <img
-                      src={item.image}
+                      src={`../../uploads/${item.image}`}
                       alt={item.name}
                       className="w-12 h-12 object-cover rounded border"
                     />
@@ -154,13 +168,22 @@ export default function AdminInventoryPage() {
                     </span>
                   </td>
                   <td className="px-4 py-3 border text-center">
-                    <button
-                      onClick={() => handleEdit(item.raw)}
-                      className="text-teal-600 hover:underline flex items-center justify-center gap-1 text-sm"
-                    >
-                      <Edit className="w-4 h-4" />
-                      Edit
-                    </button>
+                    <div className="flex justify-center gap-3">
+                      <button
+                        onClick={() => handleEdit(item.raw)}
+                        className="text-teal-600 hover:underline flex items-center gap-1"
+                      >
+                        <Edit className="w-4 h-4" />
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(item.id)}
+                        className="text-red-600 hover:underline flex items-center gap-1"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        Delete
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))

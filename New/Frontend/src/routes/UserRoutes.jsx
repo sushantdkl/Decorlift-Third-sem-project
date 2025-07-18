@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
 
 // Public Pages
 import HomePage from "../public/HomePage";
@@ -11,9 +12,9 @@ import GalleryPage from "../public/GalleryPage";
 import LoginPage from "../public/LoginPage";
 import SignUpPage from "../public/SignUpPage";
 import SecuritySetupPage from "../public/SecuritySetupPage";
+import ResetPasswordPage from "../private/ResetPasswordPage";
 
 // Private Pages
-import ResetPasswordPage from "../private/ResetPasswordPage";
 import DiningChairsPage from "../private/DiningChairsPage";
 import ArchitecturePage from "../Private/ArchitecturePage";
 import OfficeChairsPage from "../Private/OfficeChairsPage";
@@ -48,25 +49,34 @@ export default function UserRoutes({ setIsLoggedIn }) {
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/gallery" element={<GalleryPage />} />
       <Route path="/projects" element={<GalleryPage />} />
-      <Route path="/login" element={<LoginPage onLogin={setIsLoggedIn} />} />
-      <Route path="/signup" element={<SignUpPage />} />
+
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <LoginPage onLogin={setIsLoggedIn} />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <PublicRoute>
+            <SignUpPage />
+          </PublicRoute>
+        }
+      />
       <Route path="/security-setup" element={<SecuritySetupPage />} />
       <Route path="/forgot-password" element={<ResetPasswordPage />} />
+
+      {/* Semi-public product category pages */}
       <Route path="/dining-chairs" element={<DiningChairsPage />} />
       <Route path="/architecture" element={<ArchitecturePage />} />
       <Route path="/office-chairs" element={<OfficeChairsPage />} />
       <Route path="/sofa-sets" element={<SofaSetsPage />} />
       <Route path="/shop" element={<ShopPage />} />
 
-      {/* Private Routes */}
-      <Route
-        path="/reset-password"
-        element={
-          <PrivateRoute>
-            <ResetPasswordPage />
-          </PrivateRoute>
-        }
-      />
+      {/* Private User Routes */}
       <Route
         path="/checkout"
         element={
@@ -121,28 +131,23 @@ export default function UserRoutes({ setIsLoggedIn }) {
         path="/admin/*"
         element={
           <PrivateRoute>
-            <AdminProfileLayout>
-              <Routes>
-                <Route path="products" element={<AdminProductPage />} />
-                <Route path="users" element={<AdminManageUserPage />} />
-                <Route path="inventory" element={<AdminInventoryPage />} />
-                <Route path="add-product" element={<AdminAddProductPage />} />
-                <Route
-                  path="edit-product/:id"
-                  element={<AdminEditProductPage />}
-                />
-                <Route path="edit-user/:id" element={<AdminEditUserPage />} />
-                <Route path="requests" element={<AdminRequestPage />} />
-                <Route path="refund" element={<AdminRefundPage />} />
-                <Route
-                  path="customer-queries"
-                  element={<AdminCustomerPage />}
-                />
-              </Routes>
-            </AdminProfileLayout>
+            <AdminProfileLayout />
           </PrivateRoute>
         }
-      />
+      >
+        <Route path="products" element={<AdminProductPage />} />
+        <Route path="users" element={<AdminManageUserPage />} />
+        <Route path="inventory" element={<AdminInventoryPage />} />
+        <Route path="add-product" element={<AdminAddProductPage />} />
+        <Route path="edit-product/:id" element={<AdminEditProductPage />} />
+        <Route path="edit-user/:id" element={<AdminEditUserPage />} />
+        <Route path="requests" element={<AdminRequestPage />} />
+        <Route path="refund" element={<AdminRefundPage />} />
+        <Route path="customer-queries" element={<AdminCustomerPage />} />
+      </Route>
+
+      {/* Fallback for unknown routes */}
+      <Route path="*" element={<h1>404 - Page Not Found</h1>} />
     </Routes>
   );
 }
