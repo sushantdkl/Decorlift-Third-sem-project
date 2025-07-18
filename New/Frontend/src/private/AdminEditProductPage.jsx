@@ -50,16 +50,7 @@ const AdminEditProductPage = () => {
 
   return (
     <div className="flex min-h-screen bg-[#f3efeb]">
-      <nav className="w-52 fixed top-0 left-0 h-full bg-[#f3efeb] border-r-2 border-gray-300 pt-20">
-        <a href="#" className="flex items-center px-5 py-4 border-b border-gray-300 text-gray-700">Admin</a>
-        <button onClick={onBack} className="flex items-center px-5 py-4 bg-[#7a9b8e] text-white w-full text-left">Products</button>
-        <a href="/adminmanageuserpage" className="flex items-center px-5 py-4 border-b border-gray-300 text-gray-700">Manage Users</a>
-        <a href="/admininventorypage" className="flex items-center px-5 py-4 border-b border-gray-300 text-gray-700">Manage Inventory</a>
-        <a href="/adminrequestpage" className="flex items-center px-5 py-4 border-b border-gray-300 text-gray-700">Requests</a>
-        <div className="absolute bottom-5 w-full text-center">
-          <button onClick={handleLogout} className="text-gray-600 font-medium">Logout</button>
-        </div>
-      </nav>
+      
 
       <header className="fixed top-0 left-0 right-0 h-20 bg-[#e8e2e2] border-b-2 border-gray-300 flex items-center px-6 z-10">
         <div className="w-24 h-24 flex items-center justify-center font-bold text-xl">
@@ -89,7 +80,7 @@ const AdminEditProductPage = () => {
                   </div>
                 ))}
               </div>
-              <div className="w-8 h-8 border border-gray-300 flex items-center justify-center rounded cursor-pointer">›</div>
+              <div className="w-2 h-8 border border-gray-300 flex items-center justify-center rounded cursor-pointer">›</div>
             </div>
           </div>
 

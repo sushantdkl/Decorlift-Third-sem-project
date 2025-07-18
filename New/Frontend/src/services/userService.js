@@ -1,12 +1,13 @@
-import { userapi } from "./userapi";
- 
-export const getUsers = async () => {
-  try {
-    const response = await userapi.get("/api/users");
-    return response.data;
-  } catch (error) {
-    console.error("Failed to fetch users:", error);
-    throw error;
-  }
+import { userapi } from "./userapi.js";
+
+export const getUsers = () => {
+  return userapi.get("/api/users");
 };
- 
+
+export const getAddressesByUserId = (userId) => {
+  return userapi.get(`/api/addresses/user/${userId}`);
+};
+
+export const deleteUser = (userId) => {
+  return userapi.delete(`/api/users/${userId}`);
+};

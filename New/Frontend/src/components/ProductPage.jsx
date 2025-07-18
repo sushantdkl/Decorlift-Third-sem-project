@@ -1,49 +1,48 @@
-"use client"
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Search } from "lucide-react";
+import { userapi } from "../services/userapi.js";
 
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { Search } from "lucide-react"
-import { userapi } from "../services/userapi.js"
-import { useEffect } from "react"
-
-const ShopPage = () => {
-  const navigate = useNavigate()
-  const [viewAll, setViewAll] = useState(false)
-  const [searchTerm, setSearchTerm] = useState("")
-  const [products, setProducts] = useState([])
+const ProductPage = ({ category, pageTitle }) => {
+  const navigate = useNavigate();
+  const [viewAll, setViewAll] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await userapi.get("/api/products")
-        setProducts(response.data.data)
+        const response = await userapi.get(`/api/products?category=${category}`);
+        setProducts(response.data.data);
       } catch (error) {
-        console.error("Failed to fetch products", error)
+        console.error(`Failed to fetch ${category} products`, error);
       }
-    }
-    fetchProducts()
-  }, [])
+    };
+    fetchProducts();
+  }, [category]);
 
   const displayedProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  );
 
-  const productsToShow = viewAll ? displayedProducts : displayedProducts.slice(0, 8)
+  const productsToShow = viewAll ? displayedProducts : displayedProducts.slice(0, 8);
 
   const handleBuyNow = (id) => {
-    const selectedProduct = products.find((product) => product.id === id)
-    const quantity = 1
-    const totalCost = selectedProduct.price * quantity
+    const selectedProduct = products.find((product) => product.id === id);
+    const quantity = 1;
+    const totalCost = selectedProduct.price * quantity;
     navigate(
-      `/product/${id}?quantity=${quantity}&totalCost=${totalCost}&productTitle=${encodeURIComponent(selectedProduct.title)}`
-    )
-  }
+      `/product/${id}?quantity=${quantity}&totalCost=${totalCost}&productTitle=${encodeURIComponent(
+        selectedProduct.name
+      )}`
+    );
+  };
 
   return (
     <div className="font-sans text-black min-h-screen bg-[#fdfdfd]">
       {/* Page header */}
       <div className="max-w-7xl mx-auto mt-10 px-6 flex justify-between items-center">
-        <h1 className="text-4xl font-bold text-gray-900">Shop</h1>
+        <h1 className="text-4xl font-bold text-gray-900">{pageTitle}</h1>
         <div className="relative">
           <input
             type="text"
@@ -93,7 +92,7 @@ const ShopPage = () => {
       )}
       <div className="py-10"></div>
     </div>
-  )
-}
+  );
+};
 
-export default ShopPage
+export default ProductPage;

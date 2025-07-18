@@ -5,7 +5,12 @@ import { Product } from '../../models/index.js';
 */
 const getAll = async (req, res) => {
   try {
-    const products = await Product.findAll();
+    const { category } = req.query;
+    const where = {};
+    if (category) {
+      where.category = category;
+    }
+    const products = await Product.findAll({ where });
     res.status(200).send({ data: products, message: "Successfully fetched products" });
   } catch (e) {
     console.error(e);
@@ -18,13 +23,14 @@ const getAll = async (req, res) => {
 */
 const create = async (req, res) => {
   try {
-    const { name, description, price, image, stock, category } = req.body;
- 
+    const { name, description, price, stock, category } = req.body;
+    const image = req.file ? `/uploads/${req.file.filename}` : null;
+
     // validation
     if (!name || price == null) {
       return res.status(400).send({ message: "Name and price are required" });
     }
- 
+
     const product = await Product.create({
       name,
       description,
@@ -33,7 +39,7 @@ const create = async (req, res) => {
       stock: stock ?? 0,
       category,
     });
- 
+
     res.status(201).send({ data: product, message: "Product created successfully" });
   } catch (e) {
     console.error(e);

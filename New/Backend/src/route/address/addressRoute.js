@@ -6,6 +6,7 @@ router.get("/", addressController.getAll);
 router.post("/", addressController.create);
 router.put("/:id", addressController.update);
 router.delete("/:id", addressController.deleteById);
+router.get("/user/:userId", addressController.getByUserId);
  
 export { router as addressRouter };
  

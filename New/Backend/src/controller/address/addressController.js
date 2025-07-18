@@ -101,10 +101,27 @@ const deleteById = async (req, res) => {
   }
 };
  
+/**
+* Fetch all addresses for a specific user (Admin only)
+*/
+const getByUserId = async (req, res) => {
+  try {
+    if (!req.user || !req.user.isAdmin) {
+      return res.status(403).send({ message: "Forbidden" });
+    }
+    const { userId } = req.params;
+    const addresses = await Address.findAll({ where: { UserId: userId } });
+    res.status(200).send({ data: addresses, message: "Successfully fetched addresses" });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: 'Failed to fetch addresses' });
+  }
+};
 export const addressController = {
   getAll,
   create,
   update,
   deleteById,
+  getByUserId,
 };
  

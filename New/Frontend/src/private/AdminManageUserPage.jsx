@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { getUsers } from "../services/userService.js"
+import { getUsers, deleteUser } from "../services/userService.js"
 
 const AdminManageUserPage = () => {
   const [showModal, setShowModal] = useState(false)
@@ -28,6 +28,18 @@ const AdminManageUserPage = () => {
     }
   }
 
+  const handleDelete = async (userId) => {
+    if (confirm("Are you sure you want to delete this user?")) {
+      try {
+        await deleteUser(userId)
+        fetchUsers()
+      } catch (err) {
+        console.error("Failed to delete user", err)
+        alert("Failed to delete user. Please try again.")
+      }
+    }
+  }
+
   const handleLogout = () => {
     alert("Logging out...")
     setShowModal(false)
@@ -39,7 +51,9 @@ const AdminManageUserPage = () => {
     (user) =>
       user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.address?.toLowerCase().includes(searchQuery.toLowerCase())
+      user.address?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.gender?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.mobile?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   if (loading) {
@@ -73,14 +87,15 @@ const AdminManageUserPage = () => {
                 <th className="border border-black px-3 py-2 text-left font-bold w-16">S\N</th>
                 <th className="border border-black px-3 py-2 text-left font-bold">Name</th>
                 <th className="border border-black px-3 py-2 text-left font-bold">E-mail</th>
-                <th className="border border-black px-3 py-2 text-left font-bold">Address</th>
-                <th className="border border-black px-3 py-2 w-16">{/* Actions */}</th>
+                <th className="border border-black px-3 py-2 text-left font-bold">Gender</th>
+                <th className="border border-black px-3 py-2 text-left font-bold">Mobile</th>
+                <th className="border border-black px-3 py-2 w-32">{/* Actions */}</th>
               </tr>
             </thead>
             <tbody>
               {filteredUsers.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="text-center py-8 text-gray-600 border border-black">
+                  <td colSpan="6" className="text-center py-8 text-gray-600 border border-black">
                     No users found.
                   </td>
                 </tr>
@@ -90,13 +105,14 @@ const AdminManageUserPage = () => {
                     <td className="border border-black px-3 py-2">{idx + 1}</td>
                     <td className="border border-black px-3 py-2 font-medium">{user.name}</td>
                     <td className="border border-black px-3 py-2">{user.email}</td>
-                    <td className="border border-black px-3 py-2">{user.address || "N/A"}</td>
+                    <td className="border border-black px-3 py-2">{user.gender || "N/A"}</td>
+                    <td className="border border-black px-3 py-2">{user.mobile || "N/A"}</td>
                     <td className="border border-black px-3 py-2 text-center">
                       <button
-                        onClick={() => navigate(`/admin/edit-user/${user.id}`)}
-                        className="text-teal-600 hover:underline"
+                        onClick={() => handleDelete(user.id)}
+                        className="text-red-600 hover:underline"
                       >
-                        Edit
+                        Delete
                       </button>
                     </td>
                   </tr>

@@ -22,7 +22,20 @@ const create = async (req, res) => {
   }
 };
  
+/**
+* Fetch all contact submissions
+*/
+const getAll = async (req, res) => {
+  try {
+    const contacts = await Contact.findAll();
+    res.status(200).send({ data: contacts, message: "Successfully fetched contacts" });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Failed to fetch contacts" });
+  }
+};
 export const contactController = {
   create,
+  getAll,
 };
  

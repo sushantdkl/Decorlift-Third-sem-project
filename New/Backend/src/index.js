@@ -37,12 +37,11 @@ app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/contact", contactRouter);
 app.use("/api/auth", authRouter);
-app.use("/api/addresses", addressRouter);
-
 // Apply authentication middleware to all routes below
 app.use(authenticateToken);
 
 // Authenticated routes
+app.use("/api/addresses", addressRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/returns", returnRequestRouter);
 app.use("/api/requests", requestRouter);

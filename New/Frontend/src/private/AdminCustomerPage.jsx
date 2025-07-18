@@ -2,31 +2,32 @@
 
 import { useState, useEffect } from "react";
 import { ArrowLeft, Send, Search } from "lucide-react";
-import { getUsers } from "../services/userService"; // Make sure this path is correct
+import { userapi } from "../services/userapi";
 
 export default function CustomerQueriesPage() {
   const [activeView, setActiveView] = useState("list");
   const [selectedQuery, setSelectedQuery] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [replyMessage, setReplyMessage] = useState("");
-  const [customers, setCustomers] = useState([]);
+  const [queries, setQueries] = useState([]);
 
   useEffect(() => {
-    const fetchCustomers = async () => {
+    const fetchQueries = async () => {
       try {
-        const response = await getUsers();
-        setCustomers(response.data.data || []);
+        const response = await userapi.get("/api/contact");
+        setQueries(response.data.data || []);
       } catch (error) {
-        console.error("Failed to fetch customers:", error);
+        console.error("Failed to fetch queries:", error);
       }
     };
-    fetchCustomers();
+    fetchQueries();
   }, []);
 
-  const filteredQueries = customers.filter(
+  const filteredQueries = queries.filter(
     (query) =>
       query.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      query.email?.toLowerCase().includes(searchQuery.toLowerCase())
+      query.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      query.subject?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleQueryClick = (query) => {
@@ -87,11 +88,17 @@ export default function CustomerQueriesPage() {
                           <strong>Email:</strong> {query.email}
                         </p>
                         <p>
-                          <strong>Phone:</strong> {query.mobile || "N/A"}
+                          <strong>Phone:</strong> {query.phone || "N/A"}
+                        </p>
+                        <p>
+                          <strong>Subject:</strong> {query.subject}
+                        </p>
+                        <p className="truncate">
+                          <strong>Message:</strong> {query.message}
                         </p>
                       </div>
                     </div>
-                    <div className="text-xs text-gray-500">{query.createdAt || "–"}</div>
+                    <div className="text-xs text-gray-500">{new Date(query.createdAt).toLocaleDateString() || "–"}</div>
                   </div>
                 </div>
               ))
@@ -128,18 +135,28 @@ export default function CustomerQueriesPage() {
                   <input
                     type="text"
                     readOnly
-                    value={selectedQuery.mobile || ""}
+                    value={selectedQuery.phone || ""}
                     className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-50 cursor-not-allowed"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Name:</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Subject:</label>
                 <input
                   type="text"
                   readOnly
-                  value={selectedQuery.name}
+                  value={selectedQuery.subject}
+                  className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-50 cursor-not-allowed"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Message:</label>
+                <textarea
+                  readOnly
+                  value={selectedQuery.message}
+                  rows={4}
                   className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-50 cursor-not-allowed"
                 />
               </div>
