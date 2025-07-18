@@ -27,10 +27,27 @@ const LoginPage = ({ onLogin }) => {
             navigate("/");
           }
         } else {
+<<<<<<< HEAD
           alert("Login failed. Please register first.");
         }
       } catch (error) {
         alert("Login failed. Please check your credentials or register.");
+=======
+          alert("Unexpected error occurred. Please try again.");
+        }
+      } catch (error) {
+        if (error.response) {
+          if (error.response.status === 404) {
+            alert("Please register first");
+          } else if (error.response.status === 401) {
+            alert("Password does not match");
+          } else {
+            alert("Login failed: " + (error.response.data.message || "Unknown error"));
+          }
+        } else {
+          alert("Network error. Please try again later.");
+        }
+>>>>>>> 49cd4cef27059ea0a48263253e45aefb36d634d8
       }
     } else {
       alert("Please enter both email and password.");
@@ -42,7 +59,7 @@ const LoginPage = ({ onLogin }) => {
       className="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center"
       style={{
         backgroundImage:
-          "linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('src/public/backgrounds.png')",
+          "linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('src/image/backgrounds.png')",
       }}
     >
       <div className="w-[400px] bg-white bg-opacity-90 p-8 rounded-lg text-black">

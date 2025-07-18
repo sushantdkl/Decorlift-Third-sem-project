@@ -1,37 +1,57 @@
 import { Product } from '../../models/index.js';
+import multer from 'multer';
+import path from 'path';
+
+// Setup multer storage for image uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, 'uploads/'),
+  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname)),
+});
+
+export const upload = multer({ storage });
 
 /**
- * Fetch all products
+ * Fetch all products, optionally filtered by category
  */
 const getAll = async (req, res) => {
   try {
-    const products = await Product.findAll();
-    res.status(200).send({ data: products, message: "Successfully fetched products" });
+    const { category } = req.query;
+    const where = {};
+    if (category) {
+      where.category = category;
+    }
+    const products = await Product.findAll({ where });
+    res.status(200).send({ data: products, message: 'Successfully fetched products' });
   } catch (e) {
+    console.error(e);
     res.status(500).json({ error: 'Failed to fetch products' });
   }
 };
 
 /**
- * Create new product
+ * Create new product with image upload
  */
 const create = async (req, res) => {
   try {
-    const { title, description, price, image } = req.body;
+    const { name, description, price, stock, category } = req.body;
 
-    // validation
-    if (!title || !price) {
-      return res.status(400).send({ message: "Title and price are required" });
+    if (!name || price == null) {
+      return res.status(400).send({ message: 'Name and price are required' });
     }
 
+    // Store image filename with path for serving
+    const image = req.file ? `/uploads/${req.file.filename}` : null;
+
     const product = await Product.create({
-      title,
+      name,
       description,
       price,
+      stock: stock ?? 0,
+      category,
       image,
     });
 
-    res.status(201).send({ data: product, message: "Product created successfully" });
+    res.status(201).send({ data: product, message: 'Product created successfully' });
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: 'Failed to create product' });
@@ -44,22 +64,24 @@ const create = async (req, res) => {
 const update = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, subtitle, description, price, image } = req.body;
+    const { name, description, price, stock, category } = req.body;
+    const image = req.file ? `/uploads/${req.file.filename}` : undefined;
 
     const product = await Product.findOne({ where: { id } });
-
     if (!product) {
-      return res.status(404).send({ message: "Product not found" });
+      return res.status(404).send({ message: 'Product not found' });
     }
 
-    product.title = title ?? product.title;
+    product.name = name ?? product.name;
     product.description = description ?? product.description;
     product.price = price ?? product.price;
-    product.image = image ?? product.image;
+    product.stock = stock ?? product.stock;
+    product.category = category ?? product.category;
+    if (image !== undefined) product.image = image;
 
     await product.save();
 
-    res.status(200).send({ data: product, message: "Product updated successfully" });
+    res.status(200).send({ data: product, message: 'Product updated successfully' });
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: 'Failed to update product' });
@@ -74,14 +96,13 @@ const deleteById = async (req, res) => {
     const { id } = req.params;
 
     const product = await Product.findOne({ where: { id } });
-
     if (!product) {
-      return res.status(404).send({ message: "Product not found" });
+      return res.status(404).send({ message: 'Product not found' });
     }
 
     await product.destroy();
 
-    res.status(200).send({ message: "Product deleted successfully" });
+    res.status(200).send({ message: 'Product deleted successfully' });
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: 'Failed to delete product' });
@@ -96,13 +117,13 @@ const getById = async (req, res) => {
     const { id } = req.params;
 
     const product = await Product.findOne({ where: { id } });
-
     if (!product) {
-      return res.status(404).send({ message: "Product not found" });
+      return res.status(404).send({ message: 'Product not found' });
     }
 
-    res.status(200).send({ data: product, message: "Product fetched successfully" });
+    res.status(200).send({ data: product, message: 'Product fetched successfully' });
   } catch (e) {
+    console.error(e);
     res.status(500).json({ error: 'Failed to fetch product' });
   }
 };
@@ -112,5 +133,5 @@ export const productController = {
   create,
   update,
   deleteById,
-  getById
+  getById,
 };

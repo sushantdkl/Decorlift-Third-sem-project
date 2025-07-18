@@ -1,12 +1,10 @@
-"use client"
-
-import { useState } from "react"
-import { Search } from "lucide-react"
+import ProductPage from "../components/ProductPage";
 
 const OfficeChairsPage = () => {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [showAll, setShowAll] = useState(false)
+  return <ProductPage category="office-chair" pageTitle="Office Chairs" />;
+};
 
+<<<<<<< HEAD
   const products = [
     { id: 1, title: "Dining Chair", description: "Elegant sitting chair options for your living room", price: "Rs. 24,000", image: "src/image/11.jpg" },
     { id: 2, title: "Decoration", description: "Elegant sitting chair options for your living room", price: "Rs. 24,000", image: "src/image/11.jpg" },
@@ -84,3 +82,6 @@ const OfficeChairsPage = () => {
 }
 
 export default OfficeChairsPage
+=======
+export default OfficeChairsPage;
+>>>>>>> 49cd4cef27059ea0a48263253e45aefb36d634d8

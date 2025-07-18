@@ -1,12 +1,10 @@
-"use client"
-
-import { useState } from "react"
-import { Search } from "lucide-react"
+import ProductPage from "../components/ProductPage";
 
 const DiningChairsPage = () => {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [showAll, setShowAll] = useState(false)
+  return <ProductPage category="dining-chair" pageTitle="Dining Chairs" />;
+};
 
+<<<<<<< HEAD
   const products = [
     {
       id: 1,
@@ -131,3 +129,6 @@ const DiningChairsPage = () => {
 }
 
 export default DiningChairsPage
+=======
+export default DiningChairsPage;
+>>>>>>> 49cd4cef27059ea0a48263253e45aefb36d634d8

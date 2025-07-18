@@ -3,35 +3,29 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Search } from "lucide-react"
+import { userapi } from "../services/userapi.js"
+import { useEffect } from "react"
 
 const ShopPage = () => {
   const navigate = useNavigate()
   const [viewAll, setViewAll] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
+  const [products, setProducts] = useState([])
 
-  const products = [
-    { id: 1, title: "Dining Chair", description: "Elegant sitting chair options for your living room", price: 24000, image: "/image/7.jpg" },
-    { id: 2, title: "Decoration", description: "Elegant sitting chair options for your living room", price: 24999, image: "/image/7.jpg" },
-    { id: 3, title: "Chair", description: "Elegant sitting chair options for your living room", price: 24999, image: "/image/7.jpg" },
-    { id: 4, title: "Sofa", description: "Elegant sitting chair options for your living room", price: 24999, image: "/image/7.jpg" },
-    { id: 5, title: "Decoration", description: "Elegant sitting chair options for your living room", price: 24999, image: "/image/7.jpg" },
-    { id: 6, title: "Decoration", description: "Elegant sitting chair options for your living room", price: 24999, image: "/image/7.jpg" },
-    { id: 7, title: "Chair", description: "Elegant sitting chair options for your living room", price: 24999, image: "/image/7.jpg" },
-    { id: 8, title: "L-Shape Sofa", description: "Premium L-shaped sofa set for spacious living rooms", price: 85000, image: "/image/7.jpg" },
-    { id: 9, title: "3-Seater Sofa", description: "Comfortable three-seater sofa with modern design", price: 65000, image: "/image/7.jpg" },
-    { id: 10, title: "Recliner Sofa", description: "Luxury recliner sofa with premium leather finish", price: 95000, image: "/image/7.jpg" },
-    { id: 11, title: "Sectional Sofa", description: "Large sectional sofa perfect for family gatherings", price: 120000, image: "/image/7.jpg" },
-    { id: 12, title: "Fabric Sofa Set", description: "Stylish fabric sofa set with matching cushions", price: 75000, image: "/image/7.jpg" },
-    { id: 13, title: "Modern Sofa", description: "Contemporary sofa with sleek design", price: 70000, image: "/image/7.jpg" },
-    { id: 14, title: "Classic Sofa", description: "Traditional sofa with comfortable cushions", price: 68000, image: "/image/7.jpg" },
-    { id: 15, title: "Leather Sofa", description: "Premium leather sofa with durable finish", price: 90000, image: "/image/7.jpg" },
-    { id: 16, title: "Corner Sofa", description: "Spacious corner sofa with modern style", price: 83000, image: "/image/7.jpg" },
-    { id: 17, title: "Outdoor Sofa", description: "Weather-resistant sofa for outdoor use", price: 54000, image: "/image/7.jpg" },
-    { id: 18, title: "Compact Sofa", description: "Small-sized sofa for cozy spaces", price: 39000, image: "/image/7.jpg" },
-  ]
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await userapi.get("/api/products")
+        setProducts(response.data.data)
+      } catch (error) {
+        console.error("Failed to fetch products", error)
+      }
+    }
+    fetchProducts()
+  }, [])
 
   const displayedProducts = products.filter((product) =>
-    product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   const productsToShow = viewAll ? displayedProducts : displayedProducts.slice(0, 8)
@@ -64,15 +58,15 @@ const ShopPage = () => {
 
       {/* Product gallery */}
       <div className="max-w-7xl mx-auto px-6 mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {productsToShow.map(({ id, title, description, price, image }) => (
+        {productsToShow.map(({ id, name, description, price, image }) => (
           <div key={id} className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer group relative">
             <img
-              src={image || "/placeholder.svg"}
-              alt={title}
+              src={`../../uploads/${image}`}
+              alt={name}
               className="w-full h-48 object-cover group-hover:scale-105 transition-transform"
             />
             <div className="p-4">
-              <h2 className="font-semibold text-lg text-gray-900 mb-1">{title}</h2>
+              <h2 className="font-semibold text-lg text-gray-900 mb-1">{name}</h2>
               <p className="text-sm text-gray-600 mb-3">{description}</p>
               <p className="font-bold text-blue-600 text-lg">Rs. {price.toLocaleString()}</p>
             </div>

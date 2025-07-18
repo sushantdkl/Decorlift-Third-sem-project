@@ -1,74 +1,54 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { ArrowLeft, Send, Search } from "lucide-react"
-
-const customerQueries = [
-  {
-    id: "1",
-    subject: "Product Inquiry",
-    email: "customer@example.com",
-    phone: "+91 9876543210",
-    name: "John Doe",
-    details: "I would like to know more about the White Aesthetic Chair. Is it available in different colors?",
-    status: "pending",
-    createdAt: "2024-01-15",
-  },
-  {
-    id: "2",
-    subject: "Delivery Issue",
-    email: "jane@example.com",
-    phone: "+91 9876543211",
-    name: "Jane Smith",
-    details:
-      "My order was supposed to be delivered yesterday but I haven't received it yet. Can you please check the status?",
-    status: "pending",
-    createdAt: "2024-01-14",
-  },
-  {
-    id: "3",
-    subject: "Product Quality",
-    email: "bob@example.com",
-    phone: "+91 9876543212",
-    name: "Bob Johnson",
-    details: "The chair I received has a small scratch on the armrest. Can this be replaced?",
-    status: "resolved",
-    createdAt: "2024-01-13",
-  },
-]
+import { useState, useEffect } from "react";
+import { ArrowLeft, Send, Search } from "lucide-react";
+import { userapi } from "../services/userapi";
 
 export default function CustomerQueriesPage() {
-  const [activeView, setActiveView] = useState("list")
-  const [selectedQuery, setSelectedQuery] = useState(null)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [replyMessage, setReplyMessage] = useState("")
+  const [activeView, setActiveView] = useState("list");
+  const [selectedQuery, setSelectedQuery] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [replyMessage, setReplyMessage] = useState("");
+  const [queries, setQueries] = useState([]);
 
-  const filteredQueries = customerQueries.filter(
+  useEffect(() => {
+    const fetchQueries = async () => {
+      try {
+        const response = await userapi.get("/api/contact");
+        setQueries(response.data.data || []);
+      } catch (error) {
+        console.error("Failed to fetch queries:", error);
+      }
+    };
+    fetchQueries();
+  }, []);
+
+  const filteredQueries = queries.filter(
     (query) =>
-      query.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      query.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      query.email.toLowerCase().includes(searchQuery.toLowerCase()),
-  )
+      query.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      query.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      query.subject?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleQueryClick = (query) => {
-    setSelectedQuery(query)
-    setActiveView("details")
-  }
+    setSelectedQuery(query);
+    setActiveView("details");
+  };
 
   const handleBackToList = () => {
-    setActiveView("list")
-    setSelectedQuery(null)
-    setReplyMessage("")
-  }
+    setActiveView("list");
+    setSelectedQuery(null);
+    setReplyMessage("");
+  };
 
   const handleSendReply = () => {
     if (replyMessage.trim()) {
-      console.log("Sending reply:", replyMessage)
-      alert("Reply sent successfully!")
-      setReplyMessage("")
-      handleBackToList()
+      console.log("Reply to", selectedQuery.email, ":", replyMessage);
+      alert("Reply sent successfully!");
+      setReplyMessage("");
+      handleBackToList();
     }
-  }
+  };
 
   return (
     <div className="p-6">
@@ -101,28 +81,24 @@ export default function CustomerQueriesPage() {
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2 flex-wrap">
-                        <h3 className="font-semibold text-lg text-gray-900">{query.subject}</h3>
-                        <span
-                          className={`px-2 py-1 rounded-full text-xs font-medium ${
-                            query.status === "pending"
-                              ? "bg-yellow-100 text-yellow-800"
-                              : "bg-green-100 text-green-800"
-                          }`}
-                        >
-                          {query.status}
-                        </span>
+                        <h3 className="font-semibold text-lg text-gray-900">{query.name}</h3>
                       </div>
                       <div className="text-sm text-gray-600 space-y-1 max-w-xl">
                         <p>
-                          <strong>From:</strong> {query.name} ({query.email})
+                          <strong>Email:</strong> {query.email}
                         </p>
                         <p>
-                          <strong>Phone:</strong> {query.phone}
+                          <strong>Phone:</strong> {query.phone || "N/A"}
                         </p>
-                        <p className="mt-2">{query.details}</p>
+                        <p>
+                          <strong>Subject:</strong> {query.subject}
+                        </p>
+                        <p className="truncate">
+                          <strong>Message:</strong> {query.message}
+                        </p>
                       </div>
                     </div>
-                    <div className="text-xs text-gray-500">{query.createdAt}</div>
+                    <div className="text-xs text-gray-500">{new Date(query.createdAt).toLocaleDateString() || "–"}</div>
                   </div>
                 </div>
               ))
@@ -159,20 +135,10 @@ export default function CustomerQueriesPage() {
                   <input
                     type="text"
                     readOnly
-                    value={selectedQuery.phone}
+                    value={selectedQuery.phone || ""}
                     className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-50 cursor-not-allowed"
                   />
                 </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Name:</label>
-                <input
-                  type="text"
-                  readOnly
-                  value={selectedQuery.name}
-                  className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-50 cursor-not-allowed"
-                />
               </div>
 
               <div>
@@ -186,12 +152,12 @@ export default function CustomerQueriesPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Details:</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Message:</label>
                 <textarea
                   readOnly
-                  value={selectedQuery.details}
-                  rows={5}
-                  className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-50 cursor-not-allowed resize-none"
+                  value={selectedQuery.message}
+                  rows={4}
+                  className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-50 cursor-not-allowed"
                 />
               </div>
 
@@ -200,7 +166,7 @@ export default function CustomerQueriesPage() {
                 <textarea
                   value={replyMessage}
                   onChange={(e) => setReplyMessage(e.target.value)}
-                  placeholder="Automated message / typing"
+                  placeholder="Type your reply..."
                   rows={6}
                   className="w-full border-2 border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
@@ -220,5 +186,5 @@ export default function CustomerQueriesPage() {
         </>
       )}
     </div>
-  )
+  );
 }

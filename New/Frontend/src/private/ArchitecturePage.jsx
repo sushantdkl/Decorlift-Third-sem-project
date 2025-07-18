@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 
 import { useState, useEffect } from "react";
@@ -196,4 +197,12 @@ const ArchitecturePage = () => {
   );
 };
 
+=======
+import ProductPage from "../components/ProductPage";
+
+const ArchitecturePage = () => {
+  return <ProductPage category="architecture" pageTitle="Architecture" />;
+};
+
+>>>>>>> 49cd4cef27059ea0a48263253e45aefb36d634d8
 export default ArchitecturePage;

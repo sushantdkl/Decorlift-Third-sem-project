@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
+import { userapi } from "../services/userapi.js"
 
 const CheckoutPage = () => {
   const navigate = useNavigate()
@@ -26,24 +27,29 @@ const CheckoutPage = () => {
     phone: "98xxxxxxx",
   })
 
-  const handleConfirm = () => {
-    console.log("Order confirmed:", {
-      productId,
-      quantity,
-      productTitle,
-      shippingDetails,
-      deliveryMethod,
-      totalCost,
-      shippingCost,
-      estimatedTax,
-      subTotal,
-    })
-    navigate("/order-success")
+  const handleConfirm = async () => {
+    try {
+      await userapi.post("/api/orders", {
+        productId,
+        quantity,
+        totalCost,
+        shippingCost,
+        estimatedTax,
+        subTotal,
+        customerName: shippingDetails.customerName,
+        address: shippingDetails.address,
+        phone: shippingDetails.phone,
+        deliveryMethod,
+      })
+      navigate("/order-success")
+    } catch (error) {
+      console.error("Failed to confirm order", error)
+      alert("Failed to confirm order. Please try again.")
+    }
   }
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      {/* Main Content */}
       <div className="flex-1 max-w-6xl mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-12">Check-out</h1>
 
@@ -88,7 +94,7 @@ const CheckoutPage = () => {
               <div className="mt-6">
                 <label className="block text-sm font-medium text-gray-700 mb-3">Delivery Method:</label>
                 <div className="flex space-x-6">
-                  <label className="flex items-center">
+                  <label className="flex items-center cursor-pointer">
                     <input
                       type="radio"
                       name="delivery"
@@ -99,7 +105,7 @@ const CheckoutPage = () => {
                     />
                     <span className="text-sm">Standard</span>
                   </label>
-                  <label className="flex items-center">
+                  <label className="flex items-center cursor-pointer">
                     <input
                       type="radio"
                       name="delivery"
@@ -165,9 +171,12 @@ const CheckoutPage = () => {
         </div>
       </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       <div className="py-10"></div>
 >>>>>>> 6753375c8f9ed152eb0af56aff50f012cf48d746
+=======
+>>>>>>> 49cd4cef27059ea0a48263253e45aefb36d634d8
     </div>
   )
 }
