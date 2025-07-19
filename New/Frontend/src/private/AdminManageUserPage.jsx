@@ -44,6 +44,7 @@ const AdminManageUserPage = () => {
     alert("Logging out...")
     setShowModal(false)
     localStorage.removeItem("token")
+    localStorage.removeItem("user")
     navigate("/login")
   }
 

@@ -13,6 +13,7 @@ const OrderHistoryPage = () => {
     const fetchOrders = async () => {
       try {
         const response = await userapi.get("/api/orders")
+        console.log("Orders API response:", response)
         setOrders(response.data.data)
       } catch (error) {
         console.error("Failed to fetch orders", error)

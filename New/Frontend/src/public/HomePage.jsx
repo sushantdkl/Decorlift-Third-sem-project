@@ -31,8 +31,8 @@ export default function HomePage() {
   useEffect(() => {
     const fetchFeatured = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/products?category=featured-product")
-        setFeaturedProducts(res.data)
+        const res = await axios.get("http://localhost:4000/api/products")
+        setFeaturedProducts(res.data.data.slice(0, 4))
       } catch (err) {
         console.error("Error loading featured products:", err)
       }
@@ -78,7 +78,7 @@ export default function HomePage() {
           <div className="mt-8 flex justify-center gap-6">
             <Button onClick={() => navigate("/shop")}>Visit Our Store</Button>
             <a href="mailto:sushantdhakal18@gmail.com">
-              <Button>Contact Us</Button>
+              <Button>Email Us</Button>
             </a>
           </div>
         </div>
@@ -98,10 +98,10 @@ export default function HomePage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {featuredProducts.map((product) => (
-                <Card key={product._id} className="overflow-hidden">
+                <Card key={product.id} className="overflow-hidden">
                   <div className="aspect-square">
                     <img
-                      src={`http://localhost:5000${product.image}`}
+                      src={`../../uploads/${product.image}`}
                       alt={product.name}
                       className="w-full h-full object-cover"
                     />
@@ -109,7 +109,7 @@ export default function HomePage() {
                   <CardContent>
                     <h3 className="text-lg font-semibold">{product.name}</h3>
                     <p className="text-gray-600 mb-3">Rs. {product.price}</p>
-                    <Button onClick={() => navigate(`/product/${product._id}`)}>View Product</Button>
+                    <Button onClick={() => navigate(`/product/${product.id}`)}>View Product</Button>
                   </CardContent>
                 </Card>
               ))}

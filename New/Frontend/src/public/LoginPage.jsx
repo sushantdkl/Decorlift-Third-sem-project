@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-const LoginPage = ({ onLogin }) => {
+const LoginPage = ({ onLogin, setUser }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,11 +19,13 @@ const LoginPage = ({ onLogin }) => {
         const response = await axios.post("http://localhost:4000/api/auth/login", formData);
         const { token, user } = response.data;
 
-        if (token) {
+        if (token && user) {
           localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user));
           onLogin(true);
+          setUser(user);
           if (user.isAdmin) {
-            navigate("/adminproductpage");
+            navigate("/admin/products");
           } else {
             navigate("/");
           }

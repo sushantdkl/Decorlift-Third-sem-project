@@ -35,6 +35,7 @@ const AdminProductPage = () => {
 
   const confirmLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     navigate("/login");
   };
 
@@ -90,10 +91,10 @@ const AdminProductPage = () => {
               </div>
               <div className="p-4">
                 <h3 className="font-semibold text-lg text-gray-800">
-                  {product.name || product.title}
+                  {product.name }
                 </h3>
                 <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                  {product.description || product.subtitle}
+                  {product.description}
                 </p>
                 <p className="font-bold text-[#7a9b8e] mt-2">
                   Rs. {product.price}

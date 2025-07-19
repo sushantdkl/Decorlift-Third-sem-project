@@ -28,6 +28,7 @@ export const signup = async (userData) => {
 
 export const logout = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("user");
 };
  
 export const forgotPassword = async (email) => {

@@ -3,10 +3,14 @@ import { Navigate } from "react-router-dom";
 
 const PublicRoute = ({ children }) => {
   const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user") || "null");
 
-  if (token) {
-    // Redirect to dashboard if user is already logged in
-    return <Navigate to="/dashboard" replace />;
+  if (token && user) {
+    if (user.isAdmin) {
+      return <Navigate to="/admin/products" replace />;
+    } else {
+      return <Navigate to="/shop" replace />;
+    }
   }
 
   return children;

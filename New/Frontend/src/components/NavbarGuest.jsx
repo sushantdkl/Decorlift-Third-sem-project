@@ -55,7 +55,7 @@
             </li>
             <li>
                 <Link to="/gallery" className="hover:text-teal-400 transition-colors">
-                Project
+                Gallery
                 </Link>
             </li>
             <li>

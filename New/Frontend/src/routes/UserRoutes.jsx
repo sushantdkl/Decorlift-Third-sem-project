@@ -2,6 +2,8 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
+import AdminRoute from "./AdminRoute";
+import UserRoute from "./UserRoute";
 
 // Public Pages
 import HomePage from "../public/HomePage";
@@ -16,8 +18,8 @@ import ResetPasswordPage from "../private/ResetPasswordPage";
 
 // Private Pages
 import DiningChairsPage from "../private/DiningChairsPage";
-import ArchitecturePage from "../Private/ArchitecturePage";
-import OfficeChairsPage from "../Private/OfficeChairsPage";
+import ArchitecturePage from "../private/ArchitecturePage";
+import OfficeChairsPage from "../private/OfficeChairsPage";
 import SofaSetsPage from "../private/SofaSetsPage";
 import ShopPage from "../private/ShopPage";
 import CheckoutPage from "../private/CheckoutPage";
@@ -32,14 +34,14 @@ import AdminProductPage from "../private/AdminProductPage";
 import AdminRefundPage from "../private/AdminRefundPage";
 import AdminManageUserPage from "../private/AdminManageUserPage";
 import AdminRequestPage from "../private/AdminRequestPage";
-import AdminCustomerPage from "../Private/AdminCustomerPage";
+import AdminCustomerPage from "../private/AdminCustomerPage";
 import AdminEditProductPage from "../private/AdminEditProductPage";
 import AdminInventoryPage from "../private/AdminInventoryPage";
 import AdminAddProductPage from "../private/AdminAddProductPage";
 import AdminEditUserPage from "../private/AdminEditUserPage";
 import AdminProfileLayout from "../components/AdminProfileLayout";
 
-export default function UserRoutes({ setIsLoggedIn }) {
+export default function UserRoutes({ setIsLoggedIn, setUser }) {
   return (
     <Routes>
       {/* Public Routes */}
@@ -54,7 +56,7 @@ export default function UserRoutes({ setIsLoggedIn }) {
         path="/login"
         element={
           <PublicRoute>
-            <LoginPage onLogin={setIsLoggedIn} />
+            <LoginPage onLogin={setIsLoggedIn} setUser={setUser} />
           </PublicRoute>
         }
       />
@@ -80,49 +82,49 @@ export default function UserRoutes({ setIsLoggedIn }) {
       <Route
         path="/checkout"
         element={
-          <PrivateRoute>
+          <UserRoute>
             <CheckoutPage />
-          </PrivateRoute>
+          </UserRoute>
         }
       />
       <Route
         path="/product/:id"
         element={
-          <PrivateRoute>
+          <UserRoute>
             <ProductDetailPage />
-          </PrivateRoute>
+          </UserRoute>
         }
       />
       <Route
         path="/profile"
         element={
-          <PrivateRoute>
+          <UserRoute>
             <ProfileInformationPage />
-          </PrivateRoute>
+          </UserRoute>
         }
       />
       <Route
         path="/manage-addresses"
         element={
-          <PrivateRoute>
+          <UserRoute>
             <ManageAddressesPage />
-          </PrivateRoute>
+          </UserRoute>
         }
       />
       <Route
         path="/order-history"
         element={
-          <PrivateRoute>
+          <UserRoute>
             <OrderHistoryPage />
-          </PrivateRoute>
+          </UserRoute>
         }
       />
       <Route
         path="/return-refund"
         element={
-          <PrivateRoute>
+          <UserRoute>
             <ReturnRefundPage />
-          </PrivateRoute>
+          </UserRoute>
         }
       />
 
@@ -130,9 +132,9 @@ export default function UserRoutes({ setIsLoggedIn }) {
       <Route
         path="/admin/*"
         element={
-          <PrivateRoute>
+          <AdminRoute>
             <AdminProfileLayout />
-          </PrivateRoute>
+          </AdminRoute>
         }
       >
         <Route path="products" element={<AdminProductPage />} />

@@ -41,7 +41,8 @@ const CheckoutPage = () => {
         phone: shippingDetails.phone,
         deliveryMethod,
       })
-      navigate("/order-success")
+      alert("product ordered successfully")
+      navigate("/order-history")
     } catch (error) {
       console.error("Failed to confirm order", error)
       alert("Failed to confirm order. Please try again.")

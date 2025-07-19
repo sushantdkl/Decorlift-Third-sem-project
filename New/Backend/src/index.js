@@ -23,14 +23,22 @@ dotenv.config();
 
 const app = express();
 
-// Enable CORS for all origins (adjust as needed for security)
-app.use(cors());
+// Enable CORS for all origins with specific options
+app.use(cors({
+  origin: ['http://localhost:4000', 'http://localhost:5173', 'http://127.0.0.1:4000', 'http://127.0.0.1:5173'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // Use port from env or fallback
 const port = process.env.PORT || 4000;
 
 // Parse JSON request bodies
 app.use(bodyParser.json());
+
+// Serve static files from uploads directory
+app.use('/uploads', express.static('uploads'));
 
 // Public routes
 app.use("/api/users", userRouter);

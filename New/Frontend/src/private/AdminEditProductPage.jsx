@@ -44,10 +44,11 @@ const AdminEditProductPage = () => {
   const handleLogout = () => setShowModal(true);
   const confirmLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     navigate("/login");
   };
   const cancelLogout = () => setShowModal(false);
-  const onBack = () => navigate("/adminproductpage");
+  const onBack = () => navigate("/admin/products");
 
   return (
     <div className="flex min-h-screen bg-[#f3efeb]">

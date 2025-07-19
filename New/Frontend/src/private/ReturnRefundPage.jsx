@@ -33,10 +33,7 @@ const ReturnRefundPage = () => {
 
   // Images for carousel: main product image + placeholders
   const productImages = [
-    order.Product.image,
-    "/placeholder.svg?height=300&width=400",
-    "/placeholder.svg?height=300&width=400",
-    "/placeholder.svg?height=300&width=400",
+  
   ];
 
   const handleInputChange = (field, value) => {
@@ -53,7 +50,7 @@ const ReturnRefundPage = () => {
     try {
       const postData = new FormData();
       postData.append("orderId", order.id);
-      postData.append("action", formData.action);
+      postData.append("requestType", formData.action);
       postData.append("reason", formData.reason);
       if (formData.photo) postData.append("photo", formData.photo);
 
@@ -117,7 +114,7 @@ const ReturnRefundPage = () => {
           <div className="flex-1 max-w-md bg-white rounded-lg p-4 shadow-sm border">
             <div className="relative mb-4">
               <img
-                src={productImages[currentImageIndex]}
+                src={order.Product.image || "/placeholder.svg"}
                 alt="Product"
                 className="w-full h-80 object-cover rounded-lg"
               />

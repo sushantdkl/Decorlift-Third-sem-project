@@ -3,21 +3,19 @@ import { Navigate } from "react-router-dom";
 
 const AdminRoute = ({ children }) => {
   const token = localStorage.getItem("token");
-  const user = JSON.parse(localStorage.getItem("user")); // Assuming user object is stored
+  const user = JSON.parse(localStorage.getItem("user") || "null");
 
-  // Check if token or user doesn't exist
   if (!token || !user) {
     alert("You must be logged in as an admin.");
     return <Navigate to="/login" replace />;
   }
 
   // Check if user is not an admin
-  if (user.role !== "admin") {
+  if (!user.isAdmin) {
     alert("Unauthorized access: Admins only.");
-    return <Navigate to="/" replace />;
+    return <Navigate to="/shop" replace />;
   }
 
-  // Otherwise, allow access
   return children;
 };
 

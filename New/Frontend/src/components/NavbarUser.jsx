@@ -1,15 +1,21 @@
 import { Link, useNavigate } from "react-router-dom";
-import { User } from "lucide-react";
+import { User, LogOut } from "lucide-react";
+import { logout } from "../services/authService";
 
-const NavbarGuest = () => {
+const NavbarUser = () => {
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <nav className="absolute top-0 left-0 w-full z-50 flex items-center justify-between px-8 py-4 bg-black bg-opacity-20">
       {/* Logo */}
       <div onClick={() => navigate("/")} className="cursor-pointer">
         <img
-          src="src/image/logo.png" // Replace with your uploaded logo path
+          src="src/image/logo.png"
           alt="Logo"
           className="w-16 h-16 object-contain"
         />
@@ -19,25 +25,30 @@ const NavbarGuest = () => {
       <ul className="flex space-x-6 text-white font-medium text-sm">
         <li><Link to="/" className="hover:text-teal-400 transition-colors">Home</Link></li>
         <li><Link to="/about" className="hover:text-teal-400 transition-colors">About Us</Link></li>
-        <li><Link to="/gallery" className="hover:text-teal-400 transition-colors">Project</Link></li>
+        <li><Link to="/gallery" className="hover:text-teal-400 transition-colors">Gallery</Link></li>
         <li><Link to="/services" className="hover:text-teal-400 transition-colors">Our Services</Link></li>
         <li><Link to="/contact" className="hover:text-teal-400 transition-colors">Contact Us</Link></li>
+        <li><Link to="/shop" className="hover:text-teal-400 transition-colors">Shop</Link></li>
       </ul>
 
-      {/* Right Side - User Icon */}
+      {/* Right Side - User Icon and Logout */}
       <div className="flex items-center space-x-4">
-  
-        
-        {/* User Icon */}
         <button
           onClick={() => navigate("/profile")}
           className="text-white hover:text-teal-400 transition-colors"
         >
           <User className="w-5 h-5" />
         </button>
+        <button
+          onClick={handleLogout}
+          className="flex items-center space-x-1 bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+        >
+          <LogOut className="w-4 h-4" />
+          <span>Logout</span>
+        </button>
       </div>
     </nav>
   );
 };
 
-export default NavbarGuest;
+export default NavbarUser;

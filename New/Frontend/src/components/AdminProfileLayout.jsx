@@ -22,7 +22,11 @@ const AdminProfileLayout = ({ children }) => {
   const [showRequestOptions, setShowRequestOptions] = useState(false);
 
   const handleLogoutClick = () => setShowLogoutPopup(true);
-  const confirmLogout = () => navigate("/login");
+  const confirmLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
   const cancelLogout = () => setShowLogoutPopup(false);
   const toggleRequestOptions = () => setShowRequestOptions(!showRequestOptions);
 

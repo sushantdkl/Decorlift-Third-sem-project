@@ -1,5 +1,3 @@
-// api/userApi.js
-
 import axios from "axios";
 
 // Create instance with base URL
