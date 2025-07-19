@@ -61,7 +61,7 @@ const ShopPage = () => {
         {productsToShow.map(({ id, name, description, price, image }) => (
           <div key={id} className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer group relative">
             <img
-              src={`../../uploads/${image}`}
+              src={`../../uploads/${name.image}`}
               alt={name}
               className="w-full h-48 object-cover group-hover:scale-105 transition-transform"
             />

@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
-    "create-admin": "node src/scripts/createAdmin.js"
+    "create-admin": "node src/scripts/createAdmin.js",
+    "test": "jest"
   },
   "author": "",
   "type": "module",
@@ -25,6 +26,12 @@
     "vite": "^7.0.2"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "babel-jest": "^30.0.4",
+    "jest": "^30.0.4",
+    "nodemon": "^3.1.9",
+    "sequelize-mock": "^0.10.2",
+    "supertest": "^7.1.3"
   }
 }

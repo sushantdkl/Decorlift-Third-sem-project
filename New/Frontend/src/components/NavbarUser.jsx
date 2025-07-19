@@ -17,7 +17,7 @@ const NavbarUser = () => {
         <img
           src="src/image/logo.png"
           alt="Logo"
-          className="w-16 h-16 object-contain"
+          className="w-16 h-0 object-contain"
         />
       </div>
 
@@ -39,13 +39,7 @@ const NavbarUser = () => {
         >
           <User className="w-5 h-5" />
         </button>
-        <button
-          onClick={handleLogout}
-          className="flex items-center space-x-1 bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
-        >
-          <LogOut className="w-4 h-4" />
-          <span>Logout</span>
-        </button>
+        
       </div>
     </nav>
   );
