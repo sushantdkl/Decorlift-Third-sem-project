@@ -64,9 +64,9 @@ const ServicesPage = () => {
 
   return (
     <div className="font-sans text-black bg-white min-h-screen">
-      <h1 className="text-[60px] text-center mt-10 text-black/60 tracking-wide drop-shadow">
-        Our Services
-      </h1>
+      <div className="w-[78%] mx-auto  py-5 text-center">
+        <h1 className="text-6xl font-bold drop-shadow">Our Services</h1>
+      </div>
 
       {/* First Row of Services */}
       <div className="grid grid-cols-3 gap-12 px-[20%] mt-20">

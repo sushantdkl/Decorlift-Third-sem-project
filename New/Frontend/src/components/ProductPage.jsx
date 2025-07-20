@@ -41,7 +41,7 @@ const ProductPage = ({ category, pageTitle }) => {
   return (
     <div className="font-sans text-black min-h-screen bg-[#fdfdfd]">
       {/* Page header */}
-      <div className="max-w-7xl mx-auto mt-14 px-6 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto py-10 px-6 flex justify-between items-center">
         <h1 className="text-4xl font-bold text-gray-900">{pageTitle}</h1>
         <div className="relative">
           <input

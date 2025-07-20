@@ -84,7 +84,9 @@ const GalleryPage = () => {
     <div className="font-sans text-black bg-white min-h-screen">
 
       {/* Title */}
-      <h1 className="text-[70px] text-center mt-10 text-black/70 font-bold">Gallery</h1>
+      <div className="w-[78%] mx-auto  py-5 text-center">
+        <h1 className="text-6xl font-bold drop-shadow">Gallery</h1>
+      </div>
 
       {/* Gallery Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mt-10 px-4">
