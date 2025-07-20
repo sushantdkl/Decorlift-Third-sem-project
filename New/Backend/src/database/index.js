@@ -4,13 +4,12 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 export const sequelize = new Sequelize(
-  "Decorlift",
-  "postgres",
-  "root", // Updated to match the new DB_PASSWORD
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
   {
     host: process.env.DB_HOST,
     dialect: 'postgres',
-    logging: false
   }
 );
 
@@ -19,7 +18,7 @@ export const db = async () => {
     await sequelize.authenticate();
     console.log("Database authenticated successfully.");
     
-    await sequelize.sync({alter:true})
+    await sequelize.sync({force:false})
     console.log("Database synchronized successfully.");
 
   } catch (e) {

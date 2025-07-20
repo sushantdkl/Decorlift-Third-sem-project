@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useLocation, Link, useNavigate, Outlet } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import {
   LogOut,
   LayoutDashboard,
@@ -22,11 +22,7 @@ const AdminProfileLayout = ({ children }) => {
   const [showRequestOptions, setShowRequestOptions] = useState(false);
 
   const handleLogoutClick = () => setShowLogoutPopup(true);
-  const confirmLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate("/login");
-  };
+  const confirmLogout = () => navigate("/login");
   const cancelLogout = () => setShowLogoutPopup(false);
   const toggleRequestOptions = () => setShowRequestOptions(!showRequestOptions);
 
@@ -103,7 +99,7 @@ const AdminProfileLayout = ({ children }) => {
         </aside>
 
         {/* Main Content Area */}
-        <main className="flex-1 bg-white shadow-sm p-6"><Outlet/></main>
+        <main className="flex-1 bg-white shadow-sm p-6">{children}</main>
       </div>
 
       {/* Logout Confirmation Modal */}

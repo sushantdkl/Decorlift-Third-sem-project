@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import NavbarGuest from "./components/NavbarGuest";
@@ -10,24 +10,14 @@ import UserRoutes from "./routes/UserRoutes";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
   const location = useLocation();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const userData = localStorage.getItem("user");
-    if (token && userData) {
-      setIsLoggedIn(true);
-      setUser(JSON.parse(userData));
-    }
-  }, []);
 
   const isAdminRoute = location.pathname.startsWith("/admin");
   const hideFooterRoutes = ["/login", "/signup", "/security-setup"];
   const shouldHideFooter = hideFooterRoutes.includes(location.pathname) || isAdminRoute;
 
   const renderNavbar = () => {
-    if (isLoggedIn && user?.isAdmin) return <NavbarAdmin />;
+    if (isAdminRoute) return <NavbarAdmin />;
     return isLoggedIn ? <NavbarUser /> : <NavbarGuest />;
   };
 
@@ -37,7 +27,7 @@ function App() {
 
       <main className="flex-grow">
         <ScrollToTop />
-        <UserRoutes setIsLoggedIn={setIsLoggedIn} setUser={setUser} />
+        <UserRoutes setIsLoggedIn={setIsLoggedIn} />
       </main>
 
       {!shouldHideFooter && <Footer />}

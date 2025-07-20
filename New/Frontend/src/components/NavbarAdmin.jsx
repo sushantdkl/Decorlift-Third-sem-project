@@ -15,9 +15,7 @@ const NavbarAdmin = () => {
   };
 
   const confirmLogout = () => {
-    setShowLogoutConfirm(false)
-    localStorage.removeItem("token"); // Remove token from localStorage
-    localStorage.removeItem("user"); // Remove user data from localStorage
+    setShowLogoutConfirm(false);
     navigate("/"); // Go to homepage on logout
   };
 
@@ -33,13 +31,9 @@ const NavbarAdmin = () => {
       <nav className="border-t-4 border-black bg-[#f9f4ef] shadow-sm w-full z-50">
         <div className="w-full flex items-center justify-between px-8 py-3">
           {/* Left Logo */}
-           <div onClick={() => navigate("/admin/products")} className="cursor-pointer flex-shrink-0">
-            <img
-                src="src/image/logo.png"
-                alt="Logo"
-                className="w-16 h-16 object-contain"
-            />
-            </div>
+          <div onClick={() => navigate("/admin/products")} className="cursor-pointer flex-shrink-0">
+            <img src="src/image/logo.png" alt="DL Logo" className="h-10" />
+          </div>
 
           {/* Center Navigation */}
           <ul className="flex space-x-8 font-medium text-sm text-gray-700 flex-grow justify-center">
@@ -129,13 +123,13 @@ const NavbarAdmin = () => {
               <span className="text-sm font-medium">Admin</span>
             </div>
 
-            {/* <button
+            <button
               onClick={handleLogoutClick}
               className="flex items-center space-x-1 bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
               <LogOut className="w-4 h-4" />
               <span>Logout</span>
-            </button> */}
+            </button>
           </div>
         </div>
       </nav>

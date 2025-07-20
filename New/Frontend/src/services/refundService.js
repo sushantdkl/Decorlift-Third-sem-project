@@ -1,48 +1,32 @@
-import axios from "axios";
-
-const API_BASE_URL = "http://localhost:4000/api/returns";
-
+import { userapi } from "./userapi";
+ 
 export const getRefundRequests = async () => {
   try {
-    const response = await axios.get(API_BASE_URL, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    const response = await userapi.get("/api/returns");
     return response.data;
   } catch (error) {
-    console.error("Error fetching refund requests:", error);
+    console.error("Failed to fetch refund requests:", error);
     throw error;
   }
 };
-
+ 
 export const approveRefundRequest = async (id) => {
   try {
-    const response = await axios.put(`${API_BASE_URL}/${id}/approve`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    const response = await userapi.put(`/api/returns/${id}/approve`);
     return response.data;
   } catch (error) {
-    console.error("Error approving refund request:", error);
+    console.error("Failed to approve refund request:", error);
     throw error;
   }
 };
-
+ 
 export const declineRefundRequest = async (id) => {
   try {
-    const response = await axios.put(`${API_BASE_URL}/${id}/decline`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+    const response = await userapi.put(`/api/returns/${id}/decline`);
     return response.data;
   } catch (error) {
-    console.error("Error declining refund request:", error);
+    console.error("Failed to decline refund request:", error);
     throw error;
   }
 };
+ 

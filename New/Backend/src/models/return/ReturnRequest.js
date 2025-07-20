@@ -19,14 +19,6 @@ export const ReturnRequest = sequelize.define('ReturnRequest', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  requestType: {
-    type: DataTypes.ENUM('refund', 'exchange'),
-    allowNull: false,
-  },
-  photo: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
   status: {
     type: DataTypes.ENUM('Pending', 'Approved', 'Rejected', 'Completed'),
     defaultValue: 'Pending',

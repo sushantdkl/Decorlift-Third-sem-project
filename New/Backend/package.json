@@ -4,9 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "start": "node src/index.js",
-    "create-admin": "node src/scripts/createAdmin.js",
-    "test": "jest"
+    "start": "node src/index.js"
   },
   "author": "",
   "type": "module",
@@ -14,7 +12,6 @@
   "description": "",
   "dependencies": {
     "bcrypt": "^6.0.0",
-    "bcryptjs": "^3.0.2",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
@@ -26,12 +23,6 @@
     "vite": "^7.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.0",
-    "@babel/preset-env": "^7.28.0",
-    "babel-jest": "^30.0.4",
-    "jest": "^30.0.4",
-    "nodemon": "^3.1.9",
-    "sequelize-mock": "^0.10.2",
-    "supertest": "^7.1.3"
+    "nodemon": "^3.1.9"
   }
 }

@@ -40,8 +40,7 @@ export default function RefundExchangePage() {
     setError(null);
     try {
       const response = await getRefundRequests();
-       console.log(response)
-      setRequests(response.data);
+      setRequests(response.data.data);
     } catch (err) {
       setError("Failed to fetch requests");
       console.error("Fetch error:", err);
@@ -56,8 +55,9 @@ export default function RefundExchangePage() {
 
   const filteredRequests = requests.filter((request) => {
     const matchesSearch =
-      request.product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      request.order.customerName.toLowerCase().includes(searchQuery.toLowerCase())
+      request.productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      request.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      request.email.toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesStatus = filterStatus === "All" || request.status === filterStatus;
     const matchesType = filterType === "All" || request.requestType === filterType;
@@ -75,12 +75,10 @@ export default function RefundExchangePage() {
     setSelectedRequest(null);
   };
 
-  console.log("selected: ", selectedRequest);
-
   const handleApprove = async () => {
     if (!selectedRequest) return;
     try {
-      await approveRefundRequest(selectedRequest.request.id);
+      await approveRefundRequest(selectedRequest.id);
       alert("Request approved successfully!");
       await fetchRequests();
       handleBackToList();
@@ -93,7 +91,7 @@ export default function RefundExchangePage() {
   const handleDecline = async () => {
     if (!selectedRequest) return;
     try {
-      await declineRefundRequest(selectedRequest.request.id);
+      await declineRefundRequest(selectedRequest.id);
       alert("Request declined!");
       await fetchRequests();
       handleBackToList();
@@ -169,43 +167,46 @@ export default function RefundExchangePage() {
 
             {filteredRequests.map((request) => (
               <div
-                key={request.order.id}
+                key={request.id}
                 onClick={() => handleRequestClick(request)}
                 className="cursor-pointer rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow flex gap-4"
               >
                 <div className="w-24 h-24 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
                   <img
-                    src={request.product.image || "/placeholder.svg"}
-                    alt={request.product.name}
+                    src={request.image || "/placeholder.svg"}
+                    alt={request.productName}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="flex flex-col flex-1">
                   <div className="flex items-center gap-3 mb-2 flex-wrap">
-                    <h3 className="font-semibold text-lg text-gray-900">{request.product.name}</h3>
+                    <h3 className="font-semibold text-lg text-gray-900">{request.productName}</h3>
                     <span
-                      className={`px-2 py-1 rounded-full text-xs font-semibold ${typeColors[request.order.requestType]}`}
+                      className={`px-2 py-1 rounded-full text-xs font-semibold ${typeColors[request.requestType]}`}
                     >
-                      {request.request.requestType.toUpperCase()}
+                      {request.requestType.toUpperCase()}
                     </span>
                     <span
-                      className={`px-2 py-1 rounded-full text-xs font-semibold ${statusColors[request.order.status]}`}
+                      className={`px-2 py-1 rounded-full text-xs font-semibold ${statusColors[request.status]}`}
                     >
-                      {request.request.status.toUpperCase()}
+                      {request.status.toUpperCase()}
                     </span>
                   </div>
                   <div className="text-sm text-gray-600 space-y-1 max-w-xl">
                     <p>
-                      <strong>Customer:</strong> {request.order.customerName} ({request.email})
+                      <strong>Customer:</strong> {request.customerName} ({request.email})
                     </p>
                     <p>
-                      <strong>Address:</strong> {request.order.address}
+                      <strong>Address:</strong> {request.address}
                     </p>
                     <p>
-                      <strong>Amount:</strong> {request.order.totalCost}
+                      <strong>Amount:</strong> {request.amount}
                     </p>
                     <p>
-                      <strong>Reason:</strong> {request.request.reason}
+                      <strong>Reason:</strong> {request.reason}
+                    </p>
+                    <p>
+                      <strong>Request Date:</strong> {request.requestDate}
                     </p>
                   </div>
                 </div>
@@ -234,14 +235,14 @@ export default function RefundExchangePage() {
               <div>
                 <div className="border border-gray-200 rounded-lg overflow-hidden mb-4 h-80 flex items-center justify-center bg-gray-100">
                   <img
-                    src={selectedRequest.product.image || "/placeholder.svg"}
+                    src={selectedRequest.image || "/placeholder.svg"}
                     alt={selectedRequest.productName}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="text-center">
                   <h3 className="font-semibold text-lg">{selectedRequest.productName}</h3>
-                  <p className="text-gray-600">{selectedRequest.order.totalCost}</p>
+                  <p className="text-gray-600">{selectedRequest.amount}</p>
                 </div>
               </div>
 
@@ -253,7 +254,7 @@ export default function RefundExchangePage() {
                       <input
                         type="text"
                         readOnly
-                        value={selectedRequest.order.customerName}
+                        value={selectedRequest.customerName}
                         className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-50 cursor-not-allowed"
                       />
                     </div>

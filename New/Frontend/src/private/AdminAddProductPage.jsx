@@ -29,8 +29,6 @@ export default function AddProductPage() {
     if (image) {
       formData.append("image", image)
     }
-    console.log(formData.name);
-    
 
     try {
       const response = await userapi.post("/api/products", formData, {
@@ -60,7 +58,7 @@ export default function AddProductPage() {
         {/* Image Upload */}
         <div className="w-[300px] h-[250px] bg-gray-200 rounded flex items-center justify-center relative">
           {imagePreview ? (
-            <img src={`../../uploads/${"image"}`}  />
+            <img src={imagePreview} alt="Preview" className="w-full h-full object-cover rounded" />
           ) : (
             <label className="flex flex-col items-center cursor-pointer text-gray-500">
               <Upload className="w-6 h-6 mb-2" />
@@ -111,7 +109,6 @@ export default function AddProductPage() {
             <option value="dining-chair">Dining Chair</option>
             <option value="sofa-set">Sofa Set</option>
             <option value="shop">Shop</option>
-            <option value="featured-product">Featured Product</option>
           </select>
           <button
             onClick={handleSubmit}

@@ -1,4 +1,3 @@
-"use client"
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { userapi } from "../services/userapi.js";
@@ -34,7 +33,7 @@ const AdminEditProductPage = () => {
         await userapi.put(`/api/products/${product.id}`, formData);
         alert("Product updated successfully!");
       }
-      navigate("/admin/inventory");
+      navigate("/adminproductpage");
     } catch (error) {
       console.error("Failed to save product:", error);
       alert("Failed to save product");
@@ -44,11 +43,10 @@ const AdminEditProductPage = () => {
   const handleLogout = () => setShowModal(true);
   const confirmLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("user");
     navigate("/login");
   };
   const cancelLogout = () => setShowModal(false);
-  const onBack = () => navigate("/admin/products");
+  const onBack = () => navigate("/adminproductpage");
 
   return (
     <div className="flex min-h-screen bg-[#f3efeb]">
@@ -68,7 +66,7 @@ const AdminEditProductPage = () => {
           <div className="flex-1 max-w-md">
             <div className="w-full h-72 bg-gray-200 rounded mb-4 overflow-hidden">
               <img
-                src={`../../uploads/${formData.image}`}
+                src={formData.image || "/placeholder.svg?height=300&width=300"}
                 alt="Main"
                 className="w-full h-full object-cover"
               />

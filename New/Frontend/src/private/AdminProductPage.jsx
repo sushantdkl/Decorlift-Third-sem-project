@@ -12,6 +12,7 @@ const AdminProductPage = () => {
   const [error, setError] = useState(null);
   const [showRequestOptions, setShowRequestOptions] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -20,7 +21,6 @@ const AdminProductPage = () => {
     try {
       const response = await userapi.get("/api/products");
       setProducts(response.data.data);
-      console.log(response.data.data);
       setLoading(false);
     } catch (err) {
       setError("Failed to fetch products");
@@ -35,7 +35,6 @@ const AdminProductPage = () => {
 
   const confirmLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("user");
     navigate("/login");
   };
 
@@ -84,17 +83,17 @@ const AdminProductPage = () => {
             >
               <div className="aspect-square bg-gray-100">
                 <img
-                  src={`../../uploads/${product.image}`}
+                  src={product.image || "/placeholder.svg"}
                   alt={product.name || "Product Image"}
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="p-4">
                 <h3 className="font-semibold text-lg text-gray-800">
-                  {product.name }
+                  {product.name || product.title}
                 </h3>
                 <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                  {product.description}
+                  {product.description || product.subtitle}
                 </p>
                 <p className="font-bold text-[#7a9b8e] mt-2">
                   Rs. {product.price}

@@ -7,12 +7,12 @@ const AboutPage = () => {
   const navigate = useNavigate()
 
   return (
-<div className="font-sans text-black">
+    <div className="font-sans text-black">
       {/* About Us Title */}
       <div className="w-[78%] mx-auto mt-16 text-center">
         <h1 className="text-6xl font-bold drop-shadow">About us</h1>
       </div>
-    
+
       {/* Products Grid */}
       <div className="w-[78%] mx-auto grid grid-cols-4 gap-10 my-20 items-center">
         <div className="flex flex-col justify-center">

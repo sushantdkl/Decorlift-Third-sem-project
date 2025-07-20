@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-const LoginPage = ({ onLogin, setUser }) => {
+const LoginPage = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,13 +19,11 @@ const LoginPage = ({ onLogin, setUser }) => {
         const response = await axios.post("http://localhost:4000/api/auth/login", formData);
         const { token, user } = response.data;
 
-        if (token && user) {
+        if (token) {
           localStorage.setItem("token", token);
-          localStorage.setItem("user", JSON.stringify(user));
           onLogin(true);
-          setUser(user);
           if (user.isAdmin) {
-            navigate("/admin/products");
+            navigate("/adminproductpage");
           } else {
             navigate("/");
           }
@@ -55,7 +53,7 @@ const LoginPage = ({ onLogin, setUser }) => {
       className="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center"
       style={{
         backgroundImage:
-          "linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('src/image/backgrounds.png')",
+          "linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url('src/public/backgrounds.png')",
       }}
     >
       {/* Login Form */}
