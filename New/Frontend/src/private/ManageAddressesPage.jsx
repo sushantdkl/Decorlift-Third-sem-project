@@ -19,11 +19,11 @@ const ManageAddressesPage = () => {
     landmark: "",
   })
 
-  // Fetch addresses from API
+  // Fetch addresses
   const fetchAddresses = async () => {
     try {
       const response = await userapi.get("/api/addresses")
-      setAddresses(response.data.data)
+      setAddresses(response.data.data || [])
     } catch (error) {
       console.error("Failed to fetch addresses", error)
     }
@@ -32,6 +32,19 @@ const ManageAddressesPage = () => {
   useEffect(() => {
     fetchAddresses()
   }, [])
+
+  const resetForm = () => {
+    setNewAddress({
+      name: "",
+      mobile: "",
+      address: "",
+      city: "",
+      alternatePhone: "",
+      landmark: "",
+    })
+    setEditingAddress(null)
+    setShowAddForm(false)
+  }
 
   const handleInputChange = (field, value) => {
     setNewAddress((prev) => ({
@@ -42,30 +55,18 @@ const ManageAddressesPage = () => {
 
   const handleSave = async () => {
     if (!newAddress.name || !newAddress.mobile || !newAddress.address || !newAddress.city) {
-      alert("Please fill in all required fields: Name, Mobile, Address, City")
+      alert("Please fill in all required fields.")
       return
     }
 
     try {
       if (editingAddress) {
-        // Update existing address
         await userapi.put(`/api/addresses/${editingAddress.id}`, newAddress)
       } else {
-        // Add new address
         await userapi.post("/api/addresses", newAddress)
       }
-      // Reset form and reload addresses
-      setNewAddress({
-        name: "",
-        mobile: "",
-        address: "",
-        city: "",
-        alternatePhone: "",
-        landmark: "",
-      })
-      setShowAddForm(false)
-      setEditingAddress(null)
-      fetchAddresses()
+      resetForm()
+      await fetchAddresses() // ✅ make sure to refetch AFTER reset
     } catch (error) {
       console.error("Failed to save address", error)
       alert("Failed to save address. Please try again.")
@@ -76,7 +77,7 @@ const ManageAddressesPage = () => {
     if (!confirm("Are you sure you want to delete this address?")) return
     try {
       await userapi.delete(`/api/addresses/${id}`)
-      fetchAddresses()
+      await fetchAddresses()
     } catch (error) {
       console.error("Failed to delete address", error)
       alert("Failed to delete address. Please try again.")
@@ -106,7 +107,7 @@ const ManageAddressesPage = () => {
           </div>
 
           <div className="flex gap-8 max-w-6xl">
-            {/* Form Section */}
+            {/* Address Form */}
             <div className="flex-1 max-w-md">
               {!showAddForm ? (
                 <button
@@ -135,7 +136,7 @@ const ManageAddressesPage = () => {
                       placeholder="Name"
                       value={newAddress.name}
                       onChange={(e) => handleInputChange("name", e.target.value)}
-                      className="flex-1 p-3 border rounded bg-gray-100 text-sm text-gray-700 focus:outline-none focus:border-teal-500"
+                      className="flex-1 p-3 border rounded bg-gray-100 text-sm"
                       required
                     />
                     <input
@@ -143,16 +144,16 @@ const ManageAddressesPage = () => {
                       placeholder="10-Digit mobile number"
                       value={newAddress.mobile}
                       onChange={(e) => handleInputChange("mobile", e.target.value)}
-                      className="flex-1 p-3 border rounded bg-gray-100 text-sm text-gray-700 focus:outline-none focus:border-teal-500"
+                      className="flex-1 p-3 border rounded bg-gray-100 text-sm"
                       required
                     />
                   </div>
 
                   <textarea
-                    placeholder="Address ( Area / Street )"
+                    placeholder="Address (Area / Street)"
                     value={newAddress.address}
                     onChange={(e) => handleInputChange("address", e.target.value)}
-                    className="w-full p-3 border rounded bg-gray-100 text-sm text-gray-700 min-h-[80px] resize-y focus:outline-none focus:border-teal-500"
+                    className="w-full p-3 border rounded bg-gray-100 text-sm min-h-[80px] resize-y"
                     required
                   />
 
@@ -162,7 +163,7 @@ const ManageAddressesPage = () => {
                       placeholder="City / District / Town"
                       value={newAddress.city}
                       onChange={(e) => handleInputChange("city", e.target.value)}
-                      className="flex-1 p-3 border rounded bg-gray-100 text-sm text-gray-700 focus:outline-none focus:border-teal-500"
+                      className="flex-1 p-3 border rounded bg-gray-100 text-sm"
                       required
                     />
                     <input
@@ -170,7 +171,7 @@ const ManageAddressesPage = () => {
                       placeholder="Alternate Phone (Optional)"
                       value={newAddress.alternatePhone}
                       onChange={(e) => handleInputChange("alternatePhone", e.target.value)}
-                      className="flex-1 p-3 border rounded bg-gray-100 text-sm text-gray-700 focus:outline-none focus:border-teal-500"
+                      className="flex-1 p-3 border rounded bg-gray-100 text-sm"
                     />
                   </div>
 
@@ -179,7 +180,7 @@ const ManageAddressesPage = () => {
                     placeholder="Landmark (Optional)"
                     value={newAddress.landmark}
                     onChange={(e) => handleInputChange("landmark", e.target.value)}
-                    className="w-full p-3 border rounded bg-gray-100 text-sm text-gray-700 focus:outline-none focus:border-teal-500"
+                    className="w-full p-3 border rounded bg-gray-100 text-sm"
                   />
 
                   <div className="flex justify-center gap-4">
@@ -192,10 +193,7 @@ const ManageAddressesPage = () => {
                     </button>
                     <button
                       type="button"
-                      onClick={() => {
-                        setShowAddForm(false)
-                        setEditingAddress(null)
-                      }}
+                      onClick={resetForm}
                       className="bg-gray-600 text-white px-6 py-2 rounded font-semibold hover:bg-gray-700"
                     >
                       Cancel
@@ -205,11 +203,12 @@ const ManageAddressesPage = () => {
               )}
             </div>
 
-            {/* Saved Addresses Section */}
-            <div className="flex-1 max-w-md">
-              <div className="space-y-4">
-                {addresses.length === 0 && <p className="text-gray-600">No addresses saved yet.</p>}
-                {addresses.map((address) => (
+            {/* Saved Address List */}
+            <div className="flex-1 max-w-md space-y-4">
+              {addresses.length === 0 ? (
+                <p className="text-gray-600">No addresses saved yet.</p>
+              ) : (
+                addresses.map((address) => (
                   <div
                     key={address.id}
                     className="p-4 border border-gray-200 rounded-lg bg-gray-50"
@@ -238,8 +237,8 @@ const ManageAddressesPage = () => {
                       </button>
                     </div>
                   </div>
-                ))}
-              </div>
+                ))
+              )}
             </div>
           </div>
         </section>

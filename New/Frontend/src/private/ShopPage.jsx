@@ -42,7 +42,7 @@ const ShopPage = () => {
   return (
     <div className="font-sans text-black min-h-screen bg-[#fdfdfd]">
       {/* Page header */}
-      <div className="max-w-7xl mx-auto mt-10 px-6 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto mt-16 px-6 flex justify-between items-center">
         <h1 className="text-4xl font-bold text-gray-900">Shop</h1>
         <div className="relative">
           <input

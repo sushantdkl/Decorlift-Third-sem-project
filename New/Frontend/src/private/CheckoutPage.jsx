@@ -23,8 +23,8 @@ const CheckoutPage = () => {
   const [deliveryMethod, setDeliveryMethod] = useState("standard")
   const [shippingDetails, setShippingDetails] = useState({
     customerName: "",
-    address: "375 Udyog Vihar Phase 2, Gurgaon, Haryana - 122015",
-    phone: "98xxxxxxx",
+    address: "",
+    phone: "",
   })
 
   const handleConfirm = async () => {
@@ -66,7 +66,7 @@ const CheckoutPage = () => {
                 <textarea
                   className="w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-sm"
                   rows={3}
-                  value={`${shippingDetails.address}\nNumber: ${shippingDetails.phone}`}
+                  value={`${shippingDetails.address}\n ${shippingDetails.phone}`}
                   onChange={(e) => {
                     const lines = e.target.value.split("\n")
                     setShippingDetails({
@@ -107,15 +107,8 @@ const CheckoutPage = () => {
                     <span className="text-sm">Standard</span>
                   </label>
                   <label className="flex items-center cursor-pointer">
-                    <input
-                      type="radio"
-                      name="delivery"
-                      value="dulex"
-                      checked={deliveryMethod === "dulex"}
-                      onChange={(e) => setDeliveryMethod(e.target.value)}
-                      className="mr-2"
-                    />
-                    <span className="text-sm">Dulex</span>
+                  
+                    
                   </label>
                 </div>
               </div>

@@ -137,9 +137,6 @@ const ProfileInformationPage = () => {
                 <button className="text-teal-600 hover:text-teal-700 font-medium" disabled={!isEditing}>
                   Edit
                 </button>
-                <button className="text-teal-600 hover:text-teal-700 font-medium" disabled={!isEditing}>
-                  Change Password
-                </button>
               </div>
             </div>
             <input
