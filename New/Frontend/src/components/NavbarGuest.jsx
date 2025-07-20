@@ -27,7 +27,7 @@
 
         >
         {/* ✅ Full-width container with proper padding */}
-        <div className="w-full flex items-center justify-between px-8 py-4">
+        <div className="w-full flex items-center justify-between px-8 py-2">
             {/* Logo */}
             <div onClick={() => navigate("/")} className="cursor-pointer flex-shrink-0">
             <img
@@ -81,7 +81,6 @@
             </div>
         </div>
         </nav>
-    );
-    };
+    ); };
 
     export default NavbarGuest;

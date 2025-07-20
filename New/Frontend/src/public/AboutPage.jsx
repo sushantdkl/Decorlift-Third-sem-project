@@ -9,7 +9,7 @@ const AboutPage = () => {
   return (
 <div className="font-sans text-black">
       {/* About Us Title */}
-      <div className="w-[78%] mx-auto mt-16 text-center">
+      <div className="w-[78%] mx-auto py-5 text-center">
         <h1 className="text-6xl font-bold drop-shadow">About us</h1>
       </div>
     
