@@ -60,7 +60,7 @@ export default function AddProductPage() {
         {/* Image Upload */}
         <div className="w-[300px] h-[250px] bg-gray-200 rounded flex items-center justify-center relative">
           {imagePreview ? (
-            <img src={`../../uploads/${"image"}`}  />
+            <img src={`../../uploads/${image}`}  />
           ) : (
             <label className="flex flex-col items-center cursor-pointer text-gray-500">
               <Upload className="w-6 h-6 mb-2" />

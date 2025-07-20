@@ -17,6 +17,7 @@ const ProfileLayout = ({ children }) => {
   const confirmLogout = () => {
     logout()
     navigate("/")
+    
   }
 
   const cancelLogout = () => {
@@ -90,6 +91,7 @@ const ProfileLayout = ({ children }) => {
                 className="bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700 font-semibold"
               >
                 Yes
+                
               </button>
               <button
                 onClick={cancelLogout}
