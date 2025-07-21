@@ -3,9 +3,14 @@ const uploadFile = (req, res) => {
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded" });
     }
-    res
-      .status(200)
-      .json({ message: "File uploaded successfully!", file: req.file });
+    
+    // Return the file information with the correct URL path
+    res.status(200).json({ 
+      message: "File uploaded successfully!", 
+      file: req.file,
+      filename: req.file.filename,
+      url: `/uploads/${req.file.filename}`
+    });
   } catch (error) {
     res
       .status(500)

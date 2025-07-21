@@ -51,21 +51,15 @@ const ProductDetailPage = () => {
       productId: product.id.toString(),
       quantity: quantity.toString(),
       totalCost: (product.price * quantity).toString(),
-      productTitle: product.title,
+      productTitle: product.name,
     })
 
     navigate(`/checkout?${query.toString()}`)
   }
 
   const handleRelatedItemClick = (item) => {
-    const query = new URLSearchParams({
-      productId: item.id.toString(),
-      quantity: "1",
-      totalCost: item.price.toString(),
-      productTitle: item.title,
-    })
-
-    navigate(`/checkout?${query.toString()}`)
+    // Navigate to the product detail page of the clicked item
+    navigate(`/product/${item.id}`)
   }
 
   if (!product) {
@@ -73,89 +67,104 @@ const ProductDetailPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="min-h-screen bg-white">
       {/* Main Content */}
-      <main className="flex-1 max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
-        {/* Product Image */}
-        <div className="border-2 border-gray-300 rounded-lg overflow-hidden bg-white">
-          <img
-            src={product.image ? `../../uploads/${product.image}` : "src/image/placeholder.svg"}
-            alt={product.name}
-            className="w-full h-auto object-cover"
-          />
-        </div>
-
-        {/* Product Details */}
-        <section className="flex flex-col justify-start">
-          <h2 className="text-4xl font-bold text-gray-800 mb-3">{product.name}</h2>
-          <p className="text-lg text-gray-500 mb-5">{product.subtitle}</p>
-          <p className="text-gray-600 mb-8 leading-relaxed">{product.description}</p>
-          <div className="text-3xl font-bold text-gray-900 mb-8">
-            Rs. {product.price.toLocaleString()}
-          </div>
-
-          <h2 className="text-xl text-gray-800 mb-3">stock: {product.stock}</h2>
-
-          {/* Quantity Selector */}
-          <div className="flex items-center space-x-4 mb-10">
-            <button
-              onClick={() => handleQuantityChange(-1)}
-              disabled={quantity <= 1}
-              className="w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed"
-              aria-label="Decrease quantity"
-            >
-              -
-            </button>
-            <input
-              type="number"
-              value={quantity}
-              readOnly
-              className="w-16 text-center border border-gray-300 rounded"
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Product Image */}
+          <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+            <img
+              src={product.image ? (product.image.startsWith('/uploads/') ? `http://localhost:4000${product.image}` : `http://localhost:4000/uploads/${product.image}`) : "src/image/placeholder.svg"}
+              alt={product.name}
+              className="w-full h-full object-cover"
             />
-            <button
-              onClick={() => handleQuantityChange(1)}
-              disabled={quantity >= product.stock}
-              className="w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed"
-              aria-label="Increase quantity"
-            >
-              +
-            </button>
           </div>
 
-          {/* Buy Now Button */}
-          <button
-            onClick={handleBuyNow}
-            className="bg-green-700 hover:bg-green-800 text-white px-10 py-4 rounded-lg font-semibold transition"
-          >
-            Buy Now
-          </button>
-        </section>
+          {/* Product Details */}
+          <div className="flex flex-col justify-start space-y-6">
+            {/* Product Title */}
+            <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
+            
+            {/* Subtitle */}
+            <p className="text-gray-600 text-sm">{product.description || "Combination of wood and wool"}</p>
+            
+            {/* Description */}
+            <p className="text-gray-700 leading-relaxed">
+              {product.description || "Finnish-american architect and designer Eero Saarinen famously hated the sight of many table and chair legs in a room."}
+            </p>
+            
+            {/* Stock Info */}
+            <div className="flex items-center space-x-2 text-sm">
+              <span className="text-green-600 font-medium">In Stock:</span>
+              <span className="text-gray-700">{product.stock}</span>
+            </div>
+            
+            {/* Price */}
+            <div className="text-3xl font-bold text-gray-900">
+              Rs. {product.price?.toLocaleString()}
+            </div>
+
+            {/* Quantity Selector */}
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => handleQuantityChange(-1)}
+                disabled={quantity <= 1}
+                className="w-10 h-10 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-label="Decrease quantity"
+              >
+                -
+              </button>
+              <input
+                type="number"
+                value={quantity}
+                readOnly
+                className="w-16 h-10 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+              />
+              <button
+                onClick={() => handleQuantityChange(1)}
+                disabled={quantity >= product.stock}
+                className="w-10 h-10 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-label="Increase quantity"
+              >
+                +
+              </button>
+            </div>
+
+            {/* Buy Now Button */}
+            <button
+              onClick={handleBuyNow}
+              className="w-full bg-teal-600 hover:bg-teal-700 text-white py-3 px-6 rounded-lg font-medium transition-colors duration-200"
+            >
+              Buy Now
+            </button>
+          </div>
+        </div>
       </main>
 
       {/* Related Items */}
-      <section className="max-w-6xl mx-auto p-6">
-        <h3 className="text-3xl font-bold text-gray-800 mb-8">Related items</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+      <section className="max-w-7xl mx-auto px-4 py-16">
+        <h2 className="text-2xl font-bold text-gray-900 mb-8">Related Items</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {relatedItems.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-lg shadow hover:-translate-y-1 transform transition overflow-hidden cursor-pointer"
+              className="bg-white rounded-lg overflow-hidden cursor-pointer group"
               onClick={() => handleRelatedItemClick(item)}
             >
-              <div className="h-48 flex items-center justify-center bg-gray-200 overflow-hidden">
+              <div className="aspect-square bg-gray-100 overflow-hidden">
                 <img
-                  src={item.image ? `src/image/${item.image}` : "src/image/placeholder.svg"}
-                  alt={item.title}
-                  className="object-contain h-full"
+                  src={item.image ? (item.image.startsWith('/uploads/') ? `http://localhost:4000${item.image}` : `http://localhost:4000/uploads/${item.image}`) : "src/image/placeholder.svg"}
+                  alt={item.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
-              <div className="p-5">
-                <div className="text-xs text-gray-400 uppercase mb-1">{item.category}</div>
-                <h4 className="text-xl font-semibold text-gray-800 mb-1">{item.title}</h4>
-                <p className="text-sm text-gray-600 mb-2">{item.description}</p>
-                <p className="text-lg font-bold text-blue-600">
-                  Rs. {item.price.toLocaleString()}
-                </p>
+              <div className="p-4">
+                <div className="text-xs text-gray-500 uppercase tracking-wide mb-1">{item.category || "Decoration"}</div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{item.name}</h3>
+                <p className="text-sm text-gray-600 mb-3 line-clamp-2">{item.description || "Combination of wood and wool"}</p>
+                <div className="text-lg font-bold text-gray-900">
+                  Rs. {item.price?.toLocaleString()}
+                </div>
               </div>
             </div>
           ))}

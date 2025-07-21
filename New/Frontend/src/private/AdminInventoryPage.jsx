@@ -149,7 +149,7 @@ export default function AdminInventoryPage() {
                   <td className="px-4 py-3 border">{item.id}</td>
                   <td className="px-4 py-3 border">
                     <img
-                      src={`../../uploads/${item.image}`}
+                      src={item.image.startsWith('/uploads/') ? `http://localhost:4000${item.image}` : `http://localhost:4000/uploads/${item.image}`}
                       alt={item.name}
                       className="w-12 h-12 object-cover rounded border"
                     />

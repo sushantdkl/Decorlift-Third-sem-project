@@ -1,10 +1,14 @@
 import fs from "fs";
+import path from "path";
 
 const createUploadsFolder = () => {
-  const dir = "../Frontend/uploads";
+  // Create uploads folder in the Backend directory
+  const dir = path.join(process.cwd(), "uploads");
   if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
-    console.log("Uploads folder created.");
+    fs.mkdirSync(dir, { recursive: true });
+    console.log("Uploads folder created at:", dir);
+  } else {
+    console.log("Uploads folder already exists at:", dir);
   }
 };
 

@@ -39,8 +39,8 @@ const create = async (req, res) => {
       return res.status(400).send({ message: 'Name and price are required' });
     }
 
-    // Store image filename with path for serving
-    const image = req.file ? `/uploads/${req.file.filename}` : null;
+    // Store only the filename, not the full path
+    const image = req.file ? req.file.filename : null;
 
     const product = await Product.create({
       name,
@@ -65,7 +65,7 @@ const update = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, description, price, stock, category } = req.body;
-    const image = req.file ? `/uploads/${req.file.filename}` : undefined;
+    const image = req.file ? req.file.filename : undefined;
 
     const product = await Product.findOne({ where: { id } });
     if (!product) {

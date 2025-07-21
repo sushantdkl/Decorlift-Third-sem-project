@@ -61,9 +61,13 @@ const ShopPage = () => {
         {productsToShow.map(({ id, name, description, price, image }) => (
           <div key={id} className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer group relative">
             <img
-              src={`../../uploads/${name.image}`}
+              src={image.startsWith('/uploads/') ? `http://localhost:4000${image}` : `http://localhost:4000/uploads/${image}`}
               alt={name}
               className="w-full h-48 object-cover group-hover:scale-105 transition-transform"
+              onError={(e) => {
+                console.log('Image load error for:', image);
+                e.target.src = '/src/image/placeholder.svg';
+              }}
             />
             <div className="p-4">
               <h2 className="font-semibold text-lg text-gray-900 mb-1">{name}</h2>

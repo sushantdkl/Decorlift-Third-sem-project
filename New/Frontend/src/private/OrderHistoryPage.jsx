@@ -40,9 +40,19 @@ const OrderHistoryPage = () => {
                 {/* Product Image */}
                 <div className="flex-shrink-0">
                   <img
-                    src={order.Product.image || "/placeholder.svg"}
+                    src={
+                      order.Product.image
+                        ? order.Product.image.startsWith('/uploads/')
+                          ? `http://localhost:4000${order.Product.image}`
+                          : `http://localhost:4000/uploads/${order.Product.image}`
+                        : "/src/image/placeholder.svg"
+                    }
                     alt={order.Product.name}
                     className="w-32 h-32 object-cover rounded-lg border"
+                    onError={(e) => {
+                      console.log('Image load error for:', order.Product.image);
+                      e.target.src = '/src/image/placeholder.svg';
+                    }}
                   />
                 </div>
  

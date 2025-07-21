@@ -26,6 +26,7 @@ const CardContent = ({ children, className = "", ...props }) => (
 export default function HomePage() {
   const [time, setTime] = useState({ hrs: "00", min: "00", sec: "00", session: "AM" })
   const [featuredProducts, setFeaturedProducts] = useState([])
+  const [showEmailPopup, setShowEmailPopup] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -77,9 +78,7 @@ export default function HomePage() {
           </p>
           <div className="mt-8 flex justify-center gap-6">
             <Button onClick={() => navigate("/shop")}>Visit Our Store</Button>
-            <a href="mailto:sushantdhakal18@gmail.com">
-              <Button>Email Us</Button>
-            </a>
+            <Button onClick={() => setShowEmailPopup(true)}>Email Us</Button>
           </div>
         </div>
 
@@ -101,9 +100,13 @@ export default function HomePage() {
                 <Card key={product.id} className="overflow-hidden">
                   <div className="aspect-square">
                     <img
-                      src={`../../uploads/${product.image}`}
+                      src={product.image.startsWith('/uploads/') ? `http://localhost:4000${product.image}` : `http://localhost:4000/uploads/${product.image}`}
                       alt={product.name}
                       className="w-full h-full object-cover"
+                      onError={(e) => {
+                        console.log('Image load error for:', product.image);
+                        e.target.src = '/src/image/placeholder.svg';
+                      }}
                     />
                   </div>
                   <CardContent>
@@ -153,6 +156,52 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Email Popup Modal */}
+      {showEmailPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold text-gray-800">Contact Us</h3>
+              <button 
+                onClick={() => setShowEmailPopup(false)}
+                className="text-gray-500 hover:text-gray-700 text-2xl"
+              >
+                ×
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Email Address:
+                </label>
+                <div className="flex items-center justify-between bg-gray-50 p-3 rounded border">
+                  <span className="text-gray-800 font-medium">sushantdhakal18@gmail.com</span>
+                  <button 
+                    onClick={() => {
+                      navigator.clipboard.writeText('sushantdhakal18@gmail.com')
+                      alert('Email copied to clipboard!')
+                    }}
+                    className="text-teal-600 hover:text-teal-700 text-sm font-medium"
+                  >
+                    Copy
+                  </button>
+                </div>
+              </div>
+              
+              <div className="flex gap-3">
+                <button 
+                  onClick={() => setShowEmailPopup(false)}
+                  className="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 transition-colors"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

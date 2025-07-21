@@ -68,7 +68,7 @@ const AdminEditProductPage = () => {
           <div className="flex-1 max-w-md">
             <div className="w-full h-72 bg-gray-200 rounded mb-4 overflow-hidden">
               <img
-                src={`../../uploads/${formData.image}`}
+                src={formData.image.startsWith('/uploads/') ? `http://localhost:4000${formData.image}` : `http://localhost:4000/uploads/${formData.image}`}
                 alt="Main"
                 className="w-full h-full object-cover"
               />

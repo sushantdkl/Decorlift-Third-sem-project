@@ -8,6 +8,9 @@ import { Order } from "./order/Order.js";
 User.hasMany(Order);
 Order.belongsTo(User);
 
+User.hasMany(Address);
+Address.belongsTo(User);
+
 Product.hasMany(Order);
 Order.belongsTo(Product);
 

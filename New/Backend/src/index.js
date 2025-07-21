@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import path from "path";
 import { db, sequelize } from "./database/index.js"; // Make sure this connects to your DB
 import {
   userRouter,
@@ -25,7 +26,7 @@ const app = express();
 
 // Enable CORS for all origins with specific options
 app.use(cors({
-  origin: ['http://localhost:4000', 'http://localhost:5173', 'http://127.0.0.1:4000', 'http://127.0.0.1:5173'],
+  origin: ['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:3000', 'http://127.0.0.1:5173'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -37,8 +38,8 @@ const port = process.env.PORT || 4000;
 // Parse JSON request bodies
 app.use(bodyParser.json());
 
-// Serve static files from uploads directory
-app.use('/uploads', express.static('uploads'));
+// Serve static files from uploads directory with correct path
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Public routes
 app.use("/api/users", userRouter);

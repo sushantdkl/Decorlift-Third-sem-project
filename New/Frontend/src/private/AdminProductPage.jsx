@@ -84,7 +84,7 @@ const AdminProductPage = () => {
             >
               <div className="aspect-square bg-gray-100">
                 <img
-                  src={`../../uploads/${product.image}`}
+                  src={product.image.startsWith('/uploads/') ? `http://localhost:4000${product.image}` : `http://localhost:4000/uploads/${product.image}`}
                   alt={product.name || "Product Image"}
                   className="w-full h-full object-cover"
                 />
