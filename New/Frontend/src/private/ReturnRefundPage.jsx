@@ -33,7 +33,11 @@ const ReturnRefundPage = () => {
 
   // Images for carousel: main product image + placeholders
   const productImages = [
-  
+    order.Product.image 
+      ? order.Product.image.startsWith('/uploads/')
+        ? `http://localhost:4000${order.Product.image}`
+        : `http://localhost:4000/uploads/${order.Product.image}`
+      : "/src/image/placeholder.svg"
   ];
 
   const handleInputChange = (field, value) => {
@@ -114,9 +118,13 @@ const ReturnRefundPage = () => {
           <div className="flex-1 max-w-md bg-white rounded-lg p-4 shadow-sm border">
             <div className="relative mb-4">
               <img
-                src={order.Product.image || "/placeholder.svg"}
+                src={productImages[currentImageIndex]}
                 alt="Product"
                 className="w-full h-80 object-cover rounded-lg"
+                onError={(e) => {
+                  console.log('Image load error for:', productImages[currentImageIndex]);
+                  e.target.src = '/src/image/placeholder.svg';
+                }}
               />
               <button
                 onClick={prevImage}
@@ -140,7 +148,15 @@ const ReturnRefundPage = () => {
                     currentImageIndex === i ? "border-teal-500" : "border-gray-200"
                   }`}
                 >
-                  <img src={img} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover" />
+                  <img 
+                    src={img} 
+                    alt={`Thumbnail ${i + 1}`} 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      console.log('Thumbnail image load error for:', img);
+                      e.target.src = '/src/image/placeholder.svg';
+                    }}
+                  />
                 </button>
               ))}
             </div>
