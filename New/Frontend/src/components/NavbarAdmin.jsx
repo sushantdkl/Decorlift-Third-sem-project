@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { User, LogOut, Bell, Boxes, FileQuestion, Repeat, MessageSquare } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
 
 const NavbarAdmin = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { logout } = useAuth();
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [showRequestOptions, setShowRequestOptions] = useState(false);
 
@@ -15,9 +17,8 @@ const NavbarAdmin = () => {
   };
 
   const confirmLogout = () => {
-    setShowLogoutConfirm(false)
-    localStorage.removeItem("token"); // Remove token from localStorage
-    localStorage.removeItem("user"); // Remove user data from localStorage
+    setShowLogoutConfirm(false);
+    logout(); // Use the context logout function
     navigate("/"); // Go to homepage on logout
   };
 

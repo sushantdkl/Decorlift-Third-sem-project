@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import axios from "axios";
+import { useAuth } from "../contexts/AuthContext";
 
-const LoginPage = ({ onLogin, setUser }) => {
+const LoginPage = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,8 +23,7 @@ const LoginPage = ({ onLogin, setUser }) => {
         if (token && user) {
           localStorage.setItem("token", token);
           localStorage.setItem("user", JSON.stringify(user));
-          onLogin(true);
-          setUser(user);
+          login(user); // Use the context login function
           if (user.isAdmin) {
             navigate("/admin/products");
           } else {

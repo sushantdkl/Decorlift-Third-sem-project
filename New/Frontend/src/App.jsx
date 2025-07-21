@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
 
 import NavbarGuest from "./components/NavbarGuest";
@@ -7,20 +7,11 @@ import NavbarAdmin from "./components/NavbarAdmin";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollTop";
 import UserRoutes from "./routes/UserRoutes";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
+function AppContent() {
+  const { isLoggedIn, user } = useAuth();
   const location = useLocation();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const userData = localStorage.getItem("user");
-    if (token && userData) {
-      setIsLoggedIn(true);
-      setUser(JSON.parse(userData));
-    }
-  }, []);
 
   const isAdminRoute = location.pathname.startsWith("/admin");
   const hideFooterRoutes = ["/login", "/signup", "/security-setup"];
@@ -37,11 +28,19 @@ function App() {
 
       <main className="flex-grow">
         <ScrollToTop />
-        <UserRoutes setIsLoggedIn={setIsLoggedIn} setUser={setUser} />
+        <UserRoutes />
       </main>
 
       {!shouldHideFooter && <Footer />}
     </div>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 

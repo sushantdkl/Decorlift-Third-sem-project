@@ -41,7 +41,7 @@ import AdminAddProductPage from "../private/AdminAddProductPage";
 import AdminEditUserPage from "../private/AdminEditUserPage";
 import AdminProfileLayout from "../components/AdminProfileLayout";
 
-export default function UserRoutes({ setIsLoggedIn, setUser }) {
+export default function UserRoutes() {
   return (
     <Routes>
       {/* Public Routes */}
@@ -56,7 +56,7 @@ export default function UserRoutes({ setIsLoggedIn, setUser }) {
         path="/login"
         element={
           <PublicRoute>
-            <LoginPage onLogin={setIsLoggedIn} setUser={setUser} />
+            <LoginPage />
           </PublicRoute>
         }
       />

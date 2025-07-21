@@ -3,11 +3,12 @@
 import { useState } from "react"
 import { useNavigate, useLocation, Link } from "react-router-dom"
 import { User, History, MapPin, LogOut } from "lucide-react"
-import { logout } from "../services/authService"
+import { useAuth } from "../contexts/AuthContext"
 
 const ProfileLayout = ({ children }) => {
   const navigate = useNavigate()
   const location = useLocation()
+  const { logout } = useAuth()
   const [showLogoutPopup, setShowLogoutPopup] = useState(false)
 
   const handleLogoutClick = () => {
@@ -15,9 +16,8 @@ const ProfileLayout = ({ children }) => {
   }
 
   const confirmLogout = () => {
-    logout()
+    logout() // Use the context logout function
     navigate("/")
-    
   }
 
   const cancelLogout = () => {

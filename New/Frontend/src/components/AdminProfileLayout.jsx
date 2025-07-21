@@ -14,18 +14,19 @@ import {
   FileQuestion,
 } from "lucide-react";
 import NavbarAdmin from "./NavbarAdmin"; // Adjust path if needed
+import { useAuth } from "../contexts/AuthContext";
 
 const AdminProfileLayout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { logout } = useAuth();
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
   const [showRequestOptions, setShowRequestOptions] = useState(false);
 
   const handleLogoutClick = () => setShowLogoutPopup(true);
   const confirmLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate("/login");
+    logout(); // Use the context logout function
+    navigate("/");
   };
   const cancelLogout = () => setShowLogoutPopup(false);
   const toggleRequestOptions = () => setShowRequestOptions(!showRequestOptions);
