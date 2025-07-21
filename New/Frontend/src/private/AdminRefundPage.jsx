@@ -175,9 +175,19 @@ export default function RefundExchangePage() {
               >
                 <div className="w-24 h-24 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
                   <img
-                    src={request.product.image || "/placeholder.svg"}
+                    src={
+                      request.product.image
+                        ? request.product.image.startsWith('/uploads/')
+                          ? `http://localhost:4000${request.product.image}`
+                          : `http://localhost:4000/uploads/${request.product.image}`
+                        : "/src/image/placeholder.svg"
+                    }
                     alt={request.product.name}
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      console.log('Image load error for:', request.product.image);
+                      e.target.src = '/src/image/placeholder.svg';
+                    }}
                   />
                 </div>
                 <div className="flex flex-col flex-1">
@@ -234,9 +244,19 @@ export default function RefundExchangePage() {
               <div>
                 <div className="border border-gray-200 rounded-lg overflow-hidden mb-4 h-80 flex items-center justify-center bg-gray-100">
                   <img
-                    src={selectedRequest.product.image || "/placeholder.svg"}
+                    src={
+                      selectedRequest.product.image
+                        ? selectedRequest.product.image.startsWith('/uploads/')
+                          ? `http://localhost:4000${selectedRequest.product.image}`
+                          : `http://localhost:4000/uploads/${selectedRequest.product.image}`
+                        : "/src/image/placeholder.svg"
+                    }
                     alt={selectedRequest.productName}
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      console.log('Image load error for:', selectedRequest.product.image);
+                      e.target.src = '/src/image/placeholder.svg';
+                    }}
                   />
                 </div>
                 <div className="text-center">
