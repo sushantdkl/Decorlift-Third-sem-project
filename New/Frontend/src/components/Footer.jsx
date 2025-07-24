@@ -6,6 +6,7 @@ import { Instagram, Globe, Twitter, Facebook, ArrowUp } from "lucide-react"
 // Footer component for the website
 // Contains social links and navigation
 const Footer = () => {
+  // Function to scroll to top of page
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
