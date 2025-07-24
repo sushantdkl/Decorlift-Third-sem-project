@@ -8,6 +8,7 @@ import NavbarAdmin from "./components/NavbarAdmin";
 
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollTop";
+
 import UserRoutes from "./routes/UserRoutes";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 
