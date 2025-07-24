@@ -57,6 +57,7 @@ const Footer = () => {
           </div>
 
           {/* Navigation Links with Back to Top */}
+
           <div className="flex justify-center items-center space-x-12 text-black text-lg font-medium">
             <Link to="/" className="hover:text-gray-700 transition-colors">
               Home
