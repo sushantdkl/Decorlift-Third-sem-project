@@ -20,6 +20,7 @@ const Footer = () => {
           </div>
 
           {/* Social Icons */}
+
           <div className="flex justify-center space-x-8 mb-16">
             <a
               href="https://www.instagram.com/_sushant_dhakal/"
