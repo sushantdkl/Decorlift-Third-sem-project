@@ -1,3 +1,4 @@
+// Authentication context for user state management
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
