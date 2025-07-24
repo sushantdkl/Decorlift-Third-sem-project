@@ -33,6 +33,14 @@ const create = async (req, res) => {
       return res.status(400).send({ message: "Invalid payload" });
     }
 
+    // Check if email already exists
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(409).json({ 
+        error: "Email already exists. Please use a different email address." 
+      });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
@@ -50,6 +58,19 @@ const create = async (req, res) => {
     res.status(201).send({ data: user, message: "User created successfully" });
   } catch (e) {
     console.error("User creation error:", e);
+    
+    // Handle unique constraint violation for email
+    if (e.name === 'SequelizeUniqueConstraintError') {
+      if (e.errors && e.errors[0] && e.errors[0].path === 'email') {
+        return res.status(409).json({ 
+          error: "Email already exists. Please use a different email address." 
+        });
+      }
+      return res.status(409).json({ 
+        error: "This information already exists in our system." 
+      });
+    }
+    
     res.status(500).json({ error: e.message || "Failed to create user" });
   }
 };
