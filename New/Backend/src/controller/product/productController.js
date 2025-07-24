@@ -1,4 +1,6 @@
+// Product controller for managing products
 import { Product } from '../../models/index.js';
+
 import multer from 'multer';
 import path from 'path';
 

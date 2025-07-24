@@ -1,5 +1,6 @@
 
- import { Link, useLocation, useNavigate } from "react-router-dom";
+// User navigation component
+import { Link, useLocation, useNavigate } from "react-router-dom";
     import { User } from "lucide-react";
     import nav_bg from "../image/nav_Background.png";
 

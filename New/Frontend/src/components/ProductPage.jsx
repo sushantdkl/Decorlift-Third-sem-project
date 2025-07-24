@@ -1,3 +1,4 @@
+// Product page component for displaying items
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";

@@ -1,11 +1,14 @@
+// Main App component
 import React from "react";
 import { useLocation } from "react-router-dom";
 
 import NavbarGuest from "./components/NavbarGuest";
 import NavbarUser from "./components/NavbarUser";
 import NavbarAdmin from "./components/NavbarAdmin";
+
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollTop";
+
 import UserRoutes from "./routes/UserRoutes";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 

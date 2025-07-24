@@ -3,7 +3,11 @@
 import { Link } from "react-router-dom"
 import { Instagram, Globe, Twitter, Facebook, ArrowUp } from "lucide-react"
 
+// Footer component for the website
+// Contains social links and navigation
+// Project completion: All features implemented
 const Footer = () => {
+  // Function to scroll to top of page
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
@@ -18,6 +22,7 @@ const Footer = () => {
           </div>
 
           {/* Social Icons */}
+
           <div className="flex justify-center space-x-8 mb-16">
             <a
               href="https://www.instagram.com/_sushant_dhakal/"
@@ -54,6 +59,7 @@ const Footer = () => {
           </div>
 
           {/* Navigation Links with Back to Top */}
+
           <div className="flex justify-center items-center space-x-12 text-black text-lg font-medium">
             <Link to="/" className="hover:text-gray-700 transition-colors">
               Home
