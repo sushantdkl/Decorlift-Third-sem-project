@@ -3,6 +3,8 @@
 import { Link } from "react-router-dom"
 import { Instagram, Globe, Twitter, Facebook, ArrowUp } from "lucide-react"
 
+// Footer component for the website
+// Contains social links and navigation
 const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" })
