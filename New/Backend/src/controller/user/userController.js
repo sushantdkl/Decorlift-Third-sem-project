@@ -1,3 +1,4 @@
+// User controller for managing user operations
 import { User } from '../../models/index.js';
 import bcrypt from 'bcrypt';
 
