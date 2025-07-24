@@ -1,5 +1,6 @@
 "use client";
 
+// Admin navigation component
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { User, LogOut, Bell, Boxes, FileQuestion, Repeat, MessageSquare } from "lucide-react";
